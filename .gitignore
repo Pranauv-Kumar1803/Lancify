@@ -1,0 +1,6 @@
+node_modules
+.env
+.eslintrc.json
+.prettierrc
+index.html
+index2.html

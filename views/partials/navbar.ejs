@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar</title>
+
+  <link rel="stylesheet" href="/css/home.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/3606b3275f.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <nav class="top">
+    <ul class="topnav" id="dropdownclick">
+      <li><a class="active" href="/"><b><i id="title">Lancify</i></b></a></li>
+      <li>
+        <div class="search-container">
+          <form action="/action_page.php">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+      </li>
+      <% if(isLoggedIn!==undefined && isLoggedIn===true) { %>
+        <li class="topnav-right"><a href="/logout" > Logout</a></li>
+        <li class="topnav-right"><a href="/profile"> Profile</a></li>
+        <li class="topnav-right"><a href="/domains"> Explore</a></li>
+        <li class="topnav-right"><a href="/register"> Become a seller</a></li>
+        <li class="dropdownicon"><a href="javascript:void(0);" onclick="dropdownmenu()">&#9776;</a></li>
+      <% } else { %>
+        <li class="topnav-right"><a href="/login"> Login</a></li>
+        <li class="topnav-right"><a href="/login"> Register </a></li>
+        <li class="topnav-right"><a href="/domains"> Explore</a></li>
+        <li class="topnav-right"><a href="/register_seller"> Become a seller</a></li>
+        <li class="dropdownicon"><a href="javascript:void(0);" onclick="dropdownmenu()">&#9776;</a></li>
+      <% } %>
+    </ul>
+  </nav>
+  <nav class="topnext">
+    <ul class="topnext" id="dropdownclick">
+      <li class="topnext-right"><a href="javascript:void(0)"> Graphics & Design</a>
+        <div class="dropdown-content">
+          <a href="/domains/gd-logo_design">Logo Design</a>
+          <a href="/domains/gd-web_design">Web Design</a>
+          <a href="/domains/gd-print">Poster/Flyer Prints</a>
+        </div>
+      </li>
+      <li class="topnext-right"><a href="javascript:void(0)"> Programming & Tech</a>
+        <div class="dropdown-content" id="Programming_Tech">
+          <a href="/domains/pt-web_dev">Web Development</a>
+          <a href="/domains/pt-app_dev">App Development</a>
+        </div>
+      </li>
+      <li class="topnext-right"><a href="javascript:void(0)">Content & Digital Writing</a>
+        <div class="dropdown-content" id="Content_Digital_Writing">
+          <a href="/domains/cdw-blogs_articles">Blogs & Articles</a>
+          <a href="/domains/cdw-resume_cover">Resume & Cover Letters</a>
+        </div>
+      <li>
+      <li class="topnext-right"><a href="javascript:void(0)"> Video and Animation</a>
+        <div class="dropdown-content" id="Vedio_Animation">
+          <a href="/domains/va-video_editing">Video Editing</a>
+          <a href="/domains/va-animation">Animation</a>
+        </div>
+      </li>
+      <li class="topnext-right"><a href="javascript:void(0)"> Digital Marketing</a>
+        <div class="dropdown-content" id="Digital_Marketing">
+          <a href="/domains/dm-seo">SEO</a>
+          <a href="/domains/dm-social_marketing">Social Media Marketing</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <script>
+    function user_session_check() {
+      if (document.cookie.split(';')[0].split('=')[0] !== 'user') {
+        return false;
+      }
+      return true;
+    }
+
+    function dropdownmenu() {
+      var x = document.getElementById("dropdownclick");
+      if (x.classname === "topnav") {
+        x.classname += " responsive";
+        /* change topnav to topnav.responsive */
+      } else {
+        x.classname = "topnav";
+      }
+    }
+  </script>
+</body>
+
+</html>

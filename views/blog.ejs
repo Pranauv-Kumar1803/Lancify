@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+
+
+    <!--box icons-->
+   
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+   <link rel="stylesheet" href="/css/blog.css">
+</head>
+<body>
+
+   <%- include('partials/navbar.ejs',{isLoggedIn:login}) %>
+
+   <section class="newsection" id="newsection">
+      <h2 class="heading"><span>BLOGS</span></h2>
+   
+      <div class = "newsection-container">
+         <div class="newsection-box">
+            <h2>BLOG 1 </h2> 
+            <h3>About-Something </h3>
+            <p>Lorem ipsum dolor sit amet consectetu
+               r adipisicing elit. Hic dolorem rerum, officiis, 
+               ipsum ipsa esse iusto doloremque blanditiis dist
+               inctio unde at. Aliquam praesentium corporis, dol
+               ores quo animi sed unde assumenda!</p>  
+               <a href="https://firstsiteguide.com/what-is-blog/" class="btn">Learn More  <i class='bx bx-right-arrow-alt'></i></a>
+               <p class="para"><i class='bx bx-like'></i>16K | <i class='bx bx-message-rounded-dots'></i>10K</p>
+         </div>
+   
+         <div class="newsection-box">
+            <h2>BLOG 2</h2>
+            <h3>About-Something </h3>
+            <p>Lorem ipsum dolor sit amet consectetu
+               r adipisicing elit. Hic dolorem rerum, officiis, 
+               ipsum ipsa esse iusto doloremque blanditiis dist
+               inctio unde at. Aliquam praesentium corporis, dol
+               ores quo animi sed unde assumenda!</p>  
+               <a href="https://firstsiteguide.com/what-is-blog/" class="btn">Learn More  <i class='bx bx-right-arrow-alt'></i></a>
+               <p class="para"><i class='bx bx-like'></i>16K | <i class='bx bx-message-rounded-dots'></i>10K</p>
+         </div>
+   
+         <div class="newsection-box">
+            <h2>BLOG 3</h2> 
+            <h3>About-Something </h3>
+            <p>Lorem ipsum dolor sit amet consectetu
+               r adipisicing elit. Hic dolorem rerum, officiis, 
+               ipsum ipsa esse iusto doloremque blanditiis dist
+               inctio unde at. Aliquam praesentium corporis, dol
+               ores quo animi sed unde assumenda!</p>  
+               <a href="https://firstsiteguide.com/what-is-blog/" class="btn">Learn More  <i class='bx bx-right-arrow-alt'></i></a>
+               <p class="para"><i class='bx bx-like'></i>16K | <i class='bx bx-message-rounded-dots'></i>10K</p>
+         </div>
+
+      </div>
+   </section>
+
+   <%- include('partials/footer.ejs') %>
+
+</body>
+</html>

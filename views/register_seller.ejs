@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register As a Seller</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/register_seller.css" type="text/css">
+</head>
+
+<body style="background-color: #4B6666;">
+
+    <%- include('partials/navbar.ejs',{isLoggedIn:login}) %>
+
+    <div class="container">
+        <form id="signUpForm" action="#">
+            <div class="form-header d-flex mb-4">
+                <span class="stepIndicator">Personal Details</span>
+                <span class="stepIndicator">Professional Info</span>
+                <span class="stepIndicator">Social Profiles</span>
+            </div>
+
+            <!-- step one -->
+            <div class="step form-group row">
+                <p class="text-center mb-4">Provide your Personal Details</p>
+                <div class="mb-3 row">
+                    <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
+                    <div class="col">
+                        <input type="text" id="fname" placeholder="First name" oninput="this.className = ''"
+                            name="fname">
+                    </div>
+                    <div class="col">
+                        <input type="text" id="lname" placeholder="Last name" oninput="this.className = ''"
+                            name="lname">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <textarea name="description" cols="30" rows="10"
+                        placeholder="Professional Description in abt 150 words" id="description"></textarea>
+                </div>
+                <div class="mb-3 row">
+                    <label for="photo" class="col-sm-2 col-form-label">Profile Pic</label>
+                    <div class="custom-file col">
+                        <label class="custom-file-label" for="profile">Choose file</label>
+                        <input type="file" class="custom-file-input" id="profile">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="photo" class="col-sm-2 col-form-label">Languages You Speak</label>
+                    <div class="col flex align-items-center">
+                        <select id="languages" multiple="multiple">
+                            <option value="None" selected>None</option>
+                            <option value="Afrikaans">Afrikaans</option>
+                            <option value="Albanian">Albanian</option>
+                            <option value="Arabic">Arabic</option>
+                            <option value="Armenian">Armenian</option>
+                            <option value="Basque">Basque</option>
+                            <option value="Bengali">Bengali</option>
+                            <option value="Bulgarian">Bulgarian</option>
+                            <option value="Catalan">Catalan</option>
+                            <option value="Cambodian">Cambodian</option>
+                            <option value="Chinese (Mandarin)">Chinese (Mandarin)</option>
+                            <option value="Croatian">Croatian</option>
+                            <option value="Czech">Czech</option>
+                            <option value="Danish">Danish</option>
+                            <option value="Dutch">Dutch</option>
+                            <option value="English">English</option>
+                            <option value="Estonian">Estonian</option>
+                            <option value="Fiji">Fiji</option>
+                            <option value="Finnish">Finnish</option>
+                            <option value="French">French</option>
+                            <option value="Georgian">Georgian</option>
+                            <option value="German">German</option>
+                            <option value="Greek">Greek</option>
+                            <option value="Gujarati">Gujarati</option>
+                            <option value="Hebrew">Hebrew</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="Hungarian">Hungarian</option>
+                            <option value="Icelandic">Icelandic</option>
+                            <option value="Indonesian">Indonesian</option>
+                            <option value="Irish">Irish</option>
+                            <option value="Italian">Italian</option>
+                            <option value="Japanese">Japanese</option>
+                            <option value="Javanese">Javanese</option>
+                            <option value="Korean">Korean</option>
+                            <option value="Latin">Latin</option>
+                            <option value="Latvian">Latvian</option>
+                            <option value="Lithuanian">Lithuanian</option>
+                            <option value="Macedonian">Macedonian</option>
+                            <option value="Malay">Malay</option>
+                            <option value="Malayalam">Malayalam</option>
+                            <option value="Maltese">Maltese</option>
+                            <option value="Maori">Maori</option>
+                            <option value="Marathi">Marathi</option>
+                            <option value="Mongolian">Mongolian</option>
+                            <option value="Nepali">Nepali</option>
+                            <option value="Norwegian">Norwegian</option>
+                            <option value="Persian">Persian</option>
+                            <option value="Polish">Polish</option>
+                            <option value="Portuguese">Portuguese</option>
+                            <option value="Punjabi">Punjabi</option>
+                            <option value="Quechua">Quechua</option>
+                            <option value="Romanian">Romanian</option>
+                            <option value="Russian">Russian</option>
+                            <option value="Samoan">Samoan</option>
+                            <option value="Serbian">Serbian</option>
+                            <option value="Slovak">Slovak</option>
+                            <option value="Slovenian">Slovenian</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="Swahili">Swahili</option>
+                            <option value="Swedish ">Swedish </option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="Tatar">Tatar</option>
+                            <option value="Telugu">Telugu</option>
+                            <option value="Thai">Thai</option>
+                            <option value="Tibetan">Tibetan</option>
+                            <option value="Tonga">Tonga</option>
+                            <option value="Turkish">Turkish</option>
+                            <option value="Ukrainian">Ukrainian</option>
+                            <option value="Urdu">Urdu</option>
+                            <option value="Uzbek">Uzbek</option>
+                            <option value="Vietnamese">Vietnamese</option>
+                            <option value="Welsh">Welsh</option>
+                            <option value="Xhosa">Xhosa</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- step two -->
+            <div class="step">
+                <p class="text-center mb-4">Your Skils, Occupation and Experience</p>
+                <div class="mb-3 row">
+                    <label for="occupation" class="col-sm-2 col-form-label">Occupation</label>
+                    <div class="col">
+                        <select class="custom-select" id="occupation">
+                            <option selected>None</option>
+                            <option value="student">Student</option>
+                            <option value="working">Working Professional(>1 yr experience)</option>
+                            <option value="fresher">Working Fresherman</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="education" class="col-sm-2 col-form-label">Education</label>
+                    <div class="col">
+                        <div class="mb-2 row">
+                            <div class="col">
+                                <input type="text" id="country" name="country" placeholder="Country of Institute">
+                            </div>
+                            <div class="col">
+                                <input type="text" id="institute_name" name="institute_name"
+                                    placeholder="Name of Institute">
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col">
+                                <input type="text" name="title" id="title" placeholder="Title">
+                            </div>
+                            <div class="col">
+                                <input type="text" name="major" id="major" placeholder="Major">
+                            </div>
+                            <div class="col">
+                                <input type="number" name="year" id="year" placeholder="Year">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="education" class="col-sm-2 col-form-label">Certifications</label>
+                    <div class="col">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="certification">
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-2 col-form-label">Personal Website</label>
+                    <div class="col">
+                        <input type="text" id="portfolio" placeholder="Personal Website Link here..."
+                            oninput="this.className = ''" name="personal_website">
+                    </div>
+                </div>
+            </div>
+
+            <!-- step three -->
+            <div class="step">
+                <p class="text-center mb-4">Please provide your Social and Professional accounts</p>
+                <div class="mb-3 row">
+                    <label for="github" class="col-sm-2 col-form-label">Github</label>
+                    <div class="col">
+                        <input type="text" id="github" placeholder="Github Account link ..."
+                            oninput="this.className = ''" name="github">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="stackOverflow" class="col-sm-2 col-form-label">Stack Overflow</label>
+                    <div class="col">
+                        <input type="text" id="stack-overflow" placeholder="stackOverflow Account link ..."
+                            oninput="this.className = ''" name="stackOverflow">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="linkedin" class="col-sm-2 col-form-label">Linkedin</label>
+                    <div class="col">
+                        <input type="text" id="linkedin" placeholder="Linkedin Account link ..."
+                            oninput="this.className = ''" name="linkedin">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- start previous / next buttons -->
+            <div class="form-footer d-flex">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            </div>
+            <!-- end previous / next buttons -->
+        </form>
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+
+    <script src="/js/register_seller.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@4.2.0/dist/js/coreui.bundle.min.js" integrity="sha384-n0qOYeB4ohUPebL1M9qb/hfYkTp4lvnZM6U6phkRofqsMzK29IdkBJPegsyfj/r4" crossorigin="anonymous"></script>
+</body>
+
+</html>
