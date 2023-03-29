@@ -13,55 +13,71 @@
           crossorigin="anonymous"></script>
      <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
      <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
      <link href="/css/loginCumSignup.css" rel="stylesheet" type="text/css">
 </head>
 
 
 <body>
-
-     <div class="container" id="container">
-          <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style="display: none;">
+     <div class="partii">
+          <div class="container main--container" id="container" style="z-index: 10;">
+               <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style="display: none;">
                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                    <span aria-hidden="true">&times;</span>
                </button>
            </div> -->
-          <div class="signup-page--container sign-up-container">
-               <form action="#" id="signup-form" method="post" autocomplete="off">
-                    <h2>Join Lancify Now</h2>
-                    <input type="text" id="name" placeholder="Name *" class="name--inp" required />
+               <div class="signup-page--container sign-up-container">
+                    <form action="#" id="signup-form" method="post" autocomplete="off">
+                         <h2>Join Lancify Now</h2>
+                         <input type="text" id="name" placeholder="Name *" class="name--inp" required />
 
-                    <input type="email" id="email" placeholder="Email *" class="mail--inp" required />
+                         <input type="email" id="email" placeholder="Email *" class="mail--inp" required />
 
-                    <input type="password" id="password" class="password--inp" placeholder="Password *"
-                         pattern=".{5,50}" required />
+                         <input type="password" id="password" class="password--inp" placeholder="Password *"
+                              pattern=".{5,50}" required />
 
-                    <input type="password" id="confirmpassword" class="conpassword--inp"
-                         placeholder="Confirm Password *" pattern=".{5,50}" required>
+                         <input type="password" id="confirmpassword" class="conpassword--inp"
+                              placeholder="Confirm Password *" pattern=".{5,50}" required>
 
-                    <button type="submit" id="submit1">Sign Up</button>
-               </form>
-          </div>
-          <div class="signup-page--container page--container--sigin-in">
-               <form action="#" id="signin-form" method="post" autocomplete="off">
-                    <h2>Sign in</h2>
-                    <input type="email" id="email" placeholder="Email *" required />
-                    <input type="password" id="password" placeholder="Password *" required />
-                    <button type="submit" id="submit2">Sign In</button>
-               </form>
-          </div>
-          <div class="container--shift">
-               <div class="overlay">
-                    <div class="panel--right overlay-left">
-                         <h1>Welcome Back!</h1>
-                         <p>login with your details to continue</p>
-                         <button class="ghost" id="signIn">Sign In</button>
-                    </div>
-                    <div class="panel--right overlay-right">
-                         <h1>Join Lancify</h1>
-                         <p>Enter your details and start your freelancing journey with us right now</p>
-                         <button class="ghost" id="signUp">Sign Up</button>
+                         <button type="submit" id="submit1">Sign Up</button>
+
+                         <div class="wrap-g-c">
+                              <div class="continue-w-g">
+                                   <ion-icon name="logo-google" class="g--icon">G</ion-icon>
+                                   <span class="g-span">Conitnue With Google</span>
+                              </div>
+                         </div>
+                    </form>
+               </div>
+               <div class="signup-page--container page--container--sigin-in">
+                    <form action="#" id="signin-form" method="post" autocomplete="off">
+                         <h2>Sign in</h2>
+                         <input type="email" id="email" placeholder="Email *" required />
+                         <input type="password" id="password" placeholder="Password *" required />
+                         <button type="submit" id="submit2">Sign In</button>
+                         <div class="wrap-g-c">
+                              <div class="continue-w-g">
+                                   <ion-icon name="logo-google" class="g--icon">G</ion-icon>
+                                   <span class="g-span">Conitnue With Google</span>
+                              </div>
+                         </div>
+                    </form>
+               </div>
+               <div class="container--shift">
+                    <div class="overlay">
+                         <div class="panel--right overlay-left">
+                              <h1>Welcome Back!</h1>
+                              <p>login with your details to continue</p>
+                              <button class="ghost" id="signIn">Sign In</button>
+                         </div>
+                         <div class="panel--right overlay-right">
+                              <h1>Join Lancify</h1>
+                              <p>Enter your details and start your freelancing journey with us right now</p>
+                              <button class="ghost" id="signUp">Sign Up</button>
+                         </div>
                     </div>
                </div>
           </div>

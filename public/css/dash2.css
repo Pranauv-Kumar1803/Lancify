@@ -1,18 +1,18 @@
 /* Googlefont Poppins CDN Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .sidebar {
   position: absolute;
   height: 100%;
   width: 240px;
-  background: #4B6666;
+  background: #4b6666;
   transition: all 0.5s ease;
 }
 
@@ -31,7 +31,7 @@
   font-weight: 500;
   color: #fff;
   min-width: 60px;
-  text-align: center
+  text-align: center;
 }
 
 .sidebar .logo-details .logo_name {
@@ -60,11 +60,11 @@
 }
 
 .sidebar .nav-links li a.active {
-  background: #4B6666;
+  background: #4b6666;
 }
 
 .sidebar .nav-links li a:hover {
-  background: #4B6666;
+  background: #4b6666;
 }
 
 .sidebar .nav-links li i {
@@ -96,7 +96,7 @@
   transition: all 0.5s ease;
 }
 
-.sidebar.active~.home-section {
+.sidebar.active ~ .home-section {
   width: calc(100% - 60px);
   left: 60px;
 }
@@ -117,7 +117,7 @@
   transition: all 0.5s ease;
 }
 
-.sidebar.active~.home-section nav {
+.sidebar.active ~ .home-section nav {
   left: 60px;
   width: calc(100% - 60px);
 }
@@ -137,8 +137,8 @@ nav .sidebar-button i {
 .home-section nav .profile-details {
   display: flex;
   align-items: center;
-  background: #F5F6FA;
-  border: 2px solid #EFEEF1;
+  background: #f5f6fa;
+  border: 2px solid #efeef1;
   border-radius: 6px;
   height: 50px;
   min-width: 190px;
@@ -269,7 +269,7 @@ nav .profile-details i {
 
 .gig-boxes .box .button a {
   color: #fff;
-  background: #0A2558;
+  background: #0a2558;
   padding: 4px 12px;
   font-size: 15px;
   font-weight: 400;
@@ -281,8 +281,6 @@ nav .profile-details i {
 .gig-boxes .box .button a:hover {
   background: #0d3073;
 }
-
-
 
 /* Responsive Media Query */
 @media (max-width: 1240px) {
@@ -299,7 +297,7 @@ nav .profile-details i {
     left: 60px;
   }
 
-  .sidebar.active~.home-section {
+  .sidebar.active ~ .home-section {
     /* width: calc(100% - 220px); */
     overflow: hidden;
     left: 220px;
@@ -310,7 +308,7 @@ nav .profile-details i {
     left: 60px;
   }
 
-  .sidebar.active~.home-section nav {
+  .sidebar.active ~ .home-section nav {
     width: calc(100% - 220px);
     left: 220px;
   }
@@ -340,7 +338,6 @@ nav .profile-details i {
 }
 
 @media (max-width: 700px) {
-
   nav .sidebar-button .dashboard,
   nav .profile-details .admin_name,
   nav .profile-details i {
@@ -363,7 +360,7 @@ nav .profile-details i {
     margin-bottom: 15px;
   }
 
-  .sidebar.active~.home-section nav .profile-details {
+  .sidebar.active ~ .home-section nav .profile-details {
     display: none;
   }
 }
@@ -382,7 +379,7 @@ nav .profile-details i {
     left: 0;
   }
 
-  .sidebar.active~.home-section {
+  .sidebar.active ~ .home-section {
     left: 60px;
     width: calc(100% - 60px);
   }
@@ -392,15 +389,13 @@ nav .profile-details i {
     left: 0;
   }
 
-  .sidebar.active~.home-section nav {
+  .sidebar.active ~ .home-section nav {
     left: 60px;
     width: calc(100% - 60px);
   }
 }
 
-
 /* profile */
-
 
 .social-list {
   display: flex;
@@ -411,36 +406,34 @@ nav .profile-details i {
 
 .social-list li {
   padding: 10px;
-  color: #8E24AA;
+  color: #8e24aa;
   font-size: 19px;
 }
 
 .card:before {
-
   content: "";
   position: absolute;
   left: 0;
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: #E1BEE7;
+  background-color: #e1bee7;
   transform: scaleY(1);
   transition: all 0.5s;
-  transform-origin: bottom
+  transform-origin: bottom;
 }
 
 .card:after {
-
   content: "";
   position: absolute;
   left: 0;
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: #8E24AA;
+  background-color: #8e24aa;
   transform: scaleY(0);
   transition: all 0.5s;
-  transform-origin: bottom
+  transform-origin: bottom;
 }
 
 .card:hover::after {
@@ -448,21 +441,75 @@ nav .profile-details i {
 }
 
 .buttons button:nth-child(1) {
-  border: 1px solid #8E24AA !important;
-  color: #8E24AA;
+  border: 1px solid #8e24aa !important;
+  color: #8e24aa;
   height: 40px;
 }
 
 .buttons button:nth-child(1):hover {
-  border: 1px solid #8E24AA !important;
+  border: 1px solid #8e24aa !important;
   color: #fff;
   height: 40px;
-  background-color: #8E24AA;
+  background-color: #8e24aa;
 }
 
 .buttons button:nth-child(2) {
-  border: 1px solid #8E24AA !important;
-  background-color: #8E24AA;
+  border: 1px solid #8e24aa !important;
+  background-color: #8e24aa;
   color: #fff;
   height: 40px;
+}
+
+.section--hero {
+  padding: 10px 15px;
+  width: auto;
+  min-height: 748px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  align-items: center;
+}
+
+.item--flex-in {
+  width: 300px;
+  height: 190px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #faf9f6;
+  border-radius: 10px;
+}
+
+.alig-horz {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.waver {
+  display: inline;
+}
+
+.emo {
+  width: 50px;
+  position: relative;
+  bottom: 5px;
+}
+
+.title-head {
+  padding: 2px;
+  border-bottom: 2px solid teal;
+}
+
+@media screen and (max-width: 1300px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .alig-horz {
+    flex-direction: column ;
+  }
 }
