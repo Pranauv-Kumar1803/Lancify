@@ -1,4 +1,3 @@
-/* Googlefont Poppins CDN Link */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
 * {
@@ -510,6 +509,6 @@ nav .profile-details i {
 
 @media screen and (max-width: 1024px) {
   .alig-horz {
-    flex-direction: column ;
+    flex-direction: column;
   }
 }
