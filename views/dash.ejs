@@ -146,7 +146,7 @@
   </section>
 
      -->
-    <div class="section--hero current-not-active the-overview">
+    <div class="section--hero current-active the-overview">
       <div class="main--heading">
         <h2 class="waver">Hey Dev</h2>
         <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" class="emo" alt="hand">
@@ -191,7 +191,7 @@
 
     </div>
 
-    <div class="section--hero the-profile current-active">
+    <div class="section--hero the-profile current-not-active">
       <div class="main--heading">
         <h2 class="waver">Your gigs</h2>
         <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" class="emo" alt="hand">
@@ -301,9 +301,20 @@
             sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
         }
 
+        document.querySelector('body > div.sidebar > ul > li:nth-child(2) > a').addEventListener('click', e => {
+
+          document.querySelector('.the-profile').classList.remove('current-active');
+          document.querySelector('.the-profile').classList.add('current-not-active');
+          document.querySelector('.the-overview').classList.add('current-active');
+        })
+
         document.getElementById('profile').addEventListener('click', (e) => {
-          document.getElementsByClassName('profile-section')[0].style.display = 'block';
-          document.getElementsByClassName('home-section')[0].style.display = 'none';
+          // document.getElementsByClassName('profile-section')[0].style.display = 'block';
+          // document.getElementsByClassName('home-section')[0].style.display = 'none';
+          document.querySelector('.the-profile').classList.add('current-active');
+          document.querySelector('.the-profile').classList.remove('current-not-active');
+          document.querySelector('.the-overview').classList.add('current-not-active');
+          document.querySelector('.the-overview').classList.remove('current-active')
 
         });
       </script>
