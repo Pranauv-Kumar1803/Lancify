@@ -152,6 +152,13 @@ app.post("/login", async (req, res) => {
     }
 });
 
+app.get("/preview-gig", (req, res) => {
+    if (!req.cookies.user) {
+        return res.render("error", { data: "Page Not Found" });
+    }
+    res.render("preview_gig", { login: true });
+});
+
 app.post("/register", async (req, res) => {
     const name = req.body?.name;
     const email = req.body?.email;
