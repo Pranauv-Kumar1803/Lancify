@@ -30,7 +30,7 @@ app.use(bodyParser.json({ limit: '300mb' }));
 app.use(express.urlencoded({ extended: true, limit: '300mb' }));
 app.use(express.json({ limit: '3000mb' }));
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(cors({
 	origin: ["http://localhost:3000"],
@@ -217,15 +217,15 @@ app.get("/*", (req, res) => {
 
 
 app.get("/users", async (req, res) => {
-	const data = await db.getAllUser();
-	// console.log(data);
-	return res.json(data.data);
+    const data = await db.getAllUser();
+    // console.log(data);
+    return res.json(data.data);
 });
 
 app.get("/users/:email", async (req, res) => {
-	const data = await db.getSomeUser(req.params.email);
-	// console.log(data);
-	return res.json(data.data);
+    const data = await db.getSomeUser(req.params.email);
+    // console.log(data);
+    return res.json(data.data);
 });
 
 

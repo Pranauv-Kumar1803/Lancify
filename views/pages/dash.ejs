@@ -5,6 +5,10 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/css/dash2.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+    referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/css/new_categories.css" type="text/css">
+
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,46 +20,48 @@
 
   <%- include('../partials/navbar.ejs',{isLoggedIn:true}) %>
 
-  <div class="sidebar">
-    <div class="logo-details">
-      <i class='bx bxl-c-plus-plus'></i>
-      <span class="logo_name">Lancify</span>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class='bx bxl-c-plus-plus'></i>
+        <span class="logo_name">Lancify</span>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="/" class="active">
+            <i class='bx bx-home'></i>
+            <span class="links_name">Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="active">
+            <i class='bx bx-grid-alt'></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" id="profile">
+            <i class='bx bx-user'></i>
+            <span class="links_name">Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class='bx bx-cog'></i>
+            <span class="links_name">Setting</span>
+          </a>
+        </li>
+        <li class="log_out">
+          <a href="#">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
     </div>
-    <ul class="nav-links">
-      <li>
-        <a href="/" class="active">
-          <i class='bx bx-home'></i>
-          <span class="links_name">Home</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="active">
-          <i class='bx bx-grid-alt'></i>
-          <span class="links_name">Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" id="profile">
-          <i class='bx bx-user'></i>
-          <span class="links_name">Profile</span>
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-cog'></i>
-          <span class="links_name">Setting</span>
-        </a>
-      </li>
-      <li class="log_out">
-        <a href="#">
-          <i class='bx bx-log-out'></i>
-          <span class="links_name">Log out</span>
-        </a>
-      </li>
-    </ul>
-  </div>
 
-  
+    <!-- 
+
+      
   <section class="home-section">
     <nav>
       <div class="sidebar-button">
@@ -139,93 +145,181 @@
     </div>
   </section>
 
-  <section class="profile-section" style="display: none;">
-    
-    <nav>
-      <div class="sidebar-button">
-        <i class='bx bx-menu sidebarBtn'></i>
-        <span class="dashboard">Dashboard</span>
+     -->
+    <div class="section--hero current-active the-overview">
+      <div class="main--heading">
+        <h2 class="waver">Hey Dev</h2>
+        <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" class="emo" alt="hand">
       </div>
 
-      <div class="profile-details">
-        <img src="images/profile.jpg" alt="">
-        <span class="admin_name">Prem Shahi</span>
-        <i class='bx bx-chevron-down'></i>
+      <div class="head--customer--info">
+        <h3>Your growth & progess so far</h3>
       </div>
-    </nav>
 
-    <div class="container mt-5">
-
-      <div class="row d-flex justify-content-center">
-
-        <div class="col-md-7">
-
-          <div class="card p-3">
-
-            <div class="text-center">
-              <img src="https://i.imgur.com/bDLhJiP.jpg" width="100" class="rounded-circle">
-            </div>
-
-            <div class="text-center mt-3">
-              <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
-              <h5 class="mt-2 mb-0">Alexender Schidmt</h5>
-              <span>UI/UX Designer</span>
-
-              <div class="px-4 mt-1">
-                <p class="fonts">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                  commodo consequat. </p>
-
-              </div>
-
-              <ul class="social-list">
-                <li><i class="fa fa-facebook"></i></li>
-                <li><i class="fa fa-dribbble"></i></li>
-                <li><i class="fa fa-instagram"></i></li>
-                <li><i class="fa fa-linkedin"></i></li>
-                <li><i class="fa fa-google"></i></li>
-              </ul>
-
-              <div class="buttons">
-                <button class="btn btn-outline-primary px-4">Update Profile</button>
-                <button class="btn btn-primary px-4 ms-3">Contact</button>
-              </div>
-            </div>
+      <div class="alig-horz">
+        <div class="item--flex-in">
+          <div class="title-head">
+            Ongoing Projects 🔥
           </div>
-
+          <div class="count">
+            2
+          </div>
         </div>
+
+        <div class="item--flex-in">
+          <div class="title-head">
+            Completed Projects 🔗
+          </div>
+          <div class="count">
+            20
+          </div>
+        </div>
+
+        <div class="item--flex-in">
+          <div class="title-head">
+            Ratings®️ (20)
+          </div>
+          <div class="count">
+            4.7
+          </div>
+        </div>
+      </div>
+
+      <div class="about--community">
 
       </div>
 
     </div>
-  </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
-    integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
-    crossorigin="anonymous"></script>
+    <div class="section--hero the-profile current-not-active">
+      <div class="main--heading">
+        <h2 class="waver">Your gigs</h2>
+        <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" class="emo" alt="hand">
+      </div>
 
-  <script>
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".sidebarBtn");
-    sidebarBtn.onclick = function () {
-      sidebar.classList.toggle("active");
-      if (sidebar.classList.contains("active")) {
-        sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-      } else
-        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-    }
+      <div class="head--customer--info">
+        <h3>Gigs done so far ...</h3>
+      </div>
 
-    document.getElementById('profile').addEventListener('click',(e)=>{
-      document.getElementsByClassName('profile-section')[0].style.display='block';
-      document.getElementsByClassName('home-section')[0].style.display='none';
+      <div class="alig-horz">
+        <div class="testing--dash p-2">
+          <div class="title-head my-1">
+            &lt; TITLE OF THE GIG &gt;
+          </div>
+          <div class="description mx-2 px-4 py-1 my-1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, libero officiis itaque natus vel nihil
+            cupiditate aspernatur fugit impedit perferendis aliquam numquam maxime, optio earum. Quia non quod tenetur
+            quidem?
+          </div>
+          <div class="price count">
+            &lt; PRICE OF THE GIG &gt;
+          </div>
+        </div>
 
-    });
-  </script>
 
-  <%- include('../partials/footer.ejs') %>
+
+      </div>
+
+
+      <section class="profile-section" style="display: none;">
+
+        <nav>
+          <div class="sidebar-button">
+            <i class='bx bx-menu sidebarBtn'></i>
+            <span class="dashboard">Dashboard</span>
+          </div>
+
+          <div class="profile-details">
+            <img src="images/profile.jpg" alt="">
+            <span class="admin_name">Prem Shahi</span>
+            <i class='bx bx-chevron-down'></i>
+          </div>
+        </nav>
+
+        <div class="container mt-5">
+
+          <div class="row d-flex justify-content-center">
+
+            <div class="col-md-7">
+
+              <div class="card p-3">
+
+                <div class="text-center">
+                  <img src="https://i.imgur.com/bDLhJiP.jpg" width="100" class="rounded-circle">
+                </div>
+
+                <div class="text-center mt-3">
+                  <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
+                  <h5 class="mt-2 mb-0">Alexender Schidmt</h5>
+                  <span>UI/UX Designer</span>
+
+                  <div class="px-4 mt-1">
+                    <p class="fonts">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                      magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                      commodo consequat. </p>
+
+                  </div>
+
+                  <ul class="social-list">
+                    <li><i class="fa fa-facebook"></i></li>
+                    <li><i class="fa fa-dribbble"></i></li>
+                    <li><i class="fa fa-instagram"></i></li>
+                    <li><i class="fa fa-linkedin"></i></li>
+                    <li><i class="fa fa-google"></i></li>
+                  </ul>
+
+                  <div class="buttons">
+                    <button class="btn btn-outline-primary px-4">Update Profile</button>
+                    <button class="btn btn-primary px-4 ms-3">Contact</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+
+      <script>
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".sidebarBtn");
+        sidebarBtn.onclick = function () {
+          sidebar.classList.toggle("active");
+          if (sidebar.classList.contains("active")) {
+            sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+          } else
+            sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        }
+
+        document.querySelector('body > div.sidebar > ul > li:nth-child(2) > a').addEventListener('click', e => {
+
+          document.querySelector('.the-profile').classList.remove('current-active');
+          document.querySelector('.the-profile').classList.add('current-not-active');
+          document.querySelector('.the-overview').classList.add('current-active');
+        })
+
+        document.getElementById('profile').addEventListener('click', (e) => {
+          // document.getElementsByClassName('profile-section')[0].style.display = 'block';
+          // document.getElementsByClassName('home-section')[0].style.display = 'none';
+          document.querySelector('.the-profile').classList.add('current-active');
+          document.querySelector('.the-profile').classList.remove('current-not-active');
+          document.querySelector('.the-overview').classList.add('current-not-active');
+          document.querySelector('.the-overview').classList.remove('current-active')
+
+        });
+      </script>
+
+      <%- include('../partials/footer.ejs') %>
 
 </body>
 
