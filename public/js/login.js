@@ -30,7 +30,7 @@ signup_form.addEventListener('submit', async e => {
     }
 
     obj = { name: name, email: email, password: password };
-    const res = await fetch('http://localhost:5500/register', {
+    const res = await fetch('http://localhost:5500/auth/register', {
         method: 'post',
         body: JSON.stringify(obj),
         headers: {
@@ -45,18 +45,6 @@ signup_form.addEventListener('submit', async e => {
     else {
         alert('Sign up successful');
         window.location.href = '/login'
-    }
-
-    const res1 = await fetch('http://localhost:5500/users');
-    if (res.ok) {
-    }
-
-    if (!res.ok) {
-        alert('invalid input/server error');
-        signup_form.reset();
-    } else {
-        alert('Sign up successful');
-        window.location.href = '/login';
     }
 });
 
@@ -78,7 +66,7 @@ signin_form.addEventListener('submit', async e => {
     }
 
     obj = { email: email, password: password };
-    const res = await fetch('http://localhost:5500/login', {
+    const res = await fetch('http://localhost:5500/auth/login', {
         method: 'post',
         body: JSON.stringify(obj),
         headers: {

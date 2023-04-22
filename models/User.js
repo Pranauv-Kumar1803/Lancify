@@ -1,15 +1,24 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
-const serviceSchema = new schema({
-    userName:{
+const userSchema = new schema({
+    username:{
         type: String,
         required: true
     },
-    userImg:{
+    email:{
         type: String,
         required: true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    user_id : String,
+    user_type: String,
+    user_img : {
+        type:String,
     }
 })
 
-module.exports = mongoose.model('Service',serviceSchema);
+module.exports = mongoose.model('User',userSchema);

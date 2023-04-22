@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e ejs,js,json,css server.js"
+    "start": "npm run tailwind:css && nodemon -e ejs,js,json,css server.js",
+    "tailwind:css": "postcss public/css/tailwind.css -o public/css/styles.css"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/siddharthav19/Lancify#readme",
   "dependencies": {
     "body-parser": "^1.20.1",
+    "ckeditor4": "^4.21.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -29,10 +31,12 @@
     "helmet": "^6.0.1",
     "mongoose": "^6.9.2",
     "nodemon": "^2.0.20",
+    "socket.io": "^4.6.1",
     "sqlite3": "^5.1.6",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.14",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
@@ -41,6 +45,9 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "prettier": "^1.17.0"
+    "postcss": "^8.4.21",
+    "postcss-cli": "^10.1.0",
+    "prettier": "^1.17.0",
+    "tailwindcss": "^3.3.1"
   }
 }

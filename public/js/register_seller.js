@@ -52,13 +52,15 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
     const occupation = document.getElementById('occupation').value;
     const country = document.getElementById('country').value;
     const institute_name = document.getElementById('institute_name').value;
-    const title = document.getElementById('title').value;
+    const title = document.querySelector('#in_title').value;
     const major = document.getElementById('major').value;
     const year = document.getElementById('year').value;
     const portfolio = document.getElementById('portfolio').value;
     const github = document.getElementById('github').value;
     const stack = document.getElementById('stack-overflow').value;
     const linkedin = document.getElementById('linkedin').value;
+
+    console.log(title,major,year,portfolio,github,stack,linkedin,country,occupation,institute_name,languages,fname,lname,desc);
 
     if (fname.length < 5) {
         alert('first name must be atleast 5 characters in length');
@@ -100,7 +102,7 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
         return;
     }
     
-    if (title.length < 5) {
+    if (title.length < 2) {
         alert('title name must be atleast 5 characters in length');
         return;
     }
@@ -110,22 +112,22 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
         return;
     }
 
-    if (portfolio.length < 15) {
+    if (portfolio.length < 5) {
         alert('any link must be atleast 15 characters in length');
         return;
     }
 
-    if (github.length < 15) {
+    if (github.length < 5) {
         alert('any link must be atleast 15 characters in length');
         return;
     }
 
-    if (stack.length < 15) {
+    if (stack.length < 5) {
         alert('any link must be atleast 15 characters in length');
         return;
     }
 
-    if (linkedin.length < 15) {
+    if (linkedin.length < 5) {
         alert('any link must be atleast 15 characters in length');
         return;
     }

@@ -16,7 +16,7 @@
 
 <body style="background-color: #4B6666;">
 
-    <%- include('partials/navbar.ejs',{isLoggedIn:login}) %>
+    <%- include('../partials/navbar.ejs',{isLoggedIn:login}) %>
 
     <div class="container">
         <form id="signUpForm" action="#">
@@ -163,7 +163,7 @@
                         </div>
                         <div class="mb-2 row">
                             <div class="col">
-                                <input type="text" name="title" id="title" placeholder="Title">
+                                <input type="text" name="title" id="in_title" placeholder="Title">
                             </div>
                             <div class="col">
                                 <input type="text" name="major" id="major" placeholder="Major">
@@ -230,7 +230,7 @@
         </form>
     </div>
 
-    <%- include('partials/footer.ejs') %>
+    <%- include('../partials/footer.ejs') %>
 
     <script src="/js/register_seller.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

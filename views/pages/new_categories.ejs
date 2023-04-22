@@ -9,16 +9,13 @@
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
-    referrerpolicy="no-referrer" />
-
   <link rel="stylesheet" href="/css/new_categories.css" type="text/css">
 
 </head>
 
 <body>
 
-  <%- include('partials/navbar',{isLoggedIn:loggedIn}) %>
+  <%- include('../partials/navbar',{isLoggedIn:loggedIn}) %>
 
   <section class="body-font">
     <div class="flex justify-center dropdown py-4">
@@ -89,18 +86,18 @@
                     </span>
                   </h2>
                   <h1 class="title-font text-lg font-medium text-white mb-3">
-                    <%= d.seller_title %>
+                    <%= d.seller_title %> 
                   </h1>
                   <p class="leading-relaxed mb-3 text-white">
                     <%= d.seller_desc %>
                   </p>
                   <div class="flex items-center flex-wrap ">
                     <a class="inline-flex items-center">
-                      <img alt="blog" src="<%= d.user_img %>"
+                      <img alt="blog" src="<%= d.seller_img %>"
                         class="w-14 h-14 rounded-full flex-shrink-0 object-cover object-center">
                       <span class="flex-grow flex flex-col pl-4">
                         <span class="title-font font-medium text-white">
-                          <%= d.username %>
+                          <%= d.seller_name %>
                         </span>
                         <span class="text-white text-xs tracking-widest mt-0.5">
                           <%= d.seller_type %>
@@ -146,7 +143,7 @@
     </div>
   </section>
 
-  <%- include('partials/footer') %>
+  <%- include('../partials/footer') %>
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
   <script src="/js/categories.js"></script>

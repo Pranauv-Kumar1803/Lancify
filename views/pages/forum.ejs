@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="forum-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Forum</title>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.js"
+    integrity="sha512-CABi9vrtlQz9otMo5nT0B3nCBmn5BirYvO3oCnulsEzRDekxdMEZ2rXg85Is5pdnc9HNAcUEjm/7HagpqAFa1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
+    type="text/css" />
+
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+
+</head>
+
+<body>
+
+  <%- include('../partials/navbar.ejs',{isLoggedIn:false}) %>
+
+    <section class="flex lg:flex-row flex-col w-full bg-gray">
+        <div class="w-full md:w-48 lg:w-64 xl:w-64 h-auto flex flex-col justify-start py-10 bg-dark_green">
+          <h1 class="font-bold text-xl flex justify-center items-center text-white">Forums Available</h1>
+          <nav aria-label="Main Nav" class="flex flex-col space-y-1 w-full">
+              <a href="/forum/" class="block rounded-lg px-4 py-2 text-sm text-white font-medium hover:bg-gray-100 hover:text-gray-700">Home</a>
+
+              <a href="/forum/web_dev" class="block rounded-lg px-4 py-2 text-sm font-medium text-white hover:bg-gray-100 hover:text-gray-700">Web Dev</a>
+
+              <a href="/forum/app_dev" class="block rounded-lg px-4 py-2 text-sm font-medium text-white hover:bg-gray-100 hover:text-gray-700">App Dev</a>
+
+              <a href="/forum/video_animation" class="block rounded-lg px-4 py-2 text-sm font-medium text-white hover:bg-gray-100 hover:text-gray-700">Video and Animation</a>
+
+              <a href="/forum/ui_ux" class="block rounded-lg px-4 py-2 text-sm font-medium text-white hover:bg-gray-100 hover:text-gray-700">UI/UX Designing</a>
+
+              <a href="/forum/seo" class="block rounded-lg px-4 py-2 text-sm font-medium text-white hover:bg-gray-100 hover:text-gray-700">SEO</a>
+          </nav>
+      </div>
+
+      <div class="flex flex-1 flex-col justify-center object-contain bg-light_green py-2">
+        <div class="h-[50px] w-full">
+          <h1 class="font-bold font-poppins text-center font-bold text-xl text-dark">Hi there! Welcome to <%= forum.toUpperCase() %>
+            Discussion Forum</h1>
+        </div>
+
+        <section class="bg-white dark:bg-gray-900 py-5 lg:py-10">
+          <div class="max-w-2xl mx-auto px-4">
+            <div class="flex justify-center items-center mb-6">
+              <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white text-center" id="number">Discussions (<%= data.length %>)</h2>
+            </div>
+
+            <!-- editor -->
+            <section class="flex flex-col justify-center items-center w-full">
+              <div class="flex-1 w-full justify-center items-center">
+                <textarea id="something"></textarea>
+              </div>
+              <div class="flex-1 w-auto justify-center items-center py-2">
+                <button id="submit" type="submit" class="p-3 bg-dark_green text-white rounded font-poppins">Discuss!</button>
+              </div>
+            </section>
+            
+            <!-- details of discussions -->
+            <section id="discussions">
+              <% if(data.length > 0) { %>
+                <% data.forEach((doc)=>{ %>
+                  <article class="my-5 mb-6 text-base bg-dark_green rounded-lg dark:bg-gray-900 cursor-pointer some">
+                    <footer class="flex justify-between items-center mb-2">
+                      <div class="flex items-center">
+                        <p class="inline-flex items-center mr-3 text-sm text-white dark:text-white"><img
+                            class="mr-2 w-6 h-6 rounded-full"
+                            src="<%= doc.user_img %>" alt="Michael Gough">
+                          <%= doc.user_name %>  
+                        </p>
+                        <p class="hidden" id="some_id"><%= doc._id %></p>
+                        <p class="text-sm text-white dark:text-white"><time pubdate datetime="2022-02-08"
+                            title="February 8th, 2022"><%= doc.time.toLocaleString() %></time></p>
+                      </div>
+                      <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
+                        class="inline-flex items-center p-2 text-sm font-medium text-center text-white bg-dark_green rounded-lg focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        type="button">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
+                          </path>
+                        </svg>
+                        <span class="sr-only">Comment settings</span>
+                      </button>
+                      <!-- Dropdown menu -->
+                      <div id="dropdownComment1"
+                        class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                          aria-labelledby="dropdownMenuIconHorizontalButton">
+                          <li>
+                            <a href="#"
+                              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
+                          </li>
+                          <li>
+                            <a href="#"
+                              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </footer>
+                    <div class="text-white dark:text-white pt-0 mt-0 text-sm font-thin" ><%- doc.discussion %></div>
+                    <div class="flex items-center justify-center mt-4 mb-4 space-x-4">
+                      <button type="button" class="flex items-center mb-4 text-sm text-white  dark:text-white">
+                        <svg aria-hidden="true" class="mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+                          </path>
+                        </svg>
+                        Reply
+                      </button>
+                    </div>
+                  </article>
+                <% }) %>
+              <% } else { %>
+                <h1>No Discussions here!</h1>
+              <% } %>
+            </section>
+
+          </div>
+        </section>
+      </div>
+
+    </section>
+
+    <script src="/js/forum.js"></script>
+
+    <script type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+    
+    <script>
+      new FroalaEditor('textarea');
+    </script>
+
+
+    <%- include('../partials/footer.ejs') %>
+
+</body>
+
+</html>

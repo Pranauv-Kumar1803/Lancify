@@ -1,30 +1,45 @@
 const express = require('express');
 const router = express.Router();
 const db = require("../sqlite/config");
+const Service = require('../models/Service');
+const Seller = require('../models/Seller');
+
+router.get('/',(req,res)=>{
+    if (!req.cookies.user) {
+		return res.render("pages/domains", { login: false });
+	}
+	res.render('pages/domains',{login:true})
+})
 
 router.get("/:param", async (req, res) => {
     let loggedIn = false;
-    if(req.cookies.user)
-    {
-        loggedIn=true;
+    if (req.cookies.user) {
+        loggedIn = true;
     }
     const q = req.query;
     const param = req.params.param;
     const domain = param.split('-')[0];
     const service = param.split('-')[1];
 
+    if(!service)
+    {
+        if(!req.cookies.user)
+        {
+            return res.render('pages/domain',{login:false,domain:domain});
+        }
+        return res.render('pages/domain',{login:true,domain});
+    }
+
     if (JSON.stringify(q) === "{}") {
         try {
             if (!domain) {
                 return res.status(301).redirect('/');
             }
-            const services = await db.getDomainBasedService({domain:domain,service:service});
-
-            res.render('new_categories', { data: services.data,loggedIn });
-
+            const services = await Service.find({ service_type: service, domain_type: domain }).exec();
+            res.render('pages/new_categories', { data: services, loggedIn });
         } catch (err) {
             console.log(err);
-            res.render('error', { data: 'Server Error' });
+            res.render('pages/error', { data: 'Server Error' });
         }
     }
     else {
@@ -32,11 +47,25 @@ router.get("/:param", async (req, res) => {
             if (!domain) {
                 return res.status(301).json({ message: 'invalid domain' });
             }
-            const services = await db.getServiceBasedOnQuery({ domain: domain, query: q });
-            res.render('new_categories', { data: services.data,loggedIn });
+
+            console.log(q);
+            let services = [];
+
+            if (q.days) {
+                services = await Service.find({ service_type: service, domain_type: domain, min_duration: { $lte: q.days }, starting_price: { $gte: q.min, $lte: q.max } }).exec();
+
+                console.log(services);
+            }
+            else {
+                services = await Service.find({ service_type: service, domain_type: domain, starting_price: { $gte: q.min, $lte: q.max } }).exec();
+                
+                console.log(services);
+            }
+
+            res.render('pages/new_categories', { data: services, loggedIn });
         } catch (err) {
             console.log(err);
-            res.render('error', { data: 'Server Error' });
+            res.render('pages/error', { data: 'Server Error' });
         }
     }
 });

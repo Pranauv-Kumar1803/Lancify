@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/swiper.css" />
+  <link rel="stylesheet" href="/css/home2.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+  <script src="https://kit.fontawesome.com/3606b3275f.js" crossorigin="anonymous"></script>
+
+  <style>
+    .swiper {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <%- include('../partials/navbar.ejs',{isLoggedIn:loggedIn}) %>
+
+  <div style="margin: 0 auto;display: flex;flex-direction: column;justify-content: space-evenly;align-items: center;">
+    <div class="trend">
+      <h1 style="font-size: xx-large;color: #fafafa;">Popular services</h1>
+    </div>
+
+    <div style="padding-top: 50px; padding-bottom: 50px;" class="boxes">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="box1">
+              <div class="image">
+                <img src="./images/appdev.jpg" alt="app development" />
+              </div>
+              <div class="content">
+                <h3>APP Development</h3>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                  nihil deleniti qui accusamus esse corporis? Minus possimus
+                  culpa aspernatur rerum.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="box2">
+              <div class="image">
+                <img src="./images/gamedev.png" alt="game development" />
+              </div>
+              <div class="content">
+                <h3>GAME Development</h3>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                  nihil deleniti qui accusamus esse corporis? Minus possimus
+                  culpa aspernatur rerum.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="box3">
+              <div class="image">
+                <img src="./images/webdev.jpg" alt="web development" />
+              </div>
+              <div class="content">
+                <h3>WEB Development</h3>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                  nihil deleniti qui accusamus esse corporis? Minus possimus
+                  culpa aspernatur rerum.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="box4">
+              <div class="image">
+                <img src="./images/cloud_computing.png" alt="cloud computing" />
+              </div>
+              <div class="content">
+                <h3>CLOUD Computing</h3>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                  nihil deleniti qui accusamus esse corporis? Minus possimus
+                  culpa aspernatur rerum.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="box5">
+              <div class="image">
+                <img src="./images/embedded_systems.jpeg" alt="Embedded systems" />
+              </div>
+              <div class="content">
+                <h3>EMBEDDED Systems</h3>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                  nihil deleniti qui accusamus esse corporis? Minus possimus
+                  culpa aspernatur rerum.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="box6">
+              <div class="image">
+                <img src="./images/webdev.jpg" alt="Video editing" />
+              </div>
+              <div class="content">
+                <h3>VIDEO Editing</h3>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                  nihil deleniti qui accusamus esse corporis? Minus possimus
+                  culpa aspernatur rerum.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="get_started">
+      <div class="content">
+        <h1>Lancify marketplace</h1>
+        <a href="#" style="text-align: center;">Get started</a>
+      </div>
+    </div>
+
+    <div style="margin: 0 auto;display: flex;flex-direction: column;justify-content: space-evenly;align-items: center;">
+      <div class="trend">
+        <h1 style="font-size: xx-large;color: #fafafa;">Popular services</h1>
+      </div>
+  
+      <div style="padding-top: 50px; padding-bottom: 50px;" class="boxes">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="box1">
+                <div class="image">
+                  <img src="./images/appdev.jpg" alt="app development" />
+                </div>
+                <div class="content">
+                  <h3>APP Development</h3>
+                  <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                    nihil deleniti qui accusamus esse corporis? Minus possimus
+                    culpa aspernatur rerum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="box2">
+                <div class="image">
+                  <img src="./images/gamedev.png" alt="game development" />
+                </div>
+                <div class="content">
+                  <h3>GAME Development</h3>
+                  <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                    nihil deleniti qui accusamus esse corporis? Minus possimus
+                    culpa aspernatur rerum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="box3">
+                <div class="image">
+                  <img src="./images/webdev.jpg" alt="web development" />
+                </div>
+                <div class="content">
+                  <h3>WEB Development</h3>
+                  <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                    nihil deleniti qui accusamus esse corporis? Minus possimus
+                    culpa aspernatur rerum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="box4">
+                <div class="image">
+                  <img src="./images/cloud_computing.png" alt="cloud computing" />
+                </div>
+                <div class="content">
+                  <h3>CLOUD Computing</h3>
+                  <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                    nihil deleniti qui accusamus esse corporis? Minus possimus
+                    culpa aspernatur rerum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="box5">
+                <div class="image">
+                  <img src="./images/embedded_systems.jpeg" alt="Embedded systems" />
+                </div>
+                <div class="content">
+                  <h3>EMBEDDED Systems</h3>
+                  <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                    nihil deleniti qui accusamus esse corporis? Minus possimus
+                    culpa aspernatur rerum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="box6">
+                <div class="image">
+                  <img src="./images/webdev.jpg" alt="Video editing" />
+                </div>
+                <div class="content">
+                  <h3>VIDEO Editing</h3>
+                  <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea
+                    nihil deleniti qui accusamus esse corporis? Minus possimus
+                    culpa aspernatur rerum.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Swiper JS -->
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+
+    <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>

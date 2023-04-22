@@ -6,6 +6,13 @@ const serviceSchema = new schema({
         type: String,
         required: true
     },
+    domain_type:{
+        type: String,
+        required: true
+    },
+    seller_type: {
+        type:String
+    },
     seller_id: {
         type: Number,
         required: true
@@ -19,6 +26,7 @@ const serviceSchema = new schema({
         type: String,
         required: true
     },
+    min_duration: Number,
     seller_desc: {
         type: String,
         required: true

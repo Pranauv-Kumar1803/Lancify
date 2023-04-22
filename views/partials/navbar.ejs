@@ -8,6 +8,7 @@
   <title>Navbar</title>
 
   <link rel="stylesheet" href="/css/home.css" />
+
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/3606b3275f.js" crossorigin="anonymous"></script>
 </head>
@@ -25,16 +26,16 @@
         </div>
       </li>
       <% if(isLoggedIn!==undefined && isLoggedIn===true) { %>
-        <li class="topnav-right"><a href="/logout" > Logout</a></li>
-        <li class="topnav-right"><a href="/profile"> Profile</a></li>
+        <li class="topnav-right"><a href="/app/logout" > Logout</a></li>
+        <li class="topnav-right"><a href="/app/profile"> Profile</a></li>
         <li class="topnav-right"><a href="/domains"> Explore</a></li>
-        <li class="topnav-right"><a href="/register"> Become a seller</a></li>
+        <li class="topnav-right"><a href="/app/register"> Become a seller</a></li>
         <li class="dropdownicon"><a href="javascript:void(0);" onclick="dropdownmenu()">&#9776;</a></li>
       <% } else { %>
-        <li class="topnav-right"><a href="/login"> Login</a></li>
-        <li class="topnav-right"><a href="/login"> Register </a></li>
+        <li class="topnav-right"><a href="/auth/login"> Login</a></li>
+        <li class="topnav-right"><a href="/auth/login"> Register </a></li>
         <li class="topnav-right"><a href="/domains"> Explore</a></li>
-        <li class="topnav-right"><a href="/register_seller"> Become a seller</a></li>
+        <li class="topnav-right"><a href="/auth/login"> Become a seller</a></li>
         <li class="dropdownicon"><a href="javascript:void(0);" onclick="dropdownmenu()">&#9776;</a></li>
       <% } %>
     </ul>

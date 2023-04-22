@@ -1,0 +1,35 @@
+<!-- Include Editor style. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=\, initial-scale=1.0">
+  <title>Editor</title>
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  
+  <section class="flex flex-col justify-center items-center w-full">
+    <div class="flex-1 w-full justify-center items-center">
+      <textarea id="something"></textarea>
+    </div>
+    <div class="flex-1 w-auto justify-center items-center py-2">
+      <button id="submit" class="p-3 bg-dark_green text-white rounded font-poppins">Discuss!</button>
+    </div>
+  </section>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+  <script>
+    new FroalaEditor('textarea');
+  
+    const s = document.getElementById('submit');
+    s.addEventListener('click',(e)=>{
+        const some = document.getElementById('something');
+        console.log(some.value);
+    })
+  </script>
+
+</body>
+</html>

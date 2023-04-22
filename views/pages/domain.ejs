@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domain</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+        referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/domains.css" />
+</head>
+
+<body>
+    <%- include('../partials/navbar.ejs',{isLoggedIn:login}) %>
+
+        <div class="boxes">
+            <% if(domain=='pt') { %>
+                <div class="box1">
+                    <div class="image">
+                        <img src="/images/developer.png" alt="" />
+                    </div>
+                    <div class="content">
+                        <h3>
+                            Web Development
+                        </h3>
+                        <p>
+                            A successful website does three things:
+                            It attracts the right kinds of visitors.
+                            Guides them to the main services or product you offer.
+                            Collect Contact details for future ongoing relation.
+                        </p>
+                        <br>
+                        <p class="dark">Explore more about web development services on our website</p>
+    
+                        <ul class="indentation">
+                            <li><a href="http://localhost:5500/domains/pt-web_dev">Click Here></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box2">
+                    <div class="image">
+                        <img src="/images/developer.png" alt="" />
+                    </div>
+                    <div class="content">
+                        <h3>
+                            App Development
+                        </h3>
+                        <p>
+                            The rich and interactive experiences we have come to expect on mobile apps have created new standards and expectations for all digital media including the web. The result is websites are evolving to become more app-like in their rich functionality
+                        </p>
+                        <br>
+                        <p class="dark">Explore more about app development services on our website</p>
+    
+                        <ul class="indentation">
+                            <li><a href="http://localhost:5500/domains/pt-app_dev">Click Here></li>
+                        </ul>
+                    </div>
+                </div>
+            <% } else if(domain=='gd') { %>
+                <div class="box1">
+                    <div class="image">
+                        <img src="/images/developer.png" alt="" />
+                    </div>
+                    <div class="content">
+                        <h3>
+                            Logo Design
+                        </h3>
+                        <p>
+                            Logos are the graphic extension of the internal realities of a company.
+                        </p>
+                        <br>
+                        <p class="dark">Explore more about this services on our website</p>
+    
+                        <ul class="indentation">
+                            <li><a href="http://localhost:5500/domains/pt-logo_design">Click Here</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box2">
+                    <div class="image">
+                        <img src="/images/developer.png" alt="" />
+                    </div>
+                    <div class="content">
+                        <h3>
+                            Web Design
+                        </h3>
+                        <p>
+                            If there's one thing you learn by working on a lot of different Web sites, it's that almost any design idea--no matter how appallingly bad--can be made usable in the right circumstances, with enough effort.
+                        </p>
+                        <br>
+                        <p class="dark" style="text-align: center;">Explore more about web design services on our website</p>
+    
+                        <ul class="indentation">
+                            <li><a href="http://localhost:5500/domains/pt-app_dev">Click Here</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box3">
+                    <div class="image">
+                        <img src="/images/developer.png" alt="" />
+                    </div>
+                    <div class="content">
+                        <h3>
+                            Poster/Flyer Prints
+                        </h3>
+                        <p>
+                            Poster design is the creative construction of an idea, product, or event placed on a poster.
+                        </p>
+                        <br>
+                        <p class="dark" style="text-align: center;">Explore more about poster design services on our website</p>
+    
+                        <ul class="indentation">
+                            <li><a href="http://localhost:5500/domains/pt-app_dev">Click Here</a></li>
+                        </ul>
+                    </div>
+                </div>
+            <% } %>
+            
+        </div>
+
+        <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>
