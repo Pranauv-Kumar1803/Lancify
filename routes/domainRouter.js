@@ -51,8 +51,8 @@ router.get("/:param", async (req, res) => {
             console.log(q);
             let services = [];
 
-            if (q.days) {
-                services = await Service.find({ service_type: service, domain_type: domain, min_duration: { $lte: q.days }, starting_price: { $gte: q.min, $lte: q.max } }).exec();
+            if (q.hours) {
+                services = await Service.find({ service_type: service, domain_type: domain, min_duration: { $lte: q.hours }, starting_price: { $gte: q.min, $lte: q.max } }).exec();
 
                 console.log(services);
             }

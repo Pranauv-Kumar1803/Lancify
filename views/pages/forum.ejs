@@ -26,7 +26,7 @@
 
 <body>
 
-  <%- include('../partials/navbar.ejs',{isLoggedIn:false}) %>
+  <%- include('../partials/navbar.ejs',{isLoggedIn:login}) %>
 
     <section class="flex lg:flex-row flex-col w-full bg-gray">
         <div class="w-full md:w-48 lg:w-64 xl:w-64 h-auto flex flex-col justify-start py-10 bg-dark_green">
@@ -130,7 +130,7 @@
                   </article>
                 <% }) %>
               <% } else { %>
-                <h1>No Discussions here!</h1>
+                <h1 class="mx-auto text-dark_green text-3xl text-center">No Discussions here!</h1>
               <% } %>
             </section>
 

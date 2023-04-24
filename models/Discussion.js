@@ -22,7 +22,11 @@ const discussionSchema = new schema({
         type: String,
         required:true
     },
-    user_img: String
+    user_img: String,
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }]
 })
 
 module.exports = mongoose.model('Discussion',discussionSchema);

@@ -17,14 +17,6 @@
   <nav class="top">
     <ul class="topnav" id="dropdownclick">
       <li><a class="active" href="/"><b><i id="title">Lancify</i></b></a></li>
-      <li>
-        <div class="search-container">
-          <form action="/action_page.php">
-            <input type="text" placeholder="Search.." name="search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-          </form>
-        </div>
-      </li>
       <% if(isLoggedIn!==undefined && isLoggedIn===true) { %>
         <li class="topnav-right"><a href="/app/logout" > Logout</a></li>
         <li class="topnav-right"><a href="/app/profile"> Profile</a></li>

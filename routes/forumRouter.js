@@ -5,6 +5,10 @@ const Discussion = require('../models/Discussion');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+    let login = false;
+    if(req.cookies.user) {
+        login = true;
+    }
     const docs = await Discussion.aggregate([
         {
             $lookup: {
@@ -24,10 +28,16 @@ router.get('/', async (req, res) => {
     })
 
 
-    res.render('pages/forum', { data: docs, forum: 'Home' });
+    res.render('pages/forum', { data: docs, forum: 'Home', login });
 })
 
 router.get('/:forum', async (req, res) => {
+
+    let login = false;
+    if(req.cookies.user) {
+        login = true;
+    }
+
     const forum = req.params.forum;
 
     let docs = [];
@@ -57,7 +67,7 @@ router.get('/:forum', async (req, res) => {
 
     console.log(docs.length);
 
-    res.render('pages/forum', { data: docs, forum });
+    res.render('pages/forum', { data: docs, forum, login });
 
 })
 

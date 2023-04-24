@@ -6,15 +6,15 @@ btn.addEventListener('click',async (e)=>{
     const min = document.getElementById('min').value;
     const max = document.getElementById('max').value;
 
-    const two = document.getElementById('2d').checked;
-    const four = document.getElementById('4d').checked;
-    const seven = document.getElementById('7d').checked;
+    const two = document.getElementById('1d').checked;
+    const four = document.getElementById('3d').checked;
+    const seven = document.getElementById('4d').checked;
 
-    const days = two?2:four?4:seven?7:null;
+    const hours = two?24:four?48:seven?90:null;
     
-    if(days)
+    if(hours)
     {
-        window.location.href = window.location.href + `?min=${min}&max=${max}&days=${days}`
+        window.location.href = window.location.href + `?min=${min}&max=${max}&hours=${hours}`
     }
     else
     {

@@ -1,270 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lancify</title>
+  <link rel="stylesheet" href="/public/css/home2.css" type="text/css">
+  <link rel="stylesheet" href="/public/css/home.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/3606b3275f.js" crossorigin="anonymous"></script>
+  <style>
+    .heading1 {
+      text-decoration: none;
+      padding-bottom: 0%;
+    }
 
-   <title>Profile</title>
-   <link rel="stylesheet" href="/css/stylesheet.css">
+    .heading1:hover {
+      text-decoration: underline;
+    }
 
-   <!--box icons-->
-   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    .button-click button {
+      width: auto;
+      border-color: #425e5e;
+      color: #425e5e;
+      font-size: 120%;
+      border-radius: 15%;
+    }
 
-   <!-- swiper-css -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    .button-click button:hover {
+      background-color: #425e5e;
+      color: #e2dfdf;
+    }
+
+    .links li a {
+      text-decoration: none;
+      color: #425e5e;
+    }
+
+    .links li a:hover {
+      text-decoration: underline;
+    }
+
+    .skills li {
+      display: inline-block;
+      border-radius: 25%;
+      min-width: 4%;
+      text-align: center;
+      padding: 2% 4%;
+      margin: 0 5px 5px 0;
+      border: 2px solid #425e5e;
+      height: fit-content;
+    }
+  </style>
+
 </head>
 
-<body>
-   <%- include('../partials/navbar.ejs',{isLoggedIn:true}) %>
+<body style="background-color:#425e5e;">
+  
+   <%- include('../partials/navbar.ejs',{isLoggedIn: true}) %>
 
-   <section class="home" id="home">
-      <div class="home-content">
-         <h3>Hello,I am </h3>
-         <h1>Amritansh Shukla</h1>
-         <h2>Rating 8.6</h2>
-         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta blanditiis sffffsgrgg i know everything </p>
-         <div class="social-media">
-            <a href="#"><i class='bx bxl-facebook-square'></i></a>
-            <a href="#"><i class='bx bxl-twitter'></i></a>
-            <a href="#"><i class='bx bxl-instagram'></i></a>
-            <a href="#"><i class='bx bxl-linkedin-square'></i></a>
+  <div class="outer" style="display:flex">
+    <div class="leftouter" style="display:block;width:30%;">
 
-         </div>
+      <div class="box innerleft" style="border:1%;border-radius:2px;padding:1% 0% 0% 0%;">
+        <div
+          style="display:flex;width:auto;margin: 5%;padding: 0% 0% 0% 5%;border-radius: 2%;background-color:#e2dfdf;justify-content:space-between;">
+          <div sytle="position: absolute;cursor: pointer;right: 2%;top:5px;">
+            <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
+            <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
+            <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
+          </div>
+          <div class="icon" style="width:100%;padding-top:5%;justify-content:center;align-items:center;">
+            <img src="/public/images/pro.jpg" alt="profile pic" style="width:50%;border-radius:50%">
+          </div>
+          <div>
+            <span
+              style="color: #425e5e;font-size:100%;border-width:100%;border-color:#425e5e;border-radius:100%;">.Online</span>
+          </div>
+        </div>
+        <div>
+          <h2><a class="heading1" href="#Tech-O-web" style="color:#425e5e;">Tech-O-Web</a></h2>
+          <p style="color:#425e5e;opacity:0.8;padding-top:0%;">@techoweb</p>
+          <p style="color:#425e5e;padding-top:0%;">you dream, we design !</p>
+        </div>
 
-         <a href="#" class="btn">Download CV</a>
+        <div class="button-click">
+          <button><a style="text-decoration:none;">contact me</a></button>
+          <button><a style="text-decoration:none;">get a Quote</a></button>
+        </div>
+        <div style="padding:2% 10% 2% 10%;">
+          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+        </div>
+        <div style="display:flex;color:#425e5e;">
+          <div style="text-align:left;width:45%;">
+            <ul style="text-decoration:none;list-style-type:none;">
+              <li style="padding:5%;">From</li>
+              <li style="padding:5%;">Member since</li>
+              <li style="padding:5%;">Avg. response time</li>
+              <li style="padding:5%;">last delivery</li>
+            </ul>
+          </div>
+          <div style="text-align:right;width:45%;">
+            <ul style="text-decoration:none;list-style-type:none;">
+              <li style="padding:5%;">India</li>
+              <li style="padding:5%;">april 22</li>
+              <li style="padding:5%;">1 hour</li>
+              <li style="padding:5%;">19 hours</li>
+            </ul>
+          </div>
+
+        </div>
       </div>
 
-      <div class="Profession-container">
-         <div class="profession-box">
-            <div class="profession" style="--i:0;">
-               <i class='bx bx-code-alt'></i>
-               <h3>Web Developer</h3>
-            </div>
-
-            <div class="profession" style="--i:1;">
-               <i class='bx bx-palette'></i>
-               <h3>Web Designer</h3>
-            </div>
-
-            <div class="profession" style="--i:2;">
-               <i class='bx bxs-camera'></i>
-               <h3>Photogrpaher</h3>
-            </div>
-
-            <div class="profession" style="--i:3;">
-               <i class='bx bxs-video'></i>
-               <h3>Videographer</h3>
-            </div>
-
-            <div class="circle"></div>
-         </div>
-
-         <div class="overlay"></div>
-      </div>
-   </section>
-
-   <!-- about section design -->
-   <section class="about" id="about">
-      <div class="about-img">
-         <img src="/images/imageman.jpg" alt="">
+      <div class="box innerleft button-click" style="text-align:left;border:1%;border-radius:2px;padding:1% 0% 0% 0%;color:#425e5e">
+        <div style="text-align:left;display:flex;padding:8% 0% 0% 10%;"><strong>Some of my cool projects</strong> 
+        </div>
+        <div >
+         <ul class="links" style="list-style-type:none;padding:2% 10% 8% 10%;">
+          <li style="padding-bottom:5%;"><a href="#project1">Maxority management</a></li>
+          <li style="padding-bottom:5%;"><a href="#project2">Ultron AI</a></li>
+         </ul>
+        </div>
       </div>
 
-      <div class="about-content">
-         <h2 class="heading">About <span>Me</span></h2>
-         <h3> Hi, I'm Here to help Your Next Project !
-         </h3>
-         <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit o
-            mnis ad voluptate et labore reprehenderit nulla eveniet veniam, des
-            erunt ipsam eos exercitationem earum! Ab, officia? Tempora unde eos ma
-            gni dolores, reprehenderit atque eius temporibus nulla illo vel dolorum
-            expedita inventore.
-         </p>
-         <a href="#" class="btn">Read More</a>
+      <div class="box innerleft" style="color:#425e5e; border:1%;border-radius:2px;padding:1% 0% 0% 0%;">
+
+        <div style="text-align:left;padding-left:10%;">
+          <h3>Description</h3>
+        </div>
+
+        <div style="padding:0% 10% 2% 10%;text-align:left;">
+          <p>
+            We are a group of experienced website designers. Working with a 7+ year experience. We create websites for a
+            variety of industries, including real estate, hospitals, restaurants, schools, and educational institutions.
+            We also assist small businesses in expanding their enterprises by creating a beautiful and fully customised
+            online store.
+          </p>
+        </div>
+
+        <div style="padding:2% 10% 2% 10%;">
+          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+        </div>
+
+        <div>
+          <ul style="list-style: none;text-align:left;">
+            <li><strong>Languages</strong></li>
+            <li style="padding-top:6%;">English <span style="opacity:0.7;"> -Fluent</span></li>
+            <li style="padding-top:6%;">Hindi <strong>(हिंदी)</strong><span style="opacity:0.7;"> -Fluent</span></li>
+            <li style="padding-top:6%;">Telugu <strong>(తెలుగు)</strong><span style="opacity:0.7;"> -Fluent</span></li>
+          </ul>
+        </div>
+
+        <div style="padding:2% 10% 2% 10%;">
+          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+        </div>
+
+        <div class="links">
+          <ul style="list-style: none;text-align:left;">
+            <li><strong>Linked accounts</strong></li>
+            <li style="padding-top:6%;"><a href="#linkedin">Linkedin</a></li>
+            <li style="padding-top:6%;"><a href="#github">Github</a></li>
+            <li style="padding-top:6%;"><a href="#facebook">Facebook</a></li>
+          </ul>
+        </div>
+
+        <div style="padding:2% 10% 2% 10%;">
+          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+        </div>
+
+        <div style="text-align:left;padding-left:10%;">
+          <strong>Skills</strong>
+        </div>
+
+        <div class="skills">
+          <ul style="list-style: none;text-align:left;">
+
+            <li style="padding-top:6%;">Website design</li>
+            <li style="padding-top:6%;">Wordpress</li>
+            <li style="padding-top:6%;">HTML5</li>
+            <li style="padding-top:6%;">CSS3</li>
+            <li style="padding-top:6%;">Shopify</li>
+            <li style="padding-top:6%;">Bootstrap 5</li>
+          </ul>
+        </div>
+
+        <div style="padding:2% 10% 2% 10%;">
+          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+        </div>
+
+        <div>
+          <ul style="list-style: none;text-align:left;">
+            <li><strong>Education</strong></li>
+            <li style="padding-top:6%;">B.A. - Bachelor In Information Technology <br> <span style="opacity:0.7;">
+                Chandigarh University, India, Graduated 2010</span></li>
+            <li style="padding-top:6%;">M.B.A. - Information Technology<br><span style="opacity:0.7;">Chandigarh
+                University, India, Graduated 2013</span></li>
+          </ul>
+        </div>
+
+
+        <div style="padding:2% 10% 2% 10%;">
+          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+        </div>
+
+        <div style="padding-bottom:5%;">
+          <ul style="list-style: none;text-align:left;">
+            <li><strong>Certifications</strong></li>
+            <li style="padding-top:6%;">Diploma In Website Designing<br> <span style="opacity:0.7;"> Chandigarh
+                University 2016</span></li>
+            <li style="padding-top:6%;">Diploma In Digital Marketing<br><span style="opacity:0.7;">Chandigarh University
+                2017</span></li>
+          </ul>
+        </div>
+
       </div>
-   </section>
+    </div>
 
-   <!-- service section design    -->
-   <section class="services" id="services">
-      <h2 class="heading">My <span>Services</span></h2>
+    <div class="rightOuter"
+      style="display:block;color:#425e5e;width:70%;border:1%;border-radius:2px;padding:1% 0% 0% 0%;padding:7% 15% 15% 5%;">
+      <div><strong style="padding-left:5%;color:#e2dfdf">techoweb's gigs</strong></div>
+      <div class="box"
+        style="display:block;width:35%; border-color:#e2dfdf; border-width:2px;border-radius:2px;padding:0% 0% 0% 0%;">
 
-      <div class="services-container">
-         <div class="services-box">
-            <i class='bx bx-code-alt'></i>
-            <h3>programming and tech </h3>
-            <p>Lorem ipsum dolor sit amet consectetu
-               r adipisicing elit. Hic dolorem rerum, officiis,
-               ipsum ipsa esse iusto doloremque blanditiis dist
-               inctio unde at. Aliquam praesentium corporis, dol
-               ores quo animi sed unde assumenda!</p>
-            <a href="#" class="btn">Read More</a>
-         </div>
-         <div class="services-box">
-            <i class='bx bxs-paint'></i>
-            <h3>graphics and design</h3>
-            <p>Lorem ipsum dolor sit amet consectetu
-               r adipisicing elit. Hic dolorem rerum, officiis,
-               ipsum ipsa esse iusto doloremque blanditiis dist
-               inctio unde at. Aliquam praesentium corporis, dol
-               ores quo animi sed unde assumenda!</p>
-            <a href="#" class="btn">Read More</a>
-         </div>
-         <div class="services-box">
-            <i class='bx bx-bar-chart-alt'></i>
-            <h3>Content & digital writing</h3>
-            <p>Lorem ipsum dolor sit amet consectetu
-               r adipisicing elit. Hic dolorem rerum, officiis,
-               ipsum ipsa esse iusto doloremque blanditiis dist
-               inctio unde at. Aliquam praesentium corporis, dol
-               ores quo animi sed unde assumenda!</p>
-            <a href="#" class="btn">Read More</a>
-         </div>
-         <div class="services-box">
-            <i class='bx bx-code-alt'></i>
-            <h3>video and animation</h3>
-            <p>Lorem ipsum dolor sit amet consectetu
-               r adipisicing elit. Hic dolorem rerum, officiis,
-               ipsum ipsa esse iusto doloremque blanditiis dist
-               inctio unde at. Aliquam praesentium corporis, dol
-               ores quo animi sed unde assumenda!</p>
-            <a href="#" class="btn">Read More</a>
-         </div>
-         <div class="services-box">
-            <i class='bx bx-code-alt'></i>
-            <h3>digital marketing </h3>
-            <p>Lorem ipsum dolor sit amet consectetu
-               r adipisicing elit. Hic dolorem rerum, officiis,
-               ipsum ipsa esse iusto doloremque blanditiis dist
-               inctio unde at. Aliquam praesentium corporis, dol
-               ores quo animi sed unde assumenda!</p>
-            <a href="#" class="btn">Read More</a>
-         </div>
+        <div>
+          <img src="/public/images/webdev.jpg" alt="gig propic" style="width:100%;">
+        </div>
+
+        <div style="padding:5% 0% 0% 0%;">
+          <strong style="padding:3% 0% 1% 0%;">techoweb</strong><br>
+          <span style="opacity:0.8;">level 2 seller</span>
+        </div>
+
+        <div style="padding:0% 8% 0% 8%;">
+          <hr style="color:#425e5e;height:3px;background-color:#425e5e;">
+        </div>
+
+        <div style="padding:4% 0% 10% 0%;">
+          <a href="#gig" style="text-decoration:none;color:#425e5e;">I will design a responsive wordpress website...</a>
+        </div>
+
+        <div style="padding:4% 0% 5% 0%;">
+          <strong style="text-align:left;color:#425e5e">★ 4.9<span style="opacity:0.8;">(147)</span></strong>
+        </div>
+
+        <div>
+          <hr style="color:#425e5e;height:3px;background-color:#425e5e;">
+        </div>
+
+        <div>
+          <div style="text-align:right;padding:0% 5% 5% 5%;">
+           <span style="font:100%;"><span style="font:30%;">Starting at</span><br>17500/-</span>
+          </div>
+        </div>
       </div>
-   </section>
+    </div>
+  </div>
 
-   <!-- Portfolio section design -->
-   <section class="portfolio" id="portfolio">
-      <h2 class="heading">Latest <span>Project</span></h2>
+  <%- include('../partials/footer.ejs') %>
 
-      <div class="portfolio-container">
-         <div class="portfolio-box">
-            <img src="/images/Projecctttt.jpeg" alt="">
-            <div class="portfolio-layer">
-               <h4>Web Design</h4>
-               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae sit atque quam illo tempora id,
-                  consequuntur est quae.
-               </p>
-               <a href="#"><i class='bx bx-link-external'></i></a>
-            </div>
-         </div>
-         <div class="portfolio-box">
-            <img src="/images/Projecctttt.jpeg" alt="">
-            <div class="portfolio-layer">
-               <h4>Web Design</h4>
-               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae sit atque quam illo tempora id,
-                  consequuntur est quae.
-               </p>
-               <a href="#"><i class='bx bx-link-external'></i></a>
-            </div>
-         </div>
-         <div class="portfolio-box">
-            <img src="/images/Projecctttt.jpeg" alt="">
-            <div class="portfolio-layer">
-               <h4>Web Design</h4>
-               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae sit atque quam illo tempora id,
-                  consequuntur est quae.
-               </p>
-               <a href="#"><i class='bx bx-link-external'></i></a>
-            </div>
-         </div>
-         <div class="portfolio-box">
-            <img src="/images/Projecctttt.jpeg" alt="">
+  <script>
+    function user_session_check() {
+      if (document.cookie.split(';')[0].split('=')[0] !== 'user') {
+        return false;
+      }
+      return true;
+    }
 
-            <div class="portfolio-layer">
-               <h4>Web Design</h4>
-               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae sit atque quam illo tempora id,
-                  consequuntur est quae.
-               </p>
-               <a href="#"><i class='bx bx-link-external'></i></a>
-            </div>
-         </div>
-      </div>
-   </section>
-
-   <!-- testimonial design -->
-   <div class="testimonial-container">
-      <div class="heading">Valuable <span>Testimonial</span></div>
-
-      <div class="testimonial-wrapper">
-         <div class="testimonial-box mySwiper">
-            <div class="testimonial-content  swiper-wrapper">
-               <div class="testimonial-slide swiper-slide">
-                  <img id="newphoto" src="/images/neeeeeeeee.jpg" alt="">
-                  <h3>Seena James</h3>
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur temporibus, quae harum sunt
-                     hic nesciunt alias ex voluptates est. Placeat, sequi aperiam! Facere, ipsa! Modi vero, blanditiis
-                     illo iusto laborum similique quo, pariatur voluptate nisi sunt quaerat atque harum quibusdam
-                     dolorem. Voluptate, quod beatae earum voluptatum magni maiores libero vitae nemo ratione cupiditate
-                     iure a exercitationem, optio error unde accusamus.
-
-                  </p>
-               </div>
-               <div class="testimonial-slide swiper-slide">
-                  <img id="newphoto" src="/images/neeeeeeeee.jpg" alt="">
-                  <h3>Seena James</h3>
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur temporibus, quae harum sunt
-                     hic nesciunt alias ex voluptates est. Placeat, sequi aperiam! Facere, ipsa! Modi vero, blanditiis
-                     illo iusto laborum similique quo, pariatur voluptate nisi sunt quaerat atque harum quibusdam
-                     dolorem. Voluptate, quod beatae earum voluptatum magni maiores libero vitae nemo ratione cupiditate
-                     iure a exercitationem, optio error unde accusamus.
-
-                  </p>
-               </div>
-               <div class="testimonial-slide swiper-slide">
-                  <img id="newphoto" src="/images/neeeeeeeee.jpg" alt="">
-                  <h3>Seena James</h3>
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur temporibus, quae harum sunt
-                     hic nesciunt alias ex voluptates est. Placeat, sequi aperiam! Facere, ipsa! Modi vero, blanditiis
-                     illo iusto laborum similique quo, pariatur voluptate nisi sunt quaerat atque harum quibusdam
-                     dolorem. Voluptate, quod beatae earum voluptatum magni maiores libero vitae nemo ratione cupiditate
-                     iure a exercitationem, optio error unde accusamus.
-
-                  </p>
-               </div>
-            </div>
-
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
-         </div>
-      </div>
-   </div>
-
-   <!-- contact section design -->
-   <div class="contact" id="contact">
-      <h2 class="heading">Contact <span>Me !</span></h2>
-      <form action="#">
-         <div class="input-box">
-            <input type="text" placeholder="Full Name">
-            <input type="email" placeholder="Email Address">
-         </div>
-         <div class="input-box">
-            <input type="number" placeholder="Mobile Number">
-            <input type="text" placeholder="Email Subject">
-         </div>
-         <textarea name="" id="" cols="30" rows="10" placeholder="Your message"></textarea>
-         <input type="Submit" value="Send Message" class="btn">
-      </form>
-   </div>
-
-   <!-- footer design -->
-   <%- include('../partials/footer.ejs') %>
-
-   <!-- swiper-css -->
-
-   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-   <script src="/js/script.js"></script>
+    function dropdownmenu() {
+      var x = document.getElementById("dropdownclick");
+      if (x.classname === "topnav") {
+        x.classname += " responsive";
+        /* change topnav to topnav.responsive */
+      } else {
+        x.classname = "topnav";
+      }
+    }
+  </script>
 </body>
 
 </html>

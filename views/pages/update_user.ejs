@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Update User</title>
+     <link rel="stylesheet" href="/css/createGig.css">
+     <link rel="stylesheet" href="/css/styles.css" type="text/css">
+</head>
+
+<body class="bg-dark_green">
+     <%- include('../partials/navbar.ejs',{isLoggedIn: login}) %>
+
+     <h1 class="flex justify-center align-center mx-auto text-center text-white text-2xl py-5">Update your User Profile</h1>
+     <section class="main--section border border-sky-500 w-8/12 mx-auto p-3 mb-5">
+          <form class="p-2">
+               <div class="flex flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                    <label for="username" class="text-lg font-extralight tracking-wide text-white">Username</label>
+                    <input type="text" name="username" id="user_name" class="w-8/12 p-2 outline-none" value="<%= user.username %>">
+               </div>
+               <div class="flex flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                    <label for="email" class="text-lg font-extralight tracking-wide text-white">Email</label>
+                    <input type="text" name="email" id="user_email" class="w-8/12 p-2 outline-none" value="<%= user.email %>">
+               </div>
+               <div class="flex flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                    <label for="password" class="text-lg font-extralight tracking-wide text-white">Password</label>
+                    <input type="text" name="password" id="password" class="w-8/12 p-2 outline-none" >
+               </div>
+               <div class="flex flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                    <label for="img" class="text-lg font-extralight tracking-wide text-white"> Update Profile Image </label>
+                    <img class="rounded-full w-20 h-20" src="<%= user.user_img %>" alt="profile pic">
+                    <p class="hidden" id="imag"><%= user.user_img %></p>
+                    <input type="file" name="img" id="img" class="w-8/12 p-2 outline-none">
+               </div>
+               
+               <button type="button" id="submit" class="OOAAAC bg-white text-dark_green hover:bg-light_green hover:text-white py-2 px-8 rounded max-auto">
+                    Update Profile!
+               </button>
+          </form>
+     </section>
+
+     <script>
+          const toBase64 = file => new Promise((resolve, reject) => {
+               const reader = new FileReader();
+               reader.readAsDataURL(file);
+               reader.onload = () => resolve(reader.result);
+               reader.onerror = error => reject(error);
+          });
+            
+          const submit = document.getElementById('submit');
+          submit.addEventListener('click',async(e)=>{
+               const name = document.getElementById('user_name').value;
+               const email = document.getElementById('user_email').value;
+               const img = document.getElementById('img').files[0];
+               const password = document.getElementById('password').value;
+               let image = document.getElementById('imag').innerHTML;
+
+               if(img) {
+                   const b = await toBase64(img);
+                   image = b;
+               }
+               
+               let obj = {};
+               obj = {name, email, password, image};
+
+               const res = await fetch('http://localhost:5500/app/user/update',{
+                    method: 'post',
+                    headers: {
+                         'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+               })
+
+               if(res.ok) {
+                    alert('Your profile was updated successfully');
+                    window.location.href = '/app/profile';
+               }
+               else {
+                    alert('some error occured');
+                    window.location.reload();
+               }
+          })
+     </script>
+
+     <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>

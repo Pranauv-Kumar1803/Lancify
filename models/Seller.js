@@ -20,7 +20,16 @@ const sellerSchema = new schema({
     github: String,
     StackOverflow: String,
     linkedin: String,
-    languages: Array
+    languages: Array,
+    certificates: Array,
+    rating: Number,
+    numberRating: Number,
+    completed: Number,
+    ongoing: Number,
+    balance: {  
+        type: Number,
+        default: 0
+    }
 })
 
 module.exports = mongoose.model('Seller',sellerSchema);

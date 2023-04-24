@@ -14,7 +14,7 @@ const serviceSchema = new schema({
         type:String
     },
     seller_id: {
-        type: Number,
+        type: String,
         required: true
     },
     seller_name: {
@@ -35,11 +35,25 @@ const serviceSchema = new schema({
         type: String,
         required: true
     },
-    rating: Number,
+    rating: {
+        type: Number,
+        default: 0
+    },
     starting_price: {
         type: Number,
         required: true
-    }
+    },
+    services: [Object],
+    numCustomers: {
+        type: Number,
+        default: 0
+    },
+    numReviews: {
+        type: Number,
+        default: 0
+    },
+    avgResponseTime: Number,
+    avgCompletionDuration: Number,
 })
 
 module.exports = mongoose.model('Service',serviceSchema);

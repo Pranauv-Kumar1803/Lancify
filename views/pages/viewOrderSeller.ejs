@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Order</title>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+</head>
+
+<body>
+
+    <%- include('../partials/navbar.ejs',{isLoggedIn: login}) %>
+
+        <!-- Order details -->
+        <div class="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto bg-dark_green text-white">
+            <h1 class="text-white text-2xl mx-auto text-center pb-4">Order Details</h1>
+            <div class="flex justify-start item-start space-y-2 flex-col">
+                <h1
+                    class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-white text-center">
+                    Order
+                    <%= order._id %></h1>
+                <p class="hidden" id="order"><%= order._id %></p>
+                <h1
+                    class="text-xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-white text-center">
+                    Order Placed By
+                    <%= order.user_name %></h1>
+                <p class="text-base dark:text-gray-300 font-medium leading-6 text-white text-center"> on <%= order.order_date %></p>
+            </div>
+            <div
+                class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
+                <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
+                    <div
+                        class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
+                        <div
+                            class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
+                            <div class="pb-4 md:pb-8 w-full md:w-40">
+                                <img class="w-full hidden md:block" src="<%= order.service_id.main_img %>"
+                                    alt="dress" />
+                                <img class="w-full md:hidden" src="<%= order.service_id.main_img %>"
+                                    alt="dress" />
+                            </div>
+                            <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
+                                <div class="w-full flex flex-col justify-start items-start space-y-8">
+                                    <h3
+                                        class="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">
+                                        <%= order.service_id.seller_title %></h3>
+                                    <p
+                                        class="dark:text-white font-normal leading-6 text-gray-800">
+                                        <%= order.service_id.seller_desc %></p>
+                                </div>
+                                <div class="flex justify-between space-x-8 items-start w-full">
+                                    <p class="text-base dark:text-white xl:text-lg leading-6"> ₹<%= order.grand_total %> </p>
+                                    <p class="text-base dark:text-white xl:text-lg leading-6 text-gray-800">1</p>
+                                    <p
+                                        class="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">
+                                        ₹<%= order.grand_total %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- order timeline -->
+
+        <div class="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto bg-dark_green text-white">
+            <h1 class="text-2xl text-white mx-auto text-center"> Here's your Order Timeline / Progress! </h1>
+            <ol class="relative border-l border-gray-200 dark:border-gray-700">
+                <% order.timeline.forEach((t)=>{ %>
+                    <li class="mb-10 ml-4">
+                        <div
+                            class="absolute w-3 h-3 bg-white rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
+                        </div>
+                        <time class="mb-1 text-sm font-normal leading-none text-white dark:text-gray-500"><%= t.date %></time>
+                        <h3 class="text-lg font-semibold text-white"><%= t.title %></h3>
+                        <p class="mb-4 text-base font-normal text-white"> <%= t.message %> </p>
+                        <% if(t.files) { %>
+                            <ul style="list-style-type: none;">
+                                <% t.files.forEach(f=>{ %>
+                                    <li style="list-style-type: none;"> <a style="text-decoration: none;" class="hover:underline" href="<%= f %>" target="_blank"> Click to See Uploaded File </a></li>
+                                <% }) %>
+                            </ul>
+                        <% } %>
+                    </li>
+                <% }) %>
+            </ol>
+        </div>
+
+        <% if(pending === true) { %>
+            <div class="py-10 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto bg-dark_green text-white">
+                <h1 class="text-2xl text-center"> Update the progress </h1>
+                <form class="form-control bg-white text-dark_green p-5 flex flex-col justify-center items-center">
+                    <div class="mb-6 row flex flex-row justify-start">
+                        <div class="col">
+                            <label for="title" class="block mb-2 text-sm font-medium text-dark_green dark:text-dark_green">Title of message</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" id="progress_title" class="shadow-sm bg-gray-50 border border-gray-300 text-dark_green text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-dark_green dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+                        </div>
+                    </div>
+                    <div class="mb-6 row flex flex-row justify-start ">
+                        <div class="col">
+                            <label for="message" class="block mb-2 text-sm font-medium text-dark_green dark:text-dark_green">Content of message</label>
+                        </div>
+                        <div class="col">
+                            <textarea id="message" rows="4"
+                                class="block p-2.5 w-full text-sm text-dark_green bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-dark_green dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Leave a comment..."></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-6 row flex flex-row justify-start ">
+                        <div class="col">
+                            <label for="message" class="block mb-2 text-sm font-medium text-dark_green dark:text-dark_green">Add Files</label>
+                        </div>
+                        <div class="col">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="files" multiple>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn rounded p-2 bg-dark_green text-white" id="Add">Add Message!</button>
+                </form>
+                <button type="button" class="btn p-3 my-5 bg-light_green text-white mx-auto text-center" id="done"><i class="fa-solid fa-check"></i> Mark as done! </button>
+            </div>
+
+        <% } %>
+
+        <%- include('../partials/footer.ejs') %>
+
+        <script>
+            const toBase64 = file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+
+            const add = document.getElementById('Add');
+            add.addEventListener('click',async (e)=>{
+                e.preventDefault();
+                const title = document.getElementById('progress_title').value;
+                const message = document.getElementById('message').value;
+                const id = document.getElementById('order').innerHTML;
+                const f = document.getElementById('files').files;
+
+                let files = [];
+                for (let i = 0; i < f.length; i++) {
+                    const file = f[i];
+                    const b = await toBase64(file);
+                    files.push(b);
+                }
+
+                const res = await fetch(`http://localhost:5500/app/order/${id}/addTimeline`,{
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({title,message,files})
+                })
+
+                if(res.ok) {
+                    alert('message added to the timeline successfully');
+                    window.location.reload();
+                }
+                else {
+                    alert('there was some error!');
+                }
+            })
+
+            const done = document.getElementById('done');
+            done.addEventListener('click',async (e)=>{
+                const title = "requested for closing the order!"
+                const message = "finished all the work - please approve and close!"
+                const id = document.getElementById('order').innerHTML;
+
+                const res = await fetch(`http://localhost:5500/app/order/${id}/addTimeline/done`,{
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({title,message})
+                })
+
+                if(res.ok) {
+                    alert('message added to the timeline successfully');
+                    window.location.reload();
+                }
+                else {
+                    alert('there was some error!');
+                }
+            })
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+</body>
+
+</html>

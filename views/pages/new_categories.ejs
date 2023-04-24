@@ -38,20 +38,20 @@
               <ul style="text-decoration: none;list-style-type: none;">
                 <li>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="2d" />
-                    <label class="form-check-label" for="flexRadioDefault" style="font-size: large;color: black;"> Under 2d </label>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="1d" />
+                    <label class="form-check-label" for="flexRadioDefault" style="font-size: large;color: black;"> Under 24hrs </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="3d" />
+                    <label class="form-check-label" for="flexRadioDefault" style="font-size: large;color: black;"> Under 72hrs </label>
                   </div>
                 </li>
                 <li>
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="4d" />
-                    <label class="form-check-label" for="flexRadioDefault" style="font-size: large;color: black;"> Under 4d </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="7d" />
-                    <label class="form-check-label" for="flexRadioDefault" style="font-size: large;color: black;"> Under 7d </label>
+                    <label class="form-check-label" for="flexRadioDefault" style="font-size: large;color: black;"> Under 90hrs </label>
                   </div>
                 </li>
               </ul>
@@ -121,10 +121,10 @@
                   <div class="price">
                     <h5 class="text-white font-medium">Starting at</h5>
                     <span class="font-large text-xl text-white">
-                      <%= d.starting_price %>
+                      ₹<%= d.starting_price %>
                     </span>
                   </div>
-                  <button onclick="window.location.href='/product'"
+                  <button onclick="window.location.href=`/app/product/<%=d._id%>`"
                     class="flex text-white bg-green-400 border-0 px-6 py-2 h-auto align-center hover:bg-emerald-300 rounded">Learn
                     More</button>
                 </div>
@@ -136,7 +136,7 @@
                   <h2>404</h2>
                   <h3>Oops, nothing here...</h3>
                   <p>Please Check the URL</p>
-                  <p>Otherwise, <a href="#homepage">Click here</a> to redirect to homepage.</p>
+                  <p>Otherwise, <a href="/" onmouseover="hover()" onmouseleave="leave()" id="click">Click here</a> to redirect to homepage.</p>
                 </div>
                 <% } %>
       </div>
@@ -157,6 +157,17 @@
       } else {
         x.classname = "topnav";
       }
+    }
+
+    function hover() {
+      const p = document.getElementById('click');
+      p.style.textDecoration= 'underline';
+      p.style.color = '#fff';
+    }
+
+    function leave() {
+      const p = document.getElementById('click');
+      p.style.textDecoration = 'none'
     }
   </script>
 </body>

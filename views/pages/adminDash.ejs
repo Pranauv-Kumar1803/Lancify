@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+     <meta charset="UTF-8">
+     <link rel="stylesheet" href="/css/dash2.css" type="text/css">
+          referrerpolicy="no-referrer" />
+     <link rel="stylesheet" href="/css/new_categories.css" type="text/css">
+     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Admin</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+     <link rel="stylesheet" href="/css/styles.css" type="text/css">
+     <style>
+        .visible {
+            display: flex;
+        }
+
+        .hidden {
+            display: none;
+        }
+     </style>
+</head>
+
+<body>
+
+     <%- include('../partials/navbar.ejs',{isLoggedIn:login}) %>
+
+          <div class="p-2 flex flex-row w-full justify-center w-full bg-white text-dark_green">
+            <ul class="p-2 flex flex-row justify-between items-center">
+                <li style="list-style: none;" class="p-3">
+                    <a href="/" class="active" style="text-decoration: none; color: black;">
+                        <i class='bx bx-home'></i>
+                        <span class="links_name">Home</span>
+                    </a>
+                </li>
+                <li style="list-style: none;" class="p-3 dashboard-btn">
+                    <a href="#" class="active" id="dash-default" style="text-decoration: none; color: black;">
+                        <i class='bx bx-grid-alt'></i>
+                        <span class="links_name">Dashboard</span>
+                    </a>
+                </li>
+                <li style="list-style: none;" class="p-3 seller-btn">
+                    <a href="#" id="profile" style="text-decoration: none; color: black;">
+                        <i class='bx bx-user'></i>
+                        <span class="links_name">Sellers</span>
+                    </a>
+                </li>
+            </ul>
+            </div>
+
+          <div class="container parent w-100 bg-dark_green text-white">
+               <!-- SELLERS -->
+               <div class="w-1/4 OAAOBC mx-auto hidden px-4">
+                    <h1 class="text-3xl text-white mx-auto text-center">Sellers</h1>
+               </div>
+               <section
+                    class="container w-100 px-1 sellers-active sellers-group flex  flex-wrap flex-col md:flex-row gap-2 justify-center hidden">
+                    <!-- SELLER CARD -->
+                    <% for( let index=0; index < sellers.length; index++ ) { %>
+                         <div class="seller-info sm:w-100 lg:w-1/4 flex flex-col items-start
+                         border-2 border-gray-200 p-2 gap-px">
+                              <div class="name p-1">
+                                   Seller : <span class="font-extralight tracking-wider"><%= sellers[index]['seller_fname'] %></span>
+                              </div>
+                              <div class="rating-avg p-1">
+                                   Avg Rating : <span class="font-extralight tracking-wider"><%= sellers[index]['rating'] %> (<%= sellers[index]['numberRating'] %>)</span>
+                              </div>
+                              <div class="avg-price p-1">
+                                   Country : <span class="font-extralight tracking-wider"><%= sellers[index]['country'] %></span>
+                              </div>
+                              <div class="total-gigs p-1">
+                                   Gigs Done So far : <span class="font-extralight tracking-wider"><%= sellers[index]['completed'] %></span>
+                              </div>
+                              <div class="description p-1">
+                                   About :
+                                   <span class="font-light">
+                                    <%= sellers[index]['seller_desc'] %>
+                                   </span>
+                              </div>
+                         </div>
+                        <% } %>
+               </section>
+               <!-- END -->
+
+               <!-- OVERVIEW TEXT -->
+               <section class="overview-text container flex justify-center items-center flex-col">
+                    <div>
+                         <div class="text-lg p-1">
+                              Total Sellers : 198
+                         </div>
+                         <div class="text-lg p-1">
+                              Total Gigs : 994
+                         </div>
+                         <div class="text-lg p-1">
+                              Total Happy Users : 2001
+                         </div>
+                         <div class="text-lg p-1">
+                              Total Ratings : 3023
+                         </div>
+                         <div class="text-lg p-1">
+                              Total Avg Rating : 36
+                         </div>
+                    </div>
+               </section>
+
+          </div>
+
+
+
+          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+               integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+               crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+               integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+               crossorigin="anonymous"></script>
+
+          <script>
+               const sellers = document.querySelector('.sellers-active');
+               const groupText = document.querySelector('.overview-text');
+               document.querySelector('.seller-btn').addEventListener('click', (e) => {
+                    sellers.classList.remove('hidden');
+                    document.querySelector('.OAAOBC').classList.add('visible');
+                    document.querySelector('.OAAOBC').classList.remove('hidden');
+                    sellers.classList.add('visible');
+                    groupText.classList.remove('visible');
+                    groupText.classList.add('hidden');
+               });
+               document.querySelector('.dashboard-btn').addEventListener('click', (e) => {
+                    sellers.classList.remove('visible');
+                    document.querySelector('.OAAOBC').classList.add('hidden');
+                    document.querySelector('.OAAOBC').classList.remove('visible');
+                    sellers.classList.add('hidden');
+                    groupText.classList.remove('hidden');
+                    groupText.classList.add('visible');
+               })
+
+          </script>
+
+          <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>

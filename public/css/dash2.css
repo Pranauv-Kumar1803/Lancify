@@ -405,7 +405,7 @@ nav .profile-details i {
 
 .social-list li {
     padding: 10px;
-    color: #8e24aa;
+    color: #75B2AD;
     font-size: 19px;
 }
 
@@ -416,7 +416,7 @@ nav .profile-details i {
     top: 0;
     width: 4px;
     height: 100%;
-    background-color: #e1bee7;
+    background-color: #DCDCDC;
     transform: scaleY(1);
     transition: all 0.5s;
     transform-origin: bottom;
@@ -429,7 +429,7 @@ nav .profile-details i {
     top: 0;
     width: 4px;
     height: 100%;
-    background-color: #8e24aa;
+    background-color: #75B2AD;
     transform: scaleY(0);
     transition: all 0.5s;
     transform-origin: bottom;
@@ -440,21 +440,21 @@ nav .profile-details i {
 }
 
 .buttons button:nth-child(1) {
-    border: 1px solid #8e24aa !important;
-    color: #8e24aa;
+    border: 1px solid #75B2AD !important;
+    color: #75B2AD;
     height: 40px;
 }
 
 .buttons button:nth-child(1):hover {
-    border: 1px solid #8e24aa !important;
+    border: 1px solid #75B2AD !important;
     color: #fff;
     height: 40px;
-    background-color: #8e24aa;
+    background-color: #75B2AD;
 }
 
 .buttons button:nth-child(2) {
-    border: 1px solid #8e24aa !important;
-    background-color: #8e24aa;
+    border: 1px solid #75B2AD !important;
+    background-color: #75B2AD;
     color: #fff;
     height: 40px;
 }
@@ -462,10 +462,10 @@ nav .profile-details i {
 .section--hero {
     padding: 10px 15px;
     width: auto;
-    min-height: 748px;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
-    gap: 100px;
+    gap: 30px;
     align-items: center;
 }
 
@@ -494,6 +494,8 @@ nav .profile-details i {
 .alig-horz {
     display: flex;
     flex-direction: row;
+    max-width: 100vw;
+    flex-wrap: wrap;
     gap: 20px;
 }
 

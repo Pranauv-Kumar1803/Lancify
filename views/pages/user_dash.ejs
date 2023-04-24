@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/dash2.css" type="text/css">
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+    <link rel="stylesheet" href="/css/new_categories.css" type="text/css">
+
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+    <%- include('../partials/navbar.ejs',{isLoggedIn:true}) %>
+
+        <div class="p-2 flex flex-row w-full justify-center w-full">
+            <ul class="p-2 flex flex-row justify-between items-center">
+                <li style="list-style: none;" class="p-3">
+                    <a href="/" class="active" style="text-decoration: none; color: black;">
+                        <i class='bx bx-home'></i>
+                        <span class="links_name">Home</span>
+                    </a>
+                </li>
+                <li style="list-style: none;" class="p-3">
+                    <a href="#" class="active" id="dash-default" style="text-decoration: none; color: black;">
+                        <i class='bx bx-grid-alt'></i>
+                        <span class="links_name">Dashboard</span>
+                    </a>
+                </li>
+                <li style="list-style: none;" class="p-3">
+                    <a href="#" id="profile" style="text-decoration: none; color: black;">
+                        <i class='bx bx-user'></i>
+                        <span class="links_name">Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section--hero current-active the-overview bg-dark_green text-white">
+            <div class="main--heading">
+                <h2 class="waver">Hey There Fellow Lancifier
+                    <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" style="display: inline;"
+                        class="emo" alt="hand">
+
+                </h2>
+            </div>
+
+            
+            <div class="main--heading">
+                <h2 class="waver">Your previous orders</h2>
+            </div>
+
+            <div class="alig-horz text-dark_green">
+                <% if(orders.length > 0) { %>
+                    <% for( let index=0; index < orders.length; index++ ) { %>
+                        <div class="testing--dash p-2 cursor-pointer text-center some">
+                            <div>
+                                <img src="<%= orders[index].service_id.main_img %>" alt="Service picture">
+                            </div>
+                            <p class="hidden" id="viewOrder"><%= orders[index]['_id'] %></p>
+                            <div class="description mx-2 px-4 py-1 my-1 text-center">
+                                <%= orders[index].service_id.seller_title %>
+                            </div>
+                            <div class="price count">
+                                Seller : <%=orders[index].service_id.seller_name %>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <h1 class="text-center text-white mx-auto text-2xl"> No Orders Completely Received before!</h1>
+                <% } %> 
+            </div>
+            
+            <div class="main--heading">
+                <h2 class="waver">Your current and ongoing orders</h2>
+            </div>
+
+            <div class="alig-horz text-dark_green">
+                <% if(ongoing.length > 0) { %>
+                    <% for( let index=0; index < ongoing.length; index++ ) { %>
+                        <div class="testing--dash p-2 cursor-pointer text-center some">
+                            <div>
+                                <img src="<%= ongoing[index].service_id.main_img %>" alt="Service picture">
+                            </div>
+                            <p class="hidden" id="viewOrder"><%= ongoing[index]['_id'] %></p>
+                            <div class="description mx-2 px-4 py-1 my-1 text-center">
+                                <%= ongoing[index].service_id.seller_title %>
+                            </div>
+                            <div class="price count">
+                                Seller : <%=ongoing[index].service_id.seller_name %>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <h1 class="text-center text-white mx-auto text-2xl"> No Orders Placed Yet!</h1>
+                <% } %> 
+            </div>
+        </div>
+
+        <div class="section--hero the-profile current-not-active bg-dark_green text-white">
+            <section class="profile-section text-dark_green w-full py-0">
+                <div class="container mt-5">
+
+                    <div class="row d-flex justify-content-center">
+
+                        <div class="col-md-7">
+
+                            <div class="card p-3">
+
+                                <div class="text-center flex mx-auto">
+                                    <img src="<%= user.user_img %>"
+                                        class="w-14 h-14 rounded-full flex-shrink-0 object-cover object-center">
+                                </div>
+
+                                <div class="text-center mt-3">
+                                    <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
+                                    <h5 class="mt-2 mb-0">
+                                        <%= user.username %>
+                                    </h5>
+
+                                    <div class="px-4 mt-1">
+                                        <p class="fonts text-center">
+                                            <%= user.email %>
+                                        </p>
+                                    </div>
+
+                                    <ul class="social-list">
+                                        <li><i class="fa-solid fa-envelope"></i> <a href="mailto:<%= user.email %>" _target="blank" >
+                                                Email </a> </li>
+                                    </ul>
+
+                                    <div class="buttons">
+                                        <button class="btn btn-outline-primary px-4"
+                                            onclick="window.location.href='/app/user/edit'">Update Profile</button>
+                                        <button class="btn btn-outline-primary px-4"
+                                            onclick="window.location.href='/app/user/delete'">Delete Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <%- include('../partials/footer.ejs') %>
+
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+                integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+                integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+                crossorigin="anonymous"></script>
+
+            <script>
+
+                document.querySelector('#dash-default').addEventListener('click', e => {
+
+                    document.querySelector('.the-profile').classList.remove('current-active');
+                    document.querySelector('.the-profile').classList.add('current-not-active');
+                    document.querySelector('.the-overview').classList.add('current-active');
+                })
+
+                document.getElementById('profile').addEventListener('click', (e) => {
+                    document.querySelector('.the-profile').classList.add('current-active');
+                    document.querySelector('.the-profile').classList.remove('current-not-active');
+                    document.querySelector('.the-overview').classList.add('current-not-active');
+                    document.querySelector('.the-overview').classList.remove('current-active')
+
+                });
+
+                const some = document.getElementsByClassName('some');
+                Array.from(some).forEach((s) => {
+                    s.addEventListener('click', () => {
+                        const id = s.querySelector('#viewOrder').innerHTML;
+                        window.location.href = `/app/order/${id}`;
+                    })
+                })
+            </script>
+
+
+</body>
+
+</html>

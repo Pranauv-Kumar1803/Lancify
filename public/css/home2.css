@@ -64,12 +64,7 @@ img {
   margin: 10px auto;
 }
 
-.box1,
-.box2,
-.box3,
-.box4,
-.box5,
-.box6 {
+.box{
   max-width: 300px;
   /* margin-top: 0; */
   border-radius: 10px;
@@ -78,12 +73,7 @@ img {
   background-color: aliceblue;
 }
 
-.box1:hover,
-.box2:hover,
-.box3:hover,
-.box4:hover,
-.box5:hover,
-.box6:hover {
+.box:hover{
   /* transform: scale(1.05); */
   box-shadow: 3px 5px 5px rgba(136, 237, 207, 0.7);
   transition: 0.3s ease-in-out;

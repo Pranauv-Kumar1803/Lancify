@@ -46,7 +46,7 @@ signup_form.addEventListener("submit", async (e) => {
     }
     else {
         alert('Sign up successful');
-        window.location.href = '/login'
+        window.location.href = '/auth/login'
     }
 });
 

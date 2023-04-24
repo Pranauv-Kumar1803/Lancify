@@ -5,65 +5,186 @@
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Create Gig</title>
+     <title>Create A Gig</title>
      <link rel="stylesheet" href="/css/createGig.css">
+     <link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 
-<body>
+<body class="bg-dark_green">
+     <%- include('../partials/navbar.ejs',{isLoggedIn: login}) %>
 
-
-     <div class="gig--card">
-          <form action="/createGig" method="post" autocomplete="off">
-               <div class="input-wrapper">
-                    <label for="gig--name" class="gig--detail--label">Name of the gig</label>
-                    <input type="text" name="gig--name" id="gig--name" class="gig--detail" required>
+     <h1 class="flex justify-center align-center mx-auto text-center text-white text-2xl py-5">Create a Gig</h1>
+     <section class="main--section border border-sky-500 w-8/12 mx-auto p-3 mb-5">
+          <form class="p-2">
+               <div class="flex flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                    <label for="title" class="text-lg font-extralight tracking-wide text-white">Title</label>
+                    <input type="text" name="title" id="gig_title" class="w-8/12 p-2 outline-none" required>
                </div>
-               <div class="main--flex--col highlight--wrapper">
-                    <div class="input-wrapper">
-                         <label for="price--easy" class="gig--detail--label">Tier 1 Price</label>
-                         <input type="text" name="" id="price--easy" class="gig--price--easy" required>
-                    </div>
-
-                    <div class="input-wrapper">
-                         <label for="detail--easy" class="gig--detail--label">Tier 1 services</label>
-
-                         <textarea name="detail--easy--tier" id="detail--easy" cols="26" rows="3"></textarea>
-                    </div>
-
-                    <div class="input-wrapper">
-                         <label for="price--medium" class="gig--detail--label">Tier 2 Price</label>
-                         <input type="text" name="" id="price--medium" class="gig--price--medium" required>
-                    </div>
-
-                    <div class="input-wrapper">
-                         <label for="detail--medium" class="gig--detail--label">Tier 2 services</label>
-
-                         <textarea name="detail--medium--tier" id="detail--medium" cols="26" rows="3"></textarea>
-                    </div>
-
-
-                    <div class="input-wrapper">
-                         <label for="price--hard" class="gig--detail--label">Tier 3 Price</label>
-                         <input type="text" name="" id="price--hard" class="gig--price--hard" required>
-                    </div>
-
-                    <div class="input-wrapper">
-                         <label for="detail--hard" class="gig--detail--label">Tier 3 services</label>
-
-                         <textarea name="detail--hard--tier" id="detail--hard" cols="26" rows="3"></textarea>
-                    </div>
-
+               <div class="flex flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                    <label for="desc" class="text-lg font-extralight tracking-wide text-white">Description</label>
+                    <input type="text" name="desc" id="desc" class="w-8/12 p-2 outline-none" required>
                </div>
-               <div class="input-wrapper highlight--wrapper">
-                    <label for="duration" class="duration">Max-Duration (hours)</label>
-                    <input type="text" name="duration" id="duration" required>
+               <div class="flex flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                    <label for="img" class="text-lg font-extralight tracking-wide text-white">Image for the Gig</label>
+                    <input type="file" name="img" id="img" class="w-8/12 p-2 outline-none" required>
                </div>
-               <div class="input-wrapper highlight--wrapper">
-                    <button type="submit" class="form--submit--button">Create Gig</button>
+               <div class="w-8/12 mx-auto my-1 flex justify-between my-2">
+                    <label for="sub-category" class="pl-2 font-extralight text-lg text-white">Choose sub category</label>
+                    <select name="sub-category" id="sub-category" class="outline-none" required>
+                         <optgroup class="font-medium display-gd" label="Graphics and design">
+                              <option value="gd-logo_design">Logo Design</option>
+                              <option value="gd-web_design">web design</option>
+                         </optgroup>
+                         <optgroup class="font-medium display-ptr" label="Programming And Tech">
+                              <option value="pt-web_dev">web development</option>
+                              <option value="pt-app_dev">App development</option>
+                         </optgroup>
+                         <optgroup class="font-medium display-cdw" label="Content and Digital Writing">
+                              <option value="cdw-blogs_articles">Blogs and articles</option>
+                              <option value="cdw-resume_cover">Resume</option>
+                         </optgroup>
+                         <optgroup class="font-medium display-va" label="Video and animation">
+                              <option value="va-video_editing">video editing</option>
+                              <option value="va-animation">Animation</option>
+                         </optgroup>
+                         <optgroup class="font-medium display-dm" label="Digital Marketing">
+                              <option value="dm-seo">SEO</option>
+                              <option value="dm-social_marketing">Social Media Marketing</option>
+                         </optgroup>
+                    </select>
                </div>
+               <div>
+                    <div
+                         class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-center border-b-4">
+                         <p class="mx-auto text-xl font-medium text-white">Tier 1</p>
+                    </div>
+
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                         <label for="price1" class="text-lg font-extralight tracking-wide text-white">Price</label>
+                         <input type="number" name="price-tier-1" id="price1" class="w-1/8 p-2 outline-none" required
+                              min="0">
+                    </div>
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-start">
+                         <label for="details1" class="text-lg font-extralight tracking-wide text-white">Services</label>
+                         <textarea name="details-tier-1" id="details1" class="p-2 px-3 outline-none" cols="30" rows="3"
+                              placeholder="Enter Comma seperatedly..."></textarea>
+                    </div>
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-start">
+                         <label for="delivery1" class="text-lg font-extralight tracking-wide text-white">Delivery (hours)</label>
+                         <input type="number" name="delivery-tier-1" class="w-1/8 p-2 outline-none" min="0"
+                              id="delivery1">
+                    </div>
+               </div>
+
+               <!-- TIER 2 -->
+               <div>
+                    <div
+                         class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-center border-b-4">
+                         <p class="mx-auto text-xl font-medium text-white">Tier 2</p>
+                    </div>
+
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-center">
+                         <label for="price2" class="text-lg font-extralight tracking-wide text-white">Price</label>
+                         <input type="number" name="price-tier-2" id="price2" class="w-1/8 p-2 outline-none" required
+                              min="0">
+                    </div>
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-start">
+                         <label for="details2" class="text-lg font-extralight tracking-wide text-white">Services</label>
+                         <textarea name="details-tier-2" id="details2" class="p-2 px-3 outline-none" cols="30" rows="3"
+                              placeholder="Enter Comma seperatedly..."></textarea>
+                    </div>
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-start">
+                         <label for="delivery2" class="text-lg font-extralight tracking-wide text-white">Delivery (hours)</label>
+                         <input type="number" name="delivery-tier-2" class="w-1/8 p-2 outline-none" min="0"
+                              id="delivery2">
+                    </div>
+               </div>
+
+
+               <!-- TIER 3 -->
+
+               <div class="my-2">
+
+                    <div
+                         class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-center border-b-4">
+                         <p class="mx-auto text-xl font-medium text-white">Tier 3</p>
+                    </div>
+
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-center">
+
+                         <label for="price3" class="text-lg font-extralight tracking-wide text-white">Price</label>
+                         <input type="number" name="price-tier-3" id="price3" class="w-1/8 p-2 outline-none" required
+                              min="0">
+                    </div>
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-start">
+                         <label for="details3" class="text-lg font-extralight tracking-wide text-white">Services</label>
+                         <textarea name="details-tier-3" id="details3" class="p-2 px-3 outline-none" cols="30" rows="3"
+                              placeholder="Enter Comma seperatedly..."></textarea>
+                    </div>
+                    <div class="sub-section flex flex-col md:flex-row justify-between p-2 w-8/12 mx-auto items-start">
+                         <label for="delivery3" class="text-lg font-extralight tracking-wide text-white">Delivery (hours)</label>
+                         <input type="number" name="delivery-tier-3" class="w-1/8 p-2 outline-none" min="0"
+                              id="delivery3">
+                    </div>
+               </div>
+               <button type="button" id="submit" class="OOAAAC bg-white text-dark_green hover:bg-light_green hover:text-white py-2 px-8 rounded max-auto">
+                    Create!
+               </button>
           </form>
-     </div>
+     </section>
 
+     <script>
+          const toBase64 = file => new Promise((resolve, reject) => {
+               const reader = new FileReader();
+               reader.readAsDataURL(file);
+               reader.onload = () => resolve(reader.result);
+               reader.onerror = error => reject(error);
+          });
+            
+          const submit = document.getElementById('submit');
+          submit.addEventListener('click',async(e)=>{
+               const price1 = document.getElementById('price1').value;
+               const price2 = document.getElementById('price2').value;
+               const price3 = document.getElementById('price3').value;
+               const details1 = document.getElementById('details1').value;
+               const details2 = document.getElementById('details2').value;
+               const details3 = document.getElementById('details3').value;
+               const delivery1 = document.getElementById('delivery1').value;
+               const delivery2 = document.getElementById('delivery2').value;
+               const delivery3 = document.getElementById('delivery3').value;
+     
+               const title = document.getElementById('gig_title').value;
+               const desc = document.getElementById('desc').value;
+               const img = document.getElementById('img').files[0];
+               const sub = document.getElementById('sub-category').value;
+
+               const b = await toBase64(img);
+               const image = b;
+               
+               console.log(sub);
+               let obj = {};
+               obj = {sub,price1,price2,price3,details1,details2,details3,delivery1,delivery2,delivery3,title,desc,image};
+
+               const res = await fetch('http://localhost:5500/app/create-gig',{
+                    method: 'post',
+                    headers: {
+                         'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+               })
+
+               if(res.ok) {
+                    alert('Your gig was added successfully');
+                    window.location.href = '/app/profile';
+               }
+               else {
+                    alert('some error occured');
+                    // window.location.reload();
+               }
+          })
+     </script>
+
+     <%- include('../partials/footer.ejs') %>
 </body>
 
 </html>

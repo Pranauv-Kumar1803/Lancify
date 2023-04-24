@@ -11,7 +11,7 @@ function showTab(n) {
         document.getElementById("prevBtn").style.display = "inline";
     }
     if (n == (x.length - 1)) {
-        document.getElementById("nextBtn").innerHTML = "Register!";
+        document.getElementById("nextBtn").innerHTML = "Update Profile!";
     } else {
         document.getElementById("nextBtn").innerHTML = "Next";
     }
@@ -157,7 +157,6 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
 
     const file = document.querySelector('#profile').files[0];
     const certificates = document.querySelector('#certification').files;
-    // console.log(certificates);
     try {
         let cert = [];
         for (let i = 0; i < certificates.length; i++) {
@@ -165,7 +164,6 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
             const b = await toBase64(file);
             cert.push(b);
         }
-        // console.log(cert);
 
         const b = await toBase64(file);
         obj = { seller_id: '', fname, lname, desc, occupation, country, institute_name, title: title, major, year, portfolio, github, stack, linkedin, languages, profile: b, certificates: cert };
@@ -175,7 +173,7 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
 
     // console.log(obj);
 
-    const res = await fetch('http://localhost:5500/app/register_seller', {
+    const res = await fetch('http://localhost:5500/app/update_seller', {
         method: 'post',
         body: JSON.stringify(obj),
         headers: {
@@ -184,8 +182,8 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
     })
 
     if (res.ok) {
-        alert('registration successful');
-        window.location.href = '/';
+        alert('update successful');
+        window.location.href = '/app/profile';
     }
     else {
         alert('Error in form inputs! Please Try Again');
@@ -214,18 +212,6 @@ function validateForm() {
     x = document.getElementsByClassName("step");
     y = x[currentTab].getElementsByTagName("input");
 
-    for (i = 0; i < y.length; i++) {
-        console.log(y[i].id);
-        if(( y[i].id == 'portfolio' || y[i].id == 'linkedin' || y[i].id == 'github' || y[i].id == 'stack-overflow' ))
-        {
-            valid = true;
-        }
-        else if ( y[i].value == "") 
-        {
-            y[i].className += " invalid";
-            valid = false;
-        }
-    }
     if (valid) {
         document.getElementsByClassName("stepIndicator")[currentTab].className += " finish";
     }
