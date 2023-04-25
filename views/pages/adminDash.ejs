@@ -4,7 +4,6 @@
 <head>
      <meta charset="UTF-8">
      <link rel="stylesheet" href="/css/dash2.css" type="text/css">
-          referrerpolicy="no-referrer" />
      <link rel="stylesheet" href="/css/new_categories.css" type="text/css">
      <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +12,13 @@
 
      <link rel="stylesheet" href="/css/styles.css" type="text/css">
      <style>
-        .visible {
-            display: flex;
-        }
+          .visible {
+               display: flex;
+          }
 
-        .hidden {
-            display: none;
-        }
+          .hidden {
+               display: none;
+          }
      </style>
 </head>
 
@@ -27,28 +26,28 @@
 
      <%- include('../partials/navbar.ejs',{isLoggedIn:login}) %>
 
-          <div class="p-2 flex flex-row w-full justify-center w-full bg-white text-dark_green">
-            <ul class="p-2 flex flex-row justify-between items-center">
-                <li style="list-style: none;" class="p-3">
-                    <a href="/" class="active" style="text-decoration: none; color: black;">
-                        <i class='bx bx-home'></i>
-                        <span class="links_name">Home</span>
-                    </a>
-                </li>
-                <li style="list-style: none;" class="p-3 dashboard-btn">
-                    <a href="#" class="active" id="dash-default" style="text-decoration: none; color: black;">
-                        <i class='bx bx-grid-alt'></i>
-                        <span class="links_name">Dashboard</span>
-                    </a>
-                </li>
-                <li style="list-style: none;" class="p-3 seller-btn">
-                    <a href="#" id="profile" style="text-decoration: none; color: black;">
-                        <i class='bx bx-user'></i>
-                        <span class="links_name">Sellers</span>
-                    </a>
-                </li>
-            </ul>
-            </div>
+          <div class="p-2 flex flex-row justify-center w-full bg-white text-dark_green">
+               <ul class="p-2 flex flex-row justify-between items-center">
+                    <li style="list-style: none;" class="p-3">
+                         <a href="/" class="active" style="text-decoration: none; color: black;">
+                              <i class='bx bx-home'></i>
+                              <span class="links_name">Home</span>
+                         </a>
+                    </li>
+                    <li style="list-style: none;" class="p-3 dashboard-btn">
+                         <a href="#" class="active" id="dash-default" style="text-decoration: none; color: black;">
+                              <i class='bx bx-grid-alt'></i>
+                              <span class="links_name">Dashboard</span>
+                         </a>
+                    </li>
+                    <li style="list-style: none;" class="p-3 seller-btn">
+                         <a href="#" id="profile" style="text-decoration: none; color: black;">
+                              <i class='bx bx-user'></i>
+                              <span class="links_name">Sellers</span>
+                         </a>
+                    </li>
+               </ul>
+          </div>
 
           <div class="container parent w-100 bg-dark_green text-white">
                <!-- SELLERS -->
@@ -62,25 +61,33 @@
                          <div class="seller-info sm:w-100 lg:w-1/4 flex flex-col items-start
                          border-2 border-gray-200 p-2 gap-px">
                               <div class="name p-1">
-                                   Seller : <span class="font-extralight tracking-wider"><%= sellers[index]['seller_fname'] %></span>
+                                   Seller : <span class="font-extralight tracking-wider">
+                                        <%= sellers[index]['seller_fname'] %>
+                                   </span>
                               </div>
                               <div class="rating-avg p-1">
-                                   Avg Rating : <span class="font-extralight tracking-wider"><%= sellers[index]['rating'] %> (<%= sellers[index]['numberRating'] %>)</span>
+                                   Avg Rating : <span class="font-extralight tracking-wider">
+                                        <%= sellers[index]['rating'] %> (<%= sellers[index]['numberRating'] %>)
+                                   </span>
                               </div>
                               <div class="avg-price p-1">
-                                   Country : <span class="font-extralight tracking-wider"><%= sellers[index]['country'] %></span>
+                                   Country : <span class="font-extralight tracking-wider">
+                                        <%= sellers[index]['country'] %>
+                                   </span>
                               </div>
                               <div class="total-gigs p-1">
-                                   Gigs Done So far : <span class="font-extralight tracking-wider"><%= sellers[index]['completed'] %></span>
+                                   Gigs Done So far : <span class="font-extralight tracking-wider">
+                                        <%= sellers[index]['completed'] %>
+                                   </span>
                               </div>
                               <div class="description p-1">
                                    About :
                                    <span class="font-light">
-                                    <%= sellers[index]['seller_desc'] %>
+                                        <%= sellers[index]['seller_desc'] %>
                                    </span>
                               </div>
                          </div>
-                        <% } %>
+                         <% } %>
                </section>
                <!-- END -->
 
