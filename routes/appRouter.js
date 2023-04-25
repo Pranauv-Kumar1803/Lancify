@@ -105,6 +105,7 @@ router.post('/order/:id/acceptAndClose',async(req,res)=>{
 		order.pending = false;
 		let d = new Date();
 		order.timeline.push({ title : `This Order has been accepted and closed by ${user.username}`, date:d });
+		order.rating = false;
 		await order.save();
 
 		seller.completed += 1;
@@ -209,6 +210,68 @@ router.get("/edit", async (req, res) => {
 	console.log('inside edit');
 	console.log(seller);
 	res.render("pages/update_seller", { user, seller, login: true });
+});
+
+router.post("/delete", async (req, res) => {
+	console.log(req.user);
+	const user = await User.findOne({ user_id: req.user });
+	const seller = await Seller.findOne({ seller_id: req.user });
+
+	if(seller && user.user_id === seller.seller_id) {
+		try {
+			const services = await Service.deleteMany({seller_id: seller.seller_id});
+			const order = await Order.find({seller_id: seller.seller_id});
+	
+			if(order.length > 0) {
+				order.forEach(async (o)=>{
+					o.pending = false;
+					o.timeline.push({
+						"title": `This Order has been closed as ${seller.seller_fname} deleted their account!`,
+						"desc": 'We are very sorry for the incovenience - your refund will be initiated in a few working days',
+						"date": new Date()
+					});
+					o.user_rating = 0;
+					await o.save();
+				})
+			}
+			const u = await User.deleteOne({user_id: req.user});
+			const s = await Seller.deleteOne({seller_id: req.user});
+			res.clearCookie('user');
+			return res.status(200).json({msg: 'deleted successfully'})
+
+		} catch (err) {
+			console.log(err);
+			return res.status(400).json({msg: 'some error occured'});
+		}
+	}
+	else
+	{
+		try {
+			const order = await Order.find({user_id: user.user_id});
+			
+			if(order.length > 0) {
+				order.forEach(async (o)=>{
+					o.pending = false;
+					o.timeline.push({
+						"title": `This Order has been closed as ${user.username} deleted their account!`,
+						"desc": 'We are very sorry for the incovenience!',
+						"date": new Date()
+					});
+					o.user_rating = 5;
+					await o.save();
+				})
+			}
+	
+			const u = await User.deleteOne({user_id: req.user});
+			res.clearCookie('user');
+			return res.status(200).json({msg: 'deleted successfully'})
+		} catch (err) {
+			console.log(err);
+			return res.status(400).json({msg: 'some error occured'});
+		}
+	}
+	
+	return res.status(200).json({msg: 'user deleted'});
 });
 
 // preview gigs

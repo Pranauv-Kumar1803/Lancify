@@ -9,6 +9,7 @@ const verifyCookie = async(req,res,next) => {
     
     const user = await User.findOne({user_id: cookie}).exec();
     if(!user) {
+        res.clearCookie('user');
         return res.render('pages/error',{ data: 'Invalid token!! Login Again!' });
     }
     

@@ -72,10 +72,6 @@ app.get('/blogs', (req, res) => {
 	res.render('pages/blog', { login: true });
 })
 
-app.get('/profile/:id', async (req, res) => {
-	res.render('pages/profile', { login: true });
-})
-
 app.get('/community-hub', (req, res) => {
 	if (!req.cookies.user) {
 		res.render('pages/community', { login: false });
@@ -278,6 +274,7 @@ app.post('/create-checkout-session', verifyCookie, async (req, res) => {
 			service_id: service._id,
 			user_name: user.username,
 			user_rating: 0,
+			rating: true,
 			timeline: [
 				{
 					"date": new Date(),
@@ -303,6 +300,23 @@ app.post('/create-checkout-session', verifyCookie, async (req, res) => {
 		console.log(e);
 		res.status(500).json({ error: e.message })
 	}
+})
+
+app.get('/profile/:id',async(req,res)=>{
+	console.log('in');
+	const seller = await Seller.findOne({seller_id: req.params.id});
+	const services = await Service.find({seller_id: seller.seller_id});
+	if(!seller) {
+		return res.render('pages/error',{data: 'User Not Found'});
+	}
+
+	const user = await User.findOne({user_id: req.params.id});
+	console.log(user);
+
+	if(req.cookies.user) {
+		return res.render('pages/profile',{login: true,user,seller, services});
+	}
+	res.render('pages/profile',{login:false,user,seller,services})
 })
 
 app.get('/success', verifyCookie, (req, res) => {

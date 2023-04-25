@@ -200,7 +200,7 @@
 
                 <div class="buttons">
                   <button class="btn btn-outline-primary px-4" onclick="window.location.href='/app/edit'">Update Profile</button>
-                  <button class="btn btn-outline-primary px-4" onclick="window.location.href='/app/delete'">Delete Profile</button>
+                  <button class="btn btn-outline-primary px-4" id="delete">Delete Profile</button>
                 </div>
               </div>
             </div>
@@ -261,6 +261,30 @@
             const id = s.querySelector('#viewFinishedOrder').innerHTML;
             window.location.href = `/app/order/${id}`;
         })
+    })
+
+    const deleted = document.getElementById('delete');
+    deleted.addEventListener('click',async(e)=>{
+      if(confirm('Do you want to continue and Delete you account forever?'))
+      {
+        const res = await fetch('http://localhost:5500/app/delete',{
+          method: 'post'
+        });
+        if(res.ok) {
+          alert('account successfully deleted');
+          window.location.href = '/'
+        }
+        else
+        {
+          alert('some error occured');
+          window.location.reload();
+        }
+      } 
+      else 
+      {
+        alert('You have pressed cancel!');
+        window.location.reload()
+      }
     })
   </script>
 
