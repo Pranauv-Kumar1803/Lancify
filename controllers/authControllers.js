@@ -18,6 +18,13 @@ const loginController = async(req,res)=>{
 					maxAge: 60 * 60 * 1000,
 					httpOnly: true
 				});
+				console.log(process.env.ADMIN_EMAIL)
+				if(email===process.env.ADMIN_EMAIL){
+					res.cookie('admin', user.user_id, {
+						maxAge: 60 * 60 * 1000,
+						httpOnly: true
+					});
+				}
 				return res.status(200).json(user);
 			}
 		} else {

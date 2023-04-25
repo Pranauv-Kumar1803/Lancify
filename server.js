@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const crypto = require('crypto');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
+const crypto = require("crypto");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 
 const Seller = require("./models/Seller");
@@ -13,64 +13,63 @@ const Service = require("./models/Service");
 const Comment = require("./models/Comment");
 const Discussion = require("./models/Discussion");
 
-const authRouter = require('./routes/authRouter');
-const appRouter = require('./routes/appRouter');
-const domainRouter = require('./routes/domainRouter');
-const forumRouter = require('./routes/forumRouter');
+const authRouter = require("./routes/authRouter");
+const appRouter = require("./routes/appRouter");
+const domainRouter = require("./routes/domainRouter");
+const forumRouter = require("./routes/forumRouter");
 const verifyCookie = require("./verifyCookie");
 const Order = require("./models/Order");
 const Payment = require("./models/Payment");
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
-
-
 // middleware
 app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.urlencoded({ extended: false, limit: '300mb' }));
-app.use(bodyParser.json({ limit: '300mb' }));
-app.use(express.urlencoded({ extended: true, limit: '300mb' }));
-app.use(express.json({ limit: '3000mb' }));
+app.use(bodyParser.urlencoded({ extended: false, limit: "300mb" }));
+app.use(bodyParser.json({ limit: "300mb" }));
+app.use(express.urlencoded({ extended: true, limit: "300mb" }));
+app.use(express.json({ limit: "3000mb" }));
 app.use(express.json());
 app.use(cookieParser());
 app.set("view engine", "ejs");
-app.use(cors({
-	origin: ["http://localhost:3000"],
-	methods: ['POST', 'GET', 'HEAD', 'PUT', 'DELETE'],
-	credentials: true
-}))
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use((req, res, next) => {
-	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-	res.header('Expires', '-1');
-	res.header('Pragma', 'no-cache');
-	next();
-})
+  res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
+  res.header("Expires", "-1");
+  res.header("Pragma", "no-cache");
+  next();
+});
 // routes
-app.use('/domains', domainRouter);
-app.use('/auth', authRouter);
-app.use('/forum', forumRouter);
+app.use("/domains", domainRouter);
+app.use("/auth", authRouter);
+app.use("/forum", forumRouter);
 
 // protected routes
-app.use('/app', verifyCookie, appRouter);
+app.use("/app", verifyCookie, appRouter);
 
 // main
 app.get("/", async (req, res) => {
-	const services = await Service.find();
-	if (req.cookies.user) {
-		return res.render("pages/home", { loggedIn: true, services });
-	}
-	res.render('pages/home', { loggedIn: false, services });
+  const services = await Service.find();
+  if (req.cookies.user) {
+    return res.render("pages/home", { loggedIn: true, services });
+  }
+  res.render("pages/home", { loggedIn: false, services });
 });
 
-app.get('/blogs', (req, res) => {
-	if (!req.cookies.user) {
-		res.render('pages/blog', { login: false });
-	}
-	res.render('pages/blog', { login: true });
-})
+app.get("/blogs", (req, res) => {
+  if (!req.cookies.user) {
+    res.render("pages/blog", { login: false });
+  }
+  res.render("pages/blog", { login: true });
+});
 
 app.get('/community-hub', (req, res) => {
 	if (!req.cookies.user) {
@@ -79,65 +78,71 @@ app.get('/community-hub', (req, res) => {
 	res.render('pages/community', { login: true });
 })
 
-app.get('/domain', (req, res) => {
-	if (!req.cookies.user) {
-		res.render('pages/domain', { login: false });
-	}
-	res.render('pages/domain', { login: true })
-})
+app.get("/domain", (req, res) => {
+  if (!req.cookies.user) {
+    res.render("pages/domain", { login: false });
+  }
+  res.render("pages/domain", { login: true });
+});
 
-app.post('/discussions', async (req, res) => {
-	console.log(req.body);
+app.post("/discussions", async (req, res) => {
+  console.log(req.body);
 
-	console.log(req.cookies.user);
+  console.log(req.cookies.user);
 
-	const user = await User.findOne({ user_id: req.cookies.user });
+  const user = await User.findOne({ user_id: req.cookies.user });
 
-	if (!user) {
-		return res.status(404).json({ msg: 'user not found!' });
-	}
+  if (!user) {
+    return res.status(404).json({ msg: "user not found!" });
+  }
 
-	console.log(user._id, typeof user._id);
+  console.log(user._id, typeof user._id);
 
-	const d = await new Discussion({
-		discussion: req.body.msg,
-		forum: req.body.forum,
-		time: new Date(),
-		user_name: user.username,
-		user_img: user.user_img,
-		user_id: user._id
-	});
-	const r = await d.save();
+  const d = await new Discussion({
+    discussion: req.body.msg,
+    forum: req.body.forum,
+    time: new Date(),
+    user_name: user.username,
+    user_img: user.user_img,
+    user_id: user._id,
+  });
+  const r = await d.save();
 
-	const id = new mongoose.Types.ObjectId();
-	const c = new Comment({
-		_id: id,
-		discussion_id: d._id,
-		parents: [id],
-	})
+  const id = new mongoose.Types.ObjectId();
+  const c = new Comment({
+    _id: id,
+    discussion_id: d._id,
+    parents: [id],
+  });
 
-	await c.save();
+  await c.save();
 
-	return res.status(201).json(r);
-})
+  return res.status(201).json(r);
+});
 
-app.get('/discussions/:id', async (req, res) => {
-	let login = false;
-	if(req.cookies.user) {
-		login = true;
-	}
+app.get("/discussions/:id", async (req, res) => {
+  let login = false;
+  if (req.cookies.user) {
+    login = true;
+  }
 
-	const id = req.params.id;
-	const discussion = await Discussion.findById(new mongoose.Types.ObjectId(id)).populate('comments').sort({'comments.time': -1});
-	console.log(discussion);
+  const id = req.params.id;
+  const discussion = await Discussion.findById(new mongoose.Types.ObjectId(id))
+    .populate("comments")
+    .sort({ "comments.time": -1 });
+  console.log(discussion);
 
-	return res.render('pages/discussions',{login, dis: discussion, comments: discussion.comments})
-})
+  return res.render("pages/discussions", {
+    login,
+    dis: discussion,
+    comments: discussion.comments,
+  });
+});
 
-app.get('/admin-dash',async(req,res)=>{
-	const sellers = await Seller.find();
-	res.render('pages/adminDash',{login:true, sellers});
-})
+app.get("/admin-dash", async (req, res) => {
+  const sellers = await Seller.find();
+  res.render("pages/adminDash", { login: true, sellers });
+});
 
 // app.get('/discussions/:id', async (req, res) => {
 // 	const id = req.params.id;
@@ -220,46 +225,50 @@ app.get('/admin-dash',async(req,res)=>{
 // 	res.render('pages/discussions', { discussions: final, dis: dis, length: c, start_margin: 2 });
 // })
 
-app.post('/create-checkout-session', verifyCookie, async (req, res) => {
-	const service = JSON.parse(req.body.service);
-	const user = await User.findOne({ user_id: req.user });
-	const seller = await Seller.findOne({ seller_id: service.seller_id });
-	const items = req.body.items;
-	const price = items[0].unit_price.substring(1, items[0].unit_price.length);
-	try {
-		const session = await stripe.checkout.sessions.create({
-			payment_method_types: ['card'],
-			mode: 'payment',
-			line_items: items.map(item => {
-				console.log(price);
-				return {
-					price_data: {
-						currency: 'inr',
-						product_data: {
-							name: item.title,
-							description: 'paying : ' + item.name.toUpperCase() + ' for the service type - ' + item.type.toUpperCase()
-						},
-						unit_amount: price + '00'
-					},
-					quantity: 1
-				}
-			}),
-			success_url: 'http://localhost:5500/success',
-			cancel_url: 'http://localhost:5500/cancel'
-		})
+app.post("/create-checkout-session", verifyCookie, async (req, res) => {
+  const service = JSON.parse(req.body.service);
+  const user = await User.findOne({ user_id: req.user });
+  const seller = await Seller.findOne({ seller_id: service.seller_id });
+  const items = req.body.items;
+  const price = items[0].unit_price.substring(1, items[0].unit_price.length);
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: items.map((item) => {
+        console.log(price);
+        return {
+          price_data: {
+            currency: "inr",
+            product_data: {
+              name: item.title,
+              description:
+                "paying : " +
+                item.name.toUpperCase() +
+                " for the service type - " +
+                item.type.toUpperCase(),
+            },
+            unit_amount: price + "00",
+          },
+          quantity: 1,
+        };
+      }),
+      success_url: "http://localhost:5500/success",
+      cancel_url: "http://localhost:5500/cancel",
+    });
 
-		console.log(user);
+    console.log(user);
 
-		const payment = new Payment({
-			method: 'card',
-			price: parseInt(price),
-			grand_total: parseInt(price) + 10,
-			taxes: 0.01 * parseInt(price),
-			seller_id: service.seller_id,
-			user_id: req.user
-		});
+    const payment = new Payment({
+      method: "card",
+      price: parseInt(price),
+      grand_total: parseInt(price) + 10,
+      taxes: 0.01 * parseInt(price),
+      seller_id: service.seller_id,
+      user_id: req.user,
+    });
 
-		await payment.save();
+    await payment.save();
 
 		const order = new Order({
 			domain_type: service.domain_type,
@@ -289,18 +298,18 @@ app.post('/create-checkout-session', verifyCookie, async (req, res) => {
 			]
 		})
 
-		await order.save();
+    await order.save();
 
-		seller.balance += parseInt(price);
-		seller.ongoing += 1;
-		await seller.save();
-		
-		res.json({ url: session.url })
-	} catch (e) {
-		console.log(e);
-		res.status(500).json({ error: e.message })
-	}
-})
+    seller.balance += parseInt(price);
+    seller.ongoing += 1;
+    await seller.save();
+
+    res.json({ url: session.url });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ error: e.message });
+  }
+});
 
 app.get('/profile/:id',async(req,res)=>{
 	console.log('in');
@@ -326,24 +335,33 @@ app.get('/success', verifyCookie, (req, res) => {
 
 app.get("/*", (req, res) => {
 	res.render("pages/error", { data: 'Page Not Found' });
+})
+
+app.get("/success", verifyCookie, (req, res) => {
+  res.render("pages/success", { login: true });
 });
 
+app.get("/*", (req, res) => {
+  res.render("pages/error", { data: "Page Not Found" });
+});
 
 app.get("/users", async (req, res) => {
-	const data = await db.getAllUser();
-	// console.log(data);
-	return res.json(data.data);
+  const data = await db.getAllUser();
+  // console.log(data);
+  return res.json(data.data);
 });
 
 app.get("/users/:email", async (req, res) => {
-	const data = await db.getSomeUser(req.params.email);
-	// console.log(data);
-	return res.json(data.data);
+  const data = await db.getSomeUser(req.params.email);
+  // console.log(data);
+  return res.json(data.data);
 });
 
-
-mongoose.connect('mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/Lancify?retryWrites=true&w=majority', () => {
-	app.listen(5500, () => {
-		console.log("connected to mongodb and server started in port 5500");
-	});
-})
+mongoose.connect(
+  "mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/Lancify?retryWrites=true&w=majority",
+  () => {
+    app.listen(5500, () => {
+      console.log("connected to mongodb and server started in port 5500");
+    });
+  }
+);
