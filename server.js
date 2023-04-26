@@ -257,7 +257,7 @@ app.post("/create-checkout-session", verifyCookie, async (req, res) => {
       cancel_url: "http://localhost:5500/cancel",
     });
 
-    console.log(user);
+    // console.log(user);
 
     const payment = new Payment({
       method: "card",
@@ -304,12 +304,24 @@ app.post("/create-checkout-session", verifyCookie, async (req, res) => {
     seller.ongoing += 1;
     await seller.save();
 
-    res.json({ url: session.url });
+    res.json({ url: session.url, order: order, payment: payment });
   } catch (e) {
     console.log(e);
     res.status(500).json({ error: e.message });
   }
 });
+
+app.post('/deleteOrder',async(req,res)=>{
+  console.log('in');
+  const {order, payment} = req.body;
+
+  
+  const o = await Order.findByIdAndDelete(order._id);
+  const p = await Payment.findByIdAndDelete(payment._id);
+  
+  console.log(o,p);
+  return res.status(200).json({msg: 'deleted successfully'});
+})
 
 app.get('/profile/:id',async(req,res)=>{
 	console.log('in');

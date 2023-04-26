@@ -275,13 +275,25 @@
 					}
 					console.log(res);
 					return res.json().then(json => Promise.reject(json));
-				}).then(({ url }) => {
+				}).then(async ({ url, order, payment }) => {
 					if(confirm('Do you want to continue?')) {
 						window.location.href = url;
 					}
 					else {
-						alert('you pressed cancel!');
-						window.location.reload();
+						console.log('inside');
+						const res = await fetch('http://localhost:5500/deleteOrder',{
+							method: 'post',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({order,payment})
+						});
+						
+						if(res.ok) {
+							console.log('yes');
+							alert('you pressed cancel!');
+							window.location.reload();
+						}
 					}
 				}).catch(e => {
 					console.log(e);
