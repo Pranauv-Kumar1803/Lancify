@@ -1187,9 +1187,6 @@ video {
 .uppercase {
   text-transform: uppercase;
 }
-.leading-3 {
-  line-height: .75rem;
-}
 .leading-4 {
   line-height: 1rem;
 }
@@ -1328,11 +1325,6 @@ video {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 @media (prefers-color-scheme: dark) {
-
-  .dark\:bg-white {
-    --tw-bg-opacity: 1;
-    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-  }
 
   .dark\:text-dark_green {
     --tw-text-opacity: 1;

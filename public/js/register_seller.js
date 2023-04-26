@@ -116,7 +116,7 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
         return;
     }
     
-    const y = new Date().getFullYear();
+    const y = new Date().getFullYear() + 4;
     if(year > y || y-year > 100) {
         alert('invalid year provided');
         showTab(1);
@@ -182,6 +182,8 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
             'Content-Type': 'application/json'
         }
     })
+
+    console.log(res);
 
     if (res.ok) {
         alert('registration successful');

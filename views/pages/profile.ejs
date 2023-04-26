@@ -60,176 +60,200 @@
 </head>
 
 <body style="background-color:#425e5e;">
-  
-   <%- include('../partials/navbar.ejs',{isLoggedIn: login}) %>
 
-  <h1 class="mx-auto text-3xl text-white text-center">User Profile</h1>
-  <div class="outer" style="display:flex">
-    <div class="leftouter" style="display:block;width:30%;">
+  <%- include('../partials/navbar.ejs',{isLoggedIn: login}) %>
 
-      <div class="box innerleft" style="border:1%;border-radius:2px;padding:1% 0% 0% 0%;">
-        <div
-          style="display:flex;width:auto;margin: 5%;padding: 0% 0% 0% 5%;border-radius: 2%;background-color:#e2dfdf;justify-content:space-between;">
-          <div sytle="position: absolute;cursor: pointer;right: 2%;top:5px;">
-            <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
-            <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
-            <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
+    <h1 class="mx-auto text-3xl text-white text-center">User Profile</h1>
+    <div class="outer" style="display:flex">
+      <div class="leftouter" style="display:block;width:30%;">
+
+        <div class="box innerleft" style="border:1%;border-radius:2px;padding:1% 0% 0% 0%;">
+          <div
+            style="display:flex;width:auto;margin: 5%;padding: 0% 0% 0% 5%;border-radius: 2%;background-color:#e2dfdf;justify-content:space-between;">
+            <div sytle="position: absolute;cursor: pointer;right: 2%;top:5px;">
+              <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
+              <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
+              <div class="line" style="color:#e2dfdf;width:15px;height:2px;"></div>
+            </div>
+            <div class="icon" style="width:100%;padding-top:5%;justify-content:center;align-items:center;">
+              <img src="<%= user.user_img %>" alt="profile pic" style="width:50%;border-radius:50%">
+            </div>
           </div>
-          <div class="icon" style="width:100%;padding-top:5%;justify-content:center;align-items:center;">
-            <img src="<%= user.user_img %>" alt="profile pic" style="width:50%;border-radius:50%">
+          <div>
+            <h2><a class="heading1" href="#Tech-O-web" style="color:#425e5e;">
+                <%= user.username %>
+              </a></h2>
+            <p style="color:#425e5e;padding-top:0%;">
+              <%= seller.seller_desc %>
+            </p>
+          </div>
+
+          <div class="button-click">
+            <button><a style="text-decoration:none;">Contact me</a></button>
+            <button><a style="text-decoration:none;">Get a Quote</a></button>
+          </div>
+          <div style="padding:2% 10% 2% 10%;">
+            <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+          </div>
+          <div style="display:flex;color:#425e5e;">
+            <div style="text-align:left;width:45%;">
+              <ul style="text-decoration:none;list-style-type:none;">
+                <li style="padding:5%;">Member since <%= seller.seller_from %>
+                </li>
+                <li style="padding:5%;">Avg. response time : 5hrs</li>
+              </ul>
+            </div>
+            <div style="text-align:right;width:45%;">
+              <ul style="text-decoration:none;list-style-type:none;">
+                <li style="padding:5%;">
+                  <%= seller.country %>
+                </li>
+              </ul>
+            </div>
+
           </div>
         </div>
-        <div>
-          <h2><a class="heading1" href="#Tech-O-web" style="color:#425e5e;"><%= user.username %></a></h2>
-          <p style="color:#425e5e;padding-top:0%;"><%= seller.seller_desc %></p>
-        </div>
 
-        <div class="button-click">
-          <button><a style="text-decoration:none;">Contact me</a></button>
-          <button><a style="text-decoration:none;">Get a Quote</a></button>
-        </div>
-        <div style="padding:2% 10% 2% 10%;">
-          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
-        </div>
-        <div style="display:flex;color:#425e5e;">
-          <div style="text-align:left;width:45%;">
-            <ul style="text-decoration:none;list-style-type:none;">
-              <li style="padding:5%;">Member since <%= seller.seller_from %></li>
-              <li style="padding:5%;">Avg. response time : 5hrs</li>
+        <div class="box innerleft button-click"
+          style="text-align:left;border:1%;border-radius:2px;padding:1% 0% 0% 0%;color:#425e5e">
+          <div style="text-align:left;display:flex;padding:8% 0% 0% 10%;"><strong>Some of projects</strong>
+          </div>
+          <div>
+            <ul class="links" style="list-style-type:none;padding:2% 10% 8% 10%;">
+              <li style="padding-bottom:5%;"><a href="#project1">Maxority management</a></li>
+              <li style="padding-bottom:5%;"><a href="#project2">Ultron AI</a></li>
             </ul>
           </div>
-          <div style="text-align:right;width:45%;">
-            <ul style="text-decoration:none;list-style-type:none;">
-              <li style="padding:5%;"><%= seller.country %></li>
+        </div>
+
+        <div class="box innerleft" style="color:#425e5e; border:1%;border-radius:2px;padding:1% 0% 0% 0%;">
+
+          <div style="text-align:left;padding-left:10%;">
+            <h3>
+              <%= seller.seller_desc %>
+            </h3>
+          </div>
+
+          <div style="padding:2% 10% 2% 10%;">
+            <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+          </div>
+
+          <div>
+            <ul style="list-style: none;text-align:left;">
+              <li><strong>Languages</strong></li>
+              <% seller.languages.forEach((l)=>{ %>
+                <li style="padding-top:6%;">
+                  <%= l %> <span style="opacity:0.7;"> -Fluent</span>
+                </li>
+                <% }) %>
+            </ul>
+          </div>
+
+          <div style="padding:2% 10% 2% 10%;">
+            <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+          </div>
+
+          <div class="links">
+            <ul style="list-style: none;text-align:left;">
+              <li><strong>Linked accounts</strong></li>
+              <li style="padding-top:6%;"><a href="<%= seller.linkedin %>">Linkedin</a></li>
+              <li style="padding-top:6%;"><a href="<%= seller.github %>">Github</a></li>
+              <li style="padding-top:6%;"><a href="<%= seller.stackOverflow %>">Stack Overflow</a></li>
+            </ul>
+          </div>
+
+          <div style="padding:2% 10% 2% 10%;">
+            <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+          </div>
+
+          <div style="padding:2% 10% 2% 10%;">
+            <hr style="color:#425e5e;height:3px;background-color:#425e5e">
+          </div>
+
+          <div>
+            <ul style="list-style: none;text-align:left;">
+              <li><strong>Education</strong></li>
+              <li style="padding-top:6%;">B.A. - Bachelor In Information Technology <br> <span style="opacity:0.7;">
+                  <%= seller.degree_title %> - <%= seller.degree_major %>
+                      <%= seller.institute %>, <%= seller.year_education %>
+                </span></li>
             </ul>
           </div>
 
         </div>
       </div>
 
-      <div class="box innerleft button-click" style="text-align:left;border:1%;border-radius:2px;padding:1% 0% 0% 0%;color:#425e5e">
-        <div style="text-align:left;display:flex;padding:8% 0% 0% 10%;"><strong>Some of projects</strong> 
-        </div>
-        <div >
-         <ul class="links" style="list-style-type:none;padding:2% 10% 8% 10%;">
-          <li style="padding-bottom:5%;"><a href="#project1">Maxority management</a></li>
-          <li style="padding-bottom:5%;"><a href="#project2">Ultron AI</a></li>
-         </ul>
-        </div>
-      </div>
+      <div class="rightOuter"
+        style="display:block;color:#425e5e;width:70%;border:1%;border-radius:2px;padding:1% 0% 0% 0%;padding:7% 15% 15% 5%;">
+        <div><strong style="padding-left:45%;color:#e2dfdf">techoweb's gigs</strong></div>
+        <% services.forEach((s)=>{ %>
+          <div style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
+            <div class="box"
+              style="display:block;width:35%; border-color:#e2dfdf; border-width:2px;border-radius:2px;padding:0% 0% 0% 0%;">
 
-      <div class="box innerleft" style="color:#425e5e; border:1%;border-radius:2px;padding:1% 0% 0% 0%;">
+              <div>
+                <img src="<%= s.main_img %>" alt="gig propic" style="width:100%;">
+              </div>
 
-        <div style="text-align:left;padding-left:10%;">
-          <h3><%= seller.seller_desc %></h3>
-        </div>
+              <div style="padding:5% 0% 0% 0%;">
+                <strong style="padding:3% 0% 1% 0%;">
+                  <%= s.seller_fname %>
+                </strong><br>
+              </div>
 
-        <div style="padding:2% 10% 2% 10%;">
-          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
-        </div>
+              <div style="padding:0% 8% 0% 8%;">
+                <hr style="color:#425e5e;height:3px;background-color:#425e5e;">
+              </div>
 
-        <div>
-          <ul style="list-style: none;text-align:left;">
-            <li><strong>Languages</strong></li>
-            <% seller.languages.forEach((l)=>{ %>
-              <li style="padding-top:6%;"><%= l %> <span style="opacity:0.7;"> -Fluent</span></li>
-            <% }) %>
-          </ul>
-        </div>
+              <div style="padding:4% 0% 10% 0%;">
+                <a href="#gig" style="text-decoration:none;color:#425e5e;">
+                  <%= s.seller_title %>
+                </a>
+              </div>
 
-        <div style="padding:2% 10% 2% 10%;">
-          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
-        </div>
+              <div style="padding:4% 0% 5% 0%;">
+                <strong style="text-align:left;color:#425e5e">★ <%= seller.rating %><span style="opacity:0.8;">
+                      <%= seller.numberRating %>
+                    </span></strong>
+              </div>
 
-        <div class="links">
-          <ul style="list-style: none;text-align:left;">
-            <li><strong>Linked accounts</strong></li>
-            <li style="padding-top:6%;"><a href="<%= seller.linkedin %>">Linkedin</a></li>
-            <li style="padding-top:6%;"><a href="<%= seller.github %>">Github</a></li>
-            <li style="padding-top:6%;"><a href="<%= seller.stackOverflow %>">Stack Overflow</a></li>
-          </ul>
-        </div>
+              <div>
+                <hr style="color:#425e5e;height:3px;background-color:#425e5e;">
+              </div>
 
-        <div style="padding:2% 10% 2% 10%;">
-          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
-        </div>
-
-        <div style="padding:2% 10% 2% 10%;">
-          <hr style="color:#425e5e;height:3px;background-color:#425e5e">
-        </div>
-
-        <div>
-          <ul style="list-style: none;text-align:left;">
-            <li><strong>Education</strong></li>
-            <li style="padding-top:6%;">B.A. - Bachelor In Information Technology <br> <span style="opacity:0.7;">
-              <%= seller.degree_title %> - <%= seller.degree_major %> <%= seller.institute %>, <%= seller.year_education %></span></li>
-          </ul>
-        </div>
-
+              <div>
+                <div style="text-align:right;padding:0% 5% 5% 5%;">
+                  <span style="font:100%;"><span style="font:30%;">Starting at</span><br>
+                    <%= s.starting_price %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }) %>
       </div>
     </div>
 
-    <div class="rightOuter"
-      style="display:block;color:#425e5e;width:70%;border:1%;border-radius:2px;padding:1% 0% 0% 0%;padding:7% 15% 15% 5%;">
-      <div><strong style="padding-left:5%;color:#e2dfdf">techoweb's gigs</strong></div>
-      <% services.forEach((s)=>{ %>
-        <div class="box"
-          style="display:block;width:35%; border-color:#e2dfdf; border-width:2px;border-radius:2px;padding:0% 0% 0% 0%;">
-  
-          <div>
-            <img src="/public/images/webdev.jpg" alt="gig propic" style="width:100%;">
-          </div>
-  
-          <div style="padding:5% 0% 0% 0%;">
-            <strong style="padding:3% 0% 1% 0%;"><%= s.seller_fname %></strong><br>
-          </div>
-  
-          <div style="padding:0% 8% 0% 8%;">
-            <hr style="color:#425e5e;height:3px;background-color:#425e5e;">
-          </div>
-  
-          <div style="padding:4% 0% 10% 0%;">
-            <a href="#gig" style="text-decoration:none;color:#425e5e;"><%= s.seller_title %></a>
-          </div>
-  
-          <div style="padding:4% 0% 5% 0%;">
-            <strong style="text-align:left;color:#425e5e">★ <%= seller.rating %><span style="opacity:0.8;"><%= seller.numberRating %></span></strong>
-          </div>
-  
-          <div>
-            <hr style="color:#425e5e;height:3px;background-color:#425e5e;">
-          </div>
-  
-          <div>
-            <div style="text-align:right;padding:0% 5% 5% 5%;">
-             <span style="font:100%;"><span style="font:30%;">Starting at</span><br><%= s.starting_price %></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <% }) %>
-  </div>
+    <%- include('../partials/footer.ejs') %>
 
-  <%- include('../partials/footer.ejs') %>
+      <script>
+        function user_session_check() {
+          if (document.cookie.split(';')[0].split('=')[0] !== 'user') {
+            return false;
+          }
+          return true;
+        }
 
-  <script>
-    function user_session_check() {
-      if (document.cookie.split(';')[0].split('=')[0] !== 'user') {
-        return false;
-      }
-      return true;
-    }
-
-    function dropdownmenu() {
-      var x = document.getElementById("dropdownclick");
-      if (x.classname === "topnav") {
-        x.classname += " responsive";
-        /* change topnav to topnav.responsive */
-      } else {
-        x.classname = "topnav";
-      }
-    }
-  </script>
+        function dropdownmenu() {
+          var x = document.getElementById("dropdownclick");
+          if (x.classname === "topnav") {
+            x.classname += " responsive";
+            /* change topnav to topnav.responsive */
+          } else {
+            x.classname = "topnav";
+          }
+        }
+      </script>
 </body>
 
 </html>

@@ -262,7 +262,7 @@ app.post("/create-checkout-session", verifyCookie, async (req, res) => {
     const payment = new Payment({
       method: "card",
       price: parseInt(price),
-      grand_total: parseInt(price) + 10,
+      grand_total: parseInt(price) + 0.01 * parseInt(price),
       taxes: 0.01 * parseInt(price),
       seller_id: service.seller_id,
       user_id: req.user,
@@ -287,7 +287,7 @@ app.post("/create-checkout-session", verifyCookie, async (req, res) => {
 			timeline: [
 				{
 					"date": new Date(),
-					"title": user.username + " : bought this service to build a MERN stack website",
+					"title": user.username + " : bought this service",
 					"message": "order successfully bought!"
 				},
 				{

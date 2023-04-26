@@ -14,7 +14,7 @@ router.post("/discussions", async (req, res) => {
 });
 
 router.get("/order/:id", async (req, res) => {
-  const order = await Order.findById(req.params.id).populate("service_id");
+  const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
   const user = await User.findOne({ user_id: req.user });
 
   if (!order) {
@@ -123,6 +123,7 @@ router.post("/order/:id/acceptAndClose", async (req, res) => {
       title: `This Order has been accepted and closed by ${user.username}`,
       date: d,
     });
+    order.rating = false;
     await order.save();
 
     seller.completed += 1;
