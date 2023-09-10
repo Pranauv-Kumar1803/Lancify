@@ -98,19 +98,22 @@ signup_form.addEventListener("submit", async (e) => {
 });
 
 const signin_form = document.getElementById("signin-form");
-
+const totalsumm = document.querySelector(".total-summary");
 signin_form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = signin_form.querySelector("#email").value;
   const password = signin_form.querySelector("#password").value;
-
   if (!isValidEmail(email)) {
-    alert("Invalid email address.");
+    totalsumm.textContent = "Invalid email";
+    totalsumm.classList.remove("hide");
+    totalsumm.classList.add("show");
     return;
   }
 
   if (password === "") {
-    alert("Password is required.");
+    totalsumm.textContent = "Incorrect password";
+    totalsumm.classList.remove("hide");
+    totalsumm.classList.add("show");
     return;
   }
 
@@ -124,7 +127,9 @@ signin_form.addEventListener("submit", async (e) => {
   });
 
   if (!res.ok) {
-    alert("User Not Found / Server Error");
+    totalsumm.textContent = "User not found";
+    totalsumm.classList.remove("hide");
+    totalsumm.classList.add("show");
     signin_form.reset();
   } else {
     document.querySelector(".spinnerrr").classList.remove("spin-hide");
