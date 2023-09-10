@@ -17,10 +17,89 @@
      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
      <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
      <link href="/css/loginCumSignup.css" rel="stylesheet" type="text/css">
+     <style>
+          .err {
+               color: red;
+          }
+
+          .hide {
+               display: none !important;
+          }
+
+          .show {
+               display: inline !important;
+          }
+
+          .flexii {
+               display: flex !important;
+          }
+
+          .sign-suc-message {
+               display: none;
+               justify-content: center;
+               align-items: center;
+               height: 10vh;
+          }
+
+          .sign-suc-message p {
+               color: black;
+               background: rgba(63, 225, 119, 0.727);
+               border-radius: 10px;
+               box-shadow: 0 4px 12px rgba(18, 18, 18, 0.182);
+               padding: 20px;
+               text-align: center;
+               font-size: 18px;
+               /* color: #fff; */
+               text-shadow: 4px 4px 4px rgba(244, 229, 229, 0.966);
+          }
+
+          .spin-block {
+               display: block !important;
+          }
+
+          .spin-hide {
+               display: none;
+          }
+
+          .spinnerrr {
+               width: 50px;
+               height: 50px;
+               border: 4px solid rgba(0, 0, 0, 0.2);
+               border-top: 4px solid #1eec4e;
+               /* Change the color as desired */
+               border-radius: 50%;
+               animation: spin 1s linear infinite;
+               margin: 0 auto;
+               margin-top: 2vh;
+               margin-bottom: 3vh;
+               /* Center vertically on the viewport */
+          }
+
+          @keyframes spin {
+               0% {
+                    transform: rotate(0deg);
+               }
+
+               100% {
+                    transform: rotate(360deg);
+               }
+          }
+     </style>
 </head>
 
 
 <body>
+
+     <div class="sign-suc-message">
+          <p class="lg">Signup Successful !</p>
+     </div>
+
+     <div class="sign-suc-message xism">
+          <p class="lg">Login Successful !</p>
+     </div>
+
+     <div class="spinnerrr spin-hide"></div>
+
      <div class="partii">
           <div class="container main--container" id="container" style="z-index: 10;">
                <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style="display: none;">
@@ -32,12 +111,23 @@
                <div class="signup-page--container sign-up-container">
                     <form action="#" id="signup-form" method="post" autocomplete="off">
                          <h2>Join Lancify Now</h2>
-                         <input type="text" id="name" placeholder="Name *" class="name--inp" required />
-
+                         <input type="text" id="name" placeholder="Name *" class="name--inp" />
+                         <span class="name-err hide err">
+                              Name is taken
+                         </span>
                          <input type="email" id="email" placeholder="Email *" class="mail--inp" required />
+                         <span class="email-err hide err">
+                              Email is taken
+                         </span>
+
 
                          <input type="password" id="password" class="password--inp" placeholder="Password *"
                               pattern=".{5,50}" required />
+
+                         <span class="password-err hide err lg">
+                              password should contain atleast one digit one special character ,one uppercase letter
+                         </span>
+
 
                          <input type="password" id="confirmpassword" class="conpassword--inp"
                               placeholder="Confirm Password *" pattern=".{5,50}" required>
