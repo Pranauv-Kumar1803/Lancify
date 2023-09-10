@@ -57,7 +57,7 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
     const year = document.getElementById('year').value;
     let portfolio = document.getElementById('portfolio').value;
     let github = document.getElementById('github').value;
-    let stack = document.getElementById('stack-overflow').value;
+    let stack = document.getElementById('twitter').value;
     let linkedin = document.getElementById('linkedin').value;
 
     console.log(title,major,year,portfolio,github,stack,linkedin,country,occupation,institute_name,languages,fname,lname,desc);
@@ -65,54 +65,63 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
     if (fname.length < 5) {
         alert('first name must be atleast 5 characters in length');
         showTab(0);
+        currentTab = 0;
         return;
     }
 
     if (lname.length < 5) {
         alert('last name must be atleast 5 characters in length');
         showTab(0);
+        currentTab = 0;
         return;
     }
     
     if (desc.length < 50) {
         alert('description must be atleast 50 characters in length');
         showTab(0);
+        currentTab = 0;
         return;
     }
     
     if (profile.files.length === 0) {
         alert('select one file atleast');
         showTab(0);
+        currentTab = 0;
         return;
     }
     
     if (languages === 'None') {
         alert('select atleast one language');
         showTab(0);
+        currentTab = 0;
         return;
     }
 
     if (occupation.length < 5) {
         alert('occupation must be atleast 5 characters in length');
         showTab(1);
+        currentTab = 1;
         return;
     }
 
     if (country.length < 2) {
         alert('country name must be atleast 5 characters in length');
         showTab(1);
+        currentTab = 1;
         return;
     }
 
     if (institute_name.length < 5) {
         alert('institute name must be atleast 5 characters in length');
         showTab(1);
+        currentTab = 1;
         return;
     }
     
     if (title.length < 2) {
         alert('title name must be atleast 2 characters in length');
         showTab(1);
+        currentTab = 1;
         return;
     }
     
@@ -120,35 +129,40 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
     if(year > y || y-year > 100) {
         alert('invalid year provided');
         showTab(1);
+        currentTab = 1;
         return;
     }
 
     if ( portfolio.length>0 && portfolio.length < 15) {
         alert('portfolio link must be atleast 15 characters in length');
         showTab(1);
+        currentTab = 1;
         return;
     }
     else portfolio = ''
 
-    if (github.length>0 && github.length < 15) {
-        alert('github link must be atleast 15 characters in length');
+    if (github.length>0 && github.length < 10) {
+        alert('github link must be atleast 10 characters in length');
         showTab(2);
+        currentTab = 2;
         return;
     }
     else github = ''
 
 
-    if (stack.length>0 && stack.length < 15) {
-        alert('stack overflow link must be atleast 15 characters in length');
+    if (stack.length>0 && stack.length < 10) {
+        alert('Twitter link must be atleast 10 characters in length');
         showTab(2);
+        currentTab = 2;
         return;
     }
     else stack = ''
 
 
-    if (linkedin.length < 15) {
-        alert('linkedin profile link must be atleast 15 characters in length');
+    if (linkedin.length < 10) {
+        alert('linkedin profile link must be atleast 10 characters in length');
         showTab(2);
+        currentTab = 2;
         return;
     }
 
@@ -198,6 +212,7 @@ document.getElementById("signUpForm").addEventListener('submit', async (e) => {
 function nextPrev(n) {
     var x = document.getElementsByClassName("step");
 
+    console.log(currentTab)
     if (n == 1 && !validateForm()) return false;
 
     x[currentTab].style.display = "none";
@@ -205,7 +220,7 @@ function nextPrev(n) {
     currentTab = currentTab + n;
 
     if (currentTab >= x.length) {
-        document.getElementById("signUpForm").requestSubmit();
+        document.getElementById("signUpForm").requestSubmit();  
         return false;
     }
     showTab(currentTab);
@@ -218,7 +233,7 @@ function validateForm() {
 
     for (i = 0; i < y.length; i++) {
         console.log(y[i].id);
-        if(( y[i].id == 'portfolio' || y[i].id == 'linkedin' || y[i].id == 'github' || y[i].id == 'stack-overflow' ))
+        if(( y[i].id == 'portfolio' || y[i].id == 'linkedin' || y[i].id == 'github' || y[i].id == 'stack-overflow' || y[i].id == 'profile' ))
         {
             valid = true;
         }

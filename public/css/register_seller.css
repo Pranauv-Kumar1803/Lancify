@@ -2,6 +2,7 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+
 #signUpForm {
     max-width: 50%;
     background-color: #ffffff;
@@ -125,3 +126,24 @@ body {
     background-color: #fff !important;
     color: #009688 !important;
 }
+
+.required::after {
+    content: ' *';
+    color: red;
+  }
+
+  .req::after {
+    content: ' ';
+  }
+
+  .occupation{
+    border: 1px solid #e3e3e3;
+    width: 100%;
+    color: grey;
+    opacity: 0.75;
+    height: 50px;
+    border-radius: 5px;
+    padding-left: 15px;
+    margin-bottom: 3px;
+  }
+

@@ -61,7 +61,29 @@
                    const b = await toBase64(img);
                    image = b;
                }
-               
+
+               if (name === "") {
+                    alert("Name is required");
+                    return;
+               }
+
+               if (!isValidEmail(email)) {
+                    alert("Invalid email address");
+                    return;
+               }
+
+               if (password.length >=1 && password.length < 7) {
+                    alert("Password must be at least 7 characters long.");
+                    return;
+               }
+
+               if (password.length >=1 && !isValidPassword(password)) {
+                    alert(
+                         "password should contain atleast one digit one special character ,one uppercase letter"
+                    );
+                    return;
+               }
+          
                let obj = {};
                obj = {name, email, password, image};
 
@@ -82,6 +104,16 @@
                     window.location.reload();
                }
           })
+
+          function isValidEmail(email) {
+               const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+               return emailRegex.test(email);
+          }
+
+          function isValidPassword(password) {
+               const passWordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\[\]|\\:;"'<,>.?/])[A-Za-z\d!@#$%^&*()_+={}\[\]|\\:;"'<,>.?/]{7,}$/;
+               return passWordRegex.test(password);
+          }
      </script>
 
      <%- include('../partials/footer.ejs') %>
