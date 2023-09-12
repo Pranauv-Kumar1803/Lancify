@@ -14,279 +14,340 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    .spin-block {
+      display: block !important;
+    }
+
+    .spin-hide {
+      display: none;
+    }
+
+    .spinnerrr {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(0, 0, 0, 0.2);
+      border-top: 4px solid #1eec4e;
+      /* Change the color as desired */
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+      margin-top: 2vh;
+      margin-bottom: 3vh;
+      /* Center vertically on the viewport */
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
 
 <body>
-
+  <p hidden="true" id="profile_type">seller</p>
   <%- include('../partials/navbar.ejs',{isLoggedIn:true}) %>
 
-  <div class="p-2 flex flex-row w-full justify-center w-full">
-    <ul class="p-2 flex flex-row justify-between items-center">
-      <li style="list-style: none;" class="p-3">
-        <a href="/" class="active" style="text-decoration: none; color: black;">
-          <i class='bx bx-home'></i>
-          <span class="links_name">Home</span>
-        </a>
-      </li>
-      <li style="list-style: none;" class="p-3">
-        <a href="#" class="active" id="dash-default" style="text-decoration: none; color: black;">
-          <i class='bx bx-grid-alt'></i>
-          <span class="links_name">Dashboard</span>
-        </a>
-      </li>
-      <li style="list-style: none;" class="p-3">
-        <a href="#" id="profile" style="text-decoration: none; color: black;">
-          <i class='bx bx-user'></i>
-          <span class="links_name">Profile</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="section--hero current-active the-overview bg-dark_green text-white">
-    <div class="main--heading">
-      <h2 class="waver">Hey There Fellow Lancifier 
-        <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" style="display: inline;" class="emo"
-          alt="hand">
-
-      </h2>
+    <div class="p-2 flex flex-row w-full justify-center w-full">
+      <ul class="p-2 flex flex-row justify-between items-center">
+        <li style="list-style: none;" class="p-3">
+          <a href="/" class="active" style="text-decoration: none; color: black;">
+            <i class='bx bx-home'></i>
+            <span class="links_name">Home</span>
+          </a>
+        </li>
+        <li style="list-style: none;" class="p-3">
+          <a href="#" class="active" id="dash-default" style="text-decoration: none; color: black;">
+            <i class='bx bx-grid-alt'></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li style="list-style: none;" class="p-3">
+          <a href="#" id="profile" style="text-decoration: none; color: black;">
+            <i class='bx bx-user'></i>
+            <span class="links_name">Profile</span>
+          </a>
+        </li>
+      </ul>
     </div>
 
-    <div class="head--customer--info">
-      <h3>Your growth & progess so far</h3>
+    <div class="section--hero current-active the-overview bg-dark_green text-white" id="somethin">
+    <div class="spinnerrr spin-hide"></div>
     </div>
 
-    <div class="alig-horz text-dark_green">
-      <div class="item--flex-in">
-        <div class="title-head">
-          Ongoing Projects 🔥
-        </div>
-        <div class="count">
-          <%= seller.ongoing %>
-        </div>
-      </div>
+    <div class="section--hero the-profile current-not-active bg-dark_green text-white">
+      <section class="profile-section text-dark_green w-full py-0">
+        <div class="container mt-5">
+          <div class="row d-flex justify-content-center">
 
-      <div class="item--flex-in">
-        <div class="title-head">
-          Completed Projects 🔗
-        </div>
-        <div class="count">
-          <%= seller.completed %>
-        </div>
-      </div>
+            <div class="col-md-7">
 
-      <div class="item--flex-in">
-        <div class="title-head">
-          Ratings®️ (<%= seller.numberRating %>)
-        </div>
-        <div class="count">
-          <%= seller.rating %>
-        </div>
-      </div>
-
-      <div class="item--flex-in">
-        <div class="title-head">
-          Account Balance
-        </div>
-        <div class="count">
-          <%= seller.balance %>
-        </div>
-      </div>
-    </div>
-
-    <div class="main--heading">
-      <h2 class="waver">Your gigs
-        <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" class="emo" alt="hand"
-          style="display: inline;">
-      </h2>
-    </div>
-
-    <div class="alig-horz text-dark_green" >
-      <% for( let index=0; index < gigs.length; index++ ) { %>
-        <div class="testing--dash p-2 cursor-pointer text-center some">
-          <div>
-            <img src="<%= gigs[index]['main_img'] %>" alt="Service picture">
-          </div>
-          <p class="hidden" id="previewGig"><%= gigs[index]['_id'] %></p>
-          <div class="description mx-2 px-4 py-1 my-1 text-center">
-            <%= gigs[index]['seller_title'] %>
-          </div>
-          <div class="price count">
-            Starting Price : ₹<%=gigs[index]['starting_price'] %>
-          </div>
-        </div>
-        <% } %>
-      </div>
-      <button class="btn bg-white text-dark_green" onclick="window.location.href = '/app/create-gig'"> Create A Gig! </button>
-    <div class="main--heading">
-      <h2 class="waver">Your completed orders</h2>
-    </div>
-  
-    <div class="alig-horz text-dark_green">
-        <% if(orders.length > 0) { %>
-            <% for( let index=0; index < orders.length; index++ ) { %>
-                <div class="testing--dash p-2 cursor-pointer text-center completed">
-                    <div>
-                        <img src="<%= orders[index].service_id.main_img %>" alt="Service picture">
-                    </div>
-                    <p class="hidden" id="viewFinishedOrder"><%= orders[index]['_id'] %></p>
-                    <div class="description mx-2 px-4 py-1 my-1 text-center">
-                        <%= orders[index].service_id.seller_title %>
-                    </div>
-                    <div class="price count">
-                        Buyer : <%= orders[index].user_name %>
-                    </div>
-                </div>
-            <% } %>
-        <% } else { %>
-            <h1 class="text-center text-white mx-auto text-2xl"> No completed Orders!</h1>
-        <% } %> 
-    </div>
-  
-    <div class="main--heading">
-      <h2 class="waver">Your ongoing orders</h2>
-    </div>
-  
-    <div class="alig-horz text-dark_green">
-        <% if(ongoing.length > 0) { %>
-            <% for( let index=0; index < ongoing.length; index++ ) { %>
-                <div class="testing--dash p-2 cursor-pointer text-center ongoing">
-                    <div>
-                        <img src="<%= ongoing[index].service_id.main_img %>" alt="Service picture">
-                    </div>
-                    <p class="hidden" id="viewOngoingOrder"><%= ongoing[index]['_id'] %></p>
-                    <div class="description mx-2 px-4 py-1 my-1 text-center">
-                        <%= ongoing[index].service_id.seller_title %>
-                    </div>
-                    <div class="price count">
-                        Buyer : <%= ongoing[index].user_name %>
-                    </div>
-                </div>
-            <% } %>
-        <% } else { %>
-            <h1 class="text-center text-white mx-auto text-2xl"> No pending Orders!</h1>
-        <% } %> 
-    </div>
-  </div>
-
-  <div class="section--hero the-profile current-not-active bg-dark_green text-white">
-    <section class="profile-section text-dark_green w-full py-0">
-      <div class="container mt-5">
+              <div class="card p-3" id="prof_card">
 
 
-        <div class="row d-flex justify-content-center">
-
-          <div class="col-md-7">
-
-            <div class="card p-3">
-
-              <div class="text-center flex mx-auto">
-                <img src="<%= user.user_img %>" class="w-14 h-14 rounded-full flex-shrink-0 object-cover object-center">
               </div>
 
-              <div class="text-center mt-3">
-                <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
-                <h5 class="mt-2 mb-0"><%= user.username %></h5>
-
-                <div class="px-4 mt-1">
-                  <p class="fonts"><%= seller.seller_desc %></p>
-                </div>
-
-                <ul class="social-list">
-                  <li><i class="fa fa-github"></i></li>
-                  <li><i class="fa fa-facebook"></i></li>
-                  <li><i class="fa fa-linkedin"></i></li>
-                </ul>
-
-                <div class="buttons">
-                  <button class="btn btn-outline-primary px-4" onclick="window.location.href='/app/edit'">Update Profile</button>
-                  <button class="btn btn-outline-primary px-4" id="delete">Delete Profile</button>
-                </div>
-              </div>
             </div>
 
           </div>
 
         </div>
+      </section>
+    </div>
 
+    <%- include('../partials/footer.ejs') %>
+
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+
+      <script>
+
+        const func2 = async () => {
+          document.querySelector('#dash-default').addEventListener('click', e => {
+            document.querySelector('.the-profile').classList.remove('current-active');
+            document.querySelector('.the-profile').classList.add('current-not-active');
+            document.querySelector('.the-overview').classList.add('current-active');
+          })
+
+          document.getElementById('profile').addEventListener('click', (e) => {
+            document.querySelector('.the-profile').classList.add('current-active');
+            document.querySelector('.the-profile').classList.remove('current-not-active');
+            document.querySelector('.the-overview').classList.add('current-not-active');
+            document.querySelector('.the-overview').classList.remove('current-active')
+
+          });
+
+          const some = document.getElementsByClassName('some');
+          Array.from(some).forEach((s) => {
+            s.addEventListener('click', () => {
+              const id = s.querySelector('#previewGig').innerHTML;
+              window.location.href = `/app/product/${id}/preview`;
+            })
+          })
+
+          const ongoing = document.getElementsByClassName('ongoing');
+          Array.from(ongoing).forEach((s) => {
+            s.addEventListener('click', () => {
+              const id = s.querySelector('#viewOngoingOrder').innerHTML;
+              window.location.href = `/app/order/${id}`;
+            })
+          })
+
+          const completed = document.getElementsByClassName('completed');
+          Array.from(completed).forEach((s) => {
+            s.addEventListener('click', () => {
+              const id = s.querySelector('#viewFinishedOrder').innerHTML;
+              window.location.href = `/app/order/${id}`;
+            })
+          })
+
+          const deleted = document.getElementById('delete');
+          deleted.addEventListener('click', async (e) => {
+            if (confirm('Do you want to continue and Delete you account forever?')) {
+              const res = await fetch('http://localhost:5500/app/delete', {
+                method: 'post'
+              });
+              if (res.ok) {
+                alert('account successfully deleted');
+                window.location.href = '/'
+              }
+              else {
+                alert('some error occured');
+                window.location.reload();
+              }
+            }
+            else {
+              alert('You have pressed cancel!');
+              window.location.reload()
+            }
+          })
+        }
+
+        const func = async () => {
+          const s = document.getElementById('profile_type').innerHTML;
+          document.querySelector(".spinnerrr").classList.remove("spin-hide");
+          document.querySelector(".spinnerrr").classList.add("spin-block");
+          const res = await fetch(`http://localhost:5500/app/getProfileData?type=${s}`);
+          const { seller, gigs, orders, ongoing, user } = await res.json();
+          document.querySelector(".spinnerrr").classList.remove("spin-block");
+          document.querySelector(".spinnerrr").classList.add("spin-hide");
+
+          let str = '';
+          str += `<div class="main--heading">
+        <h2 class="waver">Hey There Fellow Lancifier 
+          <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" style="display: inline;" class="emo"
+            alt="hand">
+        </h2>
       </div>
-    </section>
-  </div>
 
-  <%- include('../partials/footer.ejs') %>
+      <div class="head--customer--info">
+        <h3>Your growth & progess so far</h3>
+      </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
-    integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
-    crossorigin="anonymous"></script>
+      <div class="alig-horz text-dark_green">
+        <div class="item--flex-in">
+          <div class="title-head">
+            Ongoing Projects 🔥
+          </div>
+          <div class="count">
+            ${seller.ongoing}
+          </div>
+        </div>
 
-  <script>
+        <div class="item--flex-in">
+          <div class="title-head">
+            Completed Projects 🔗
+          </div>
+          <div class="count">
+            ${seller.completed}
+          </div>
+        </div>
 
-    document.querySelector('#dash-default').addEventListener('click', e => {
+        <div class="item--flex-in">
+          <div class="title-head">
+            Ratings®️ (${seller.numberRating})
+          </div>
+          <div class="count">
+            ${seller.rating}
+          </div>
+        </div>
 
-      document.querySelector('.the-profile').classList.remove('current-active');
-      document.querySelector('.the-profile').classList.add('current-not-active');
-      document.querySelector('.the-overview').classList.add('current-active');
-    })
+        <div class="item--flex-in">
+          <div class="title-head">
+            Account Balance
+          </div>
+          <div class="count">
+            ${seller.balance}
+          </div>
+        </div>
+      </div>
+      <div class="main--heading">
+        <h2 class="waver">Your gigs
+          <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" class="emo" alt="hand"
+            style="display: inline;">
+        </h2>
+      </div>
+      <div class="alig-horz text-dark_green" >
+      `;
 
-    document.getElementById('profile').addEventListener('click', (e) => {
-      document.querySelector('.the-profile').classList.add('current-active');
-      document.querySelector('.the-profile').classList.remove('current-not-active');
-      document.querySelector('.the-overview').classList.add('current-not-active');
-      document.querySelector('.the-overview').classList.remove('current-active')
 
-    });
+          for (let index = 0; index < gigs.length; index++) {
+            str += `
+          <div class="testing--dash p-2 cursor-pointer text-center some">
+            <div>
+              <img src="${gigs[index]['main_img']}" alt="Service picture">
+            </div>
+            <p class="hidden" id="previewGig">${gigs[index]['_id']}</p>
+            <div class="description mx-2 px-4 py-1 my-1 text-center">
+              ${gigs[index]['seller_title']}
+            </div>
+            <div class="price count">
+              Starting Price : ₹${gigs[index]['starting_price']}
+            </div>
+          </div>`
+          }
 
-    const some = document.getElementsByClassName('some');
-    Array.from(some).forEach((s)=>{
-        s.addEventListener('click', () => {
-            const id = s.querySelector('#previewGig').innerHTML;
-            window.location.href = `/app/product/${id}/preview`;
-        })
-    })
+          str += `</div>
+        <button class="btn bg-white text-dark_green" onclick="window.location.href = '/app/create-gig'"> Create A Gig! </button>
+      <div class="main--heading">
+        <h2 class="waver">Your completed orders</h2>
+      </div>
+      <div class="alig-horz text-dark_green">`
 
-    const ongoing = document.getElementsByClassName('ongoing');
-    Array.from(ongoing).forEach((s)=>{
-        s.addEventListener('click', () => {
-            const id = s.querySelector('#viewOngoingOrder').innerHTML;
-            window.location.href = `/app/order/${id}`;
-        })
-    })
-    
-    const completed = document.getElementsByClassName('completed');
-    Array.from(completed).forEach((s)=>{
-        s.addEventListener('click', () => {
-            const id = s.querySelector('#viewFinishedOrder').innerHTML;
-            window.location.href = `/app/order/${id}`;
-        })
-    })
+          if (orders.length > 0) {
+            for (let index = 0; index < orders.length; index++) {
+              str += `<div class="testing--dash p-2 cursor-pointer text-center completed">
+                      <div>
+                          <img src="${orders[index].service_id.main_img}" alt="Service picture">
+                      </div>
+                      <p class="hidden" id="viewFinishedOrder">${orders[index]['_id']}</p>
+                      <div class="description mx-2 px-4 py-1 my-1 text-center">
+                          ${orders[index].service_id.seller_title}
+                      </div>
+                      <div class="price count">
+                          Buyer : ${orders[index].user_name}
+                      </div>
+                  </div>`
+            }
+          } else {
+            str += `<h1 class="text-center text-white mx-auto text-2xl"> No completed Orders!</h1>`
+          }
 
-    const deleted = document.getElementById('delete');
-    deleted.addEventListener('click',async(e)=>{
-      if(confirm('Do you want to continue and Delete you account forever?'))
-      {
-        const res = await fetch('http://localhost:5500/app/delete',{
-          method: 'post'
-        });
-        if(res.ok) {
-          alert('account successfully deleted');
-          window.location.href = '/'
+          str += `</div>  
+        <div class="main--heading">
+          <h2 class="waver">Your ongoing orders</h2>
+        </div>
+      <div class="alig-horz text-dark_green">`
+
+          if (ongoing.length > 0) {
+            for (let index = 0; index < ongoing.length; index++) {
+              str += `<div class="testing--dash p-2 cursor-pointer text-center ongoing">
+                    <div>
+                        <img src="${ongoing[index].service_id.main_img}" alt="Service picture">
+                    </div>
+                    <p class="hidden" id="viewOngoingOrder">${ongoing[index]['_id']}</p>
+                    <div class="description mx-2 px-4 py-1 my-1 text-center">
+                        ${ongoing[index].service_id.seller_title}
+                    </div>
+                    <div class="price count">
+                        Buyer : ${ongoing[index].user_name}
+                    </div>
+                </div>`
+            }
+          } else {
+            str += `<h1 class="text-center text-white mx-auto text-2xl"> No pending Orders!</h1>`
+          }
+
+          str += `</div>`
+
+          document.getElementById('somethin').innerHTML = str;
+
+          document.getElementById('prof_card').innerHTML = `
+      <div class="text-center flex mx-auto">
+        <img src="${user.user_img}" class="w-14 h-14 rounded-full flex-shrink-0 object-cover object-center">
+      </div>
+
+      <div class="text-center mt-3">
+        <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
+        <h5 class="mt-2 mb-0">${user.username}</h5>
+
+        <div class="px-4 mt-1">
+          <p class="fonts">${seller.seller_desc}</p>
+        </div>
+
+        <ul class="social-list">
+          <li><i class="fa fa-github"></i></li>
+          <li><i class="fa fa-facebook"></i></li>
+          <li><i class="fa fa-linkedin"></i></li>
+        </ul>
+
+        <div class="buttons">
+          <button class="btn btn-outline-primary px-4" onclick="window.location.href='/app/edit'">Update Profile</button>
+          <button class="btn btn-outline-primary px-4" id="delete">Delete Profile</button>
+        </div>
+      </div>
+      `
         }
-        else
-        {
-          alert('some error occured');
-          window.location.reload();
+
+        try {
+          func();
+          setTimeout(() => {
+            func2();
+          }, 2000);
+        } catch (err) {
+          alert('some error occurred');
         }
-      } 
-      else 
-      {
-        alert('You have pressed cancel!');
-        window.location.reload()
-      }
-    })
-  </script>
+      </script>
 
 
 </body>

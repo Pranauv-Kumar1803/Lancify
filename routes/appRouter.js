@@ -167,11 +167,64 @@ router.post("/order/:id/addTimeline/done", async (req, res) => {
   }
 });
 
-// shhow dashboard
+// show dashboard
 router.get("/profile", async (req, res) => {
   const user = await User.findOne({ user_id: req.user });
 
   if (req.cookies.admin) {
+	  // const sellers = await Seller.find();
+    // const services = await Service.find();
+    // const users = await User.find();
+    // const orders = await Order.find();
+
+    // const ratings = await Service.find({rating: true});
+    // console.log(ratings);
+    // const rating = await Seller.find({rating: {$ne: 0}});
+    // let r = 0, n=0;
+    // rating.forEach((p)=>{
+    //   r += p.rating;
+    //   n += 1;
+    // })
+    // r = r/n;
+
+    // if(ratings.length == 0) {
+    //   r = 0;
+    // }
+
+  	return res.render("pages/adminDash", {login: true});
+  }
+
+  if (user.user_type === "seller") {
+    // const gigs = await Service.find({ seller_id: req.user });
+    // const seller = await Seller.findOne({ seller_id: req.user });
+    // const seller_orders = await Order.find({
+    //   seller_id: req.user,
+    //   pending: false,
+    // }).populate("service_id");
+    // const ongoing = await Order.find({
+    //   seller_id: req.user,
+    //   pending: true,
+    // }).populate("service_id");
+    return res.render("pages/dash");
+  }
+
+  // const orders = await Order.find({
+  //   user_id: req.user,
+  //   pending: false,
+  // }).populate("service_id");
+  // const ongoing = await Order.find({
+  //   user_id: req.user,
+  //   pending: true,
+  // }).populate("service_id");
+  // console.log(orders);
+  res.render("pages/user_dash");
+});
+
+router.get("/getProfileData", async (req, res) => {
+  const user = await User.findOne({ user_id: req.user });
+  console.log('inside getProfileData');
+
+  if (req.query.type=="admin") {
 	  const sellers = await Seller.find();
     const services = await Service.find();
     const users = await User.find();
@@ -191,21 +244,24 @@ router.get("/profile", async (req, res) => {
       r = 0;
     }
 
-  	return res.render("pages/adminDash", { login: true, sellers, services, users, orders, ratings, r });
+  	return res.json({ sellers, services, users, orders, ratings, r });
   }
 
-  if (user.user_type === "seller") {
+  if (req.query.type === "seller") {
+    console.log(req.user);
     const gigs = await Service.find({ seller_id: req.user });
     const seller = await Seller.findOne({ seller_id: req.user });
     const seller_orders = await Order.find({
       seller_id: req.user,
       pending: false,
     }).populate("service_id");
+
     const ongoing = await Order.find({
       seller_id: req.user,
       pending: true,
     }).populate("service_id");
-    return res.render("pages/dash", {
+    
+    return res.json({
       user,
       seller,
       gigs,
@@ -218,12 +274,15 @@ router.get("/profile", async (req, res) => {
     user_id: req.user,
     pending: false,
   }).populate("service_id");
+
   const ongoing = await Order.find({
     user_id: req.user,
     pending: true,
   }).populate("service_id");
   console.log(orders);
-  res.render("pages/user_dash", { user, orders, ongoing });
+
+  return res.json({ user, orders, ongoing });
+
 });
 
 router.get("/user/edit", async (req, res) => {

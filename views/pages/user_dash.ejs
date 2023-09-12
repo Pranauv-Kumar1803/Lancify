@@ -14,10 +14,43 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .spin-block {
+          display: block !important;
+        }
+    
+        .spin-hide {
+          display: none;
+        }
+    
+        .spinnerrr {
+          width: 50px;
+          height: 50px;
+          border: 4px solid rgba(0, 0, 0, 0.2);
+          border-top: 4px solid #1eec4e;
+          /* Change the color as desired */
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin: 0 auto;
+          margin-top: 2vh;
+          margin-bottom: 3vh;
+          /* Center vertically on the viewport */
+        }
+    
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+    
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
 </head>
 
 <body>
-
+    <p hidden="true" id="profile_type">user</p>
     <%- include('../partials/navbar.ejs',{isLoggedIn:true}) %>
 
         <div class="p-2 flex flex-row w-full justify-center w-full">
@@ -43,65 +76,8 @@
             </ul>
         </div>
 
-        <div class="section--hero current-active the-overview bg-dark_green text-white">
-            <div class="main--heading">
-                <h2 class="waver">Hey There Fellow Lancifier
-                    <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" style="display: inline;"
-                        class="emo" alt="hand">
-
-                </h2>
-            </div>
-
-            
-            <div class="main--heading">
-                <h2 class="waver">Your previous orders</h2>
-            </div>
-
-            <div class="alig-horz text-dark_green">
-                <% if(orders.length > 0) { %>
-                    <% for( let index=0; index < orders.length; index++ ) { %>
-                        <div class="testing--dash p-2 cursor-pointer text-center some">
-                            <div>
-                                <img src="<%= orders[index].service_id.main_img %>" alt="Service picture">
-                            </div>
-                            <p class="hidden" id="viewOrder"><%= orders[index]['_id'] %></p>
-                            <div class="description mx-2 px-4 py-1 my-1 text-center">
-                                <%= orders[index].service_id.seller_title %>
-                            </div>
-                            <div class="price count">
-                                Seller : <%=orders[index].service_id.seller_name %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } else { %>
-                    <h1 class="text-center text-white mx-auto text-2xl"> No Orders Completely Received before!</h1>
-                <% } %> 
-            </div>
-            
-            <div class="main--heading">
-                <h2 class="waver">Your current and ongoing orders</h2>
-            </div>
-
-            <div class="alig-horz text-dark_green">
-                <% if(ongoing.length > 0) { %>
-                    <% for( let index=0; index < ongoing.length; index++ ) { %>
-                        <div class="testing--dash p-2 cursor-pointer text-center some">
-                            <div>
-                                <img src="<%= ongoing[index].service_id.main_img %>" alt="Service picture">
-                            </div>
-                            <p class="hidden" id="viewOrder"><%= ongoing[index]['_id'] %></p>
-                            <div class="description mx-2 px-4 py-1 my-1 text-center">
-                                <%= ongoing[index].service_id.seller_title %>
-                            </div>
-                            <div class="price count">
-                                Seller : <%=ongoing[index].service_id.seller_name %>
-                            </div>
-                        </div>
-                    <% } %>
-                <% } else { %>
-                    <h1 class="text-center text-white mx-auto text-2xl"> No Orders Placed Yet!</h1>
-                <% } %> 
-            </div>
+        <div class="section--hero current-active the-overview bg-dark_green text-white" id="somethin" style="padding-bottom: 40px;">
+            <div class="spinnerrr spin-hide"></div>
         </div>
 
         <div class="section--hero the-profile current-not-active bg-dark_green text-white">
@@ -112,36 +88,8 @@
 
                         <div class="col-md-7">
 
-                            <div class="card p-3">
+                            <div class="card p-3" id="prof_card">
 
-                                <div class="text-center flex mx-auto">
-                                    <img src="<%= user.user_img %>"
-                                        class="w-14 h-14 rounded-full flex-shrink-0 object-cover object-center">
-                                </div>
-
-                                <div class="text-center mt-3">
-                                    <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
-                                    <h5 class="mt-2 mb-0">
-                                        <%= user.username %>
-                                    </h5>
-
-                                    <div class="px-4 mt-1">
-                                        <p class="fonts text-center">
-                                            <%= user.email %>
-                                        </p>
-                                    </div>
-
-                                    <ul class="social-list">
-                                        <li><i class="fa-solid fa-envelope"></i> <a href="mailto:<%= user.email %>" _target="blank" >
-                                                Email </a> </li>
-                                    </ul>
-
-                                    <div class="buttons">
-                                        <button class="btn btn-outline-primary px-4"
-                                            onclick="window.location.href='/app/user/edit'">Update Profile</button>
-                                        <button class="btn btn-outline-primary px-4" id="delete">Delete Profile</button>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
@@ -162,53 +110,162 @@
                 crossorigin="anonymous"></script>
 
             <script>
-
-                document.querySelector('#dash-default').addEventListener('click', e => {
-
-                    document.querySelector('.the-profile').classList.remove('current-active');
-                    document.querySelector('.the-profile').classList.add('current-not-active');
-                    document.querySelector('.the-overview').classList.add('current-active');
-                })
-
-                document.getElementById('profile').addEventListener('click', (e) => {
-                    document.querySelector('.the-profile').classList.add('current-active');
-                    document.querySelector('.the-profile').classList.remove('current-not-active');
-                    document.querySelector('.the-overview').classList.add('current-not-active');
-                    document.querySelector('.the-overview').classList.remove('current-active')
-
-                });
-
-                const some = document.getElementsByClassName('some');
-                Array.from(some).forEach((s) => {
-                    s.addEventListener('click', () => {
-                        const id = s.querySelector('#viewOrder').innerHTML;
-                        window.location.href = `/app/order/${id}`;
+                const func2 = async () => {
+                    document.querySelector('#dash-default').addEventListener('click', e => {
+                        document.querySelector('.the-profile').classList.remove('current-active');
+                        document.querySelector('.the-profile').classList.add('current-not-active');
+                        document.querySelector('.the-overview').classList.add('current-active');
                     })
-                })
-                
-                const deleted = document.getElementById('delete');
-                deleted.addEventListener('click',async(e)=>{
-                if(confirm('Do you want to continue and Delete you account forever?'))
-                {
-                    const res = await fetch('http://localhost:5500/app/delete',{
-                    method: 'post'
+
+                    document.getElementById('profile').addEventListener('click', (e) => {
+                        document.querySelector('.the-profile').classList.add('current-active');
+                        document.querySelector('.the-profile').classList.remove('current-not-active');
+                        document.querySelector('.the-overview').classList.add('current-not-active');
+                        document.querySelector('.the-overview').classList.remove('current-active')
                     });
-                    if(res.ok) {
-                    alert('account successfully deleted');
-                    window.location.href = '/'
-                    }
-                    else
-                    {
-                    alert('some error occured');
-                    window.location.reload();
-                    }
-                } 
-                else 
-                {
-                    alert('You have pressed cancel!');
-                    window.location.reload()
+
+                    const some = document.getElementsByClassName('some');
+                    console.log(some);
+                    Array.from(some).forEach((s) => {
+                        s.addEventListener('click', () => {
+                            const id = s.querySelector('#viewOrder').innerHTML;
+                            window.location.href = `/app/order/${id}`;
+                        })
+                    })
+
+                    const deleted = document.getElementById('delete');
+                    deleted.addEventListener('click', async (e) => {
+                        if (confirm('Do you want to continue and Delete you account forever?')) {
+                            const res = await fetch('http://localhost:5500/app/delete', {
+                                method: 'post'
+                            });
+                            if (res.ok) {
+                                alert('account successfully deleted');
+                                window.location.href = '/'
+                            }
+                            else {
+                                alert('some error occured');
+                                window.location.reload();
+                            }
+                        }
+                        else {
+                            alert('You have pressed cancel!');
+                            window.location.reload()
+                        }
+                    })
                 }
-                })
+
+                const func = async () => {
+                    const s = document.getElementById('profile_type').innerHTML;
+                    document.querySelector(".spinnerrr").classList.remove("spin-hide");
+                    document.querySelector(".spinnerrr").classList.add("spin-block");
+                    const res = await fetch(`http://localhost:5500/app/getProfileData?type=${s}`);
+                    const { orders, ongoing, user } = await res.json();
+                    document.querySelector(".spinnerrr").classList.remove("spin-block");
+                    document.querySelector(".spinnerrr").classList.add("spin-hide");
+
+                    let str = '';
+                    str += `<div class="main--heading">
+                                <h2 class="waver">Hey There Fellow Lancifier 
+                                <img src="https://media.tenor.com/nebZyl8oN7IAAAAi/wave-hello.gif" style="display: inline;" class="emo"
+                                    alt="hand">
+                                </h2>
+                            </div>`
+
+                    str += `<div class="main--heading">
+                            <h2 class="waver">Your previous orders</h2>
+                        </div>
+                        <div class="alig-horz text-dark_green">`
+
+                    if (orders.length > 0) {
+                        for (let index = 0; index < orders.length; index++) {
+                            str += `<div class="testing--dash p-2 cursor-pointer text-center some">
+                                        <div>
+                                            <img src="${orders[index].service_id.main_img}" alt="Service picture">
+                                        </div>
+                                        <p class="hidden" id="viewOrder">${orders[index]['_id']}</p>
+                                        <div class="description mx-2 px-4 py-1 my-1 text-center">
+                                            ${orders[index].service_id.seller_title}
+                                        </div>
+                                        <div class="price count">
+                                            Seller : ${ongoing[index].service_id.seller_name}
+                                        </div>
+                                    </div>`
+                        }
+                    } else {
+                        str += `<h1 class="text-center text-white mx-auto text-2xl"> No Orders Completely Received
+                            before!</h1>`
+                    }
+
+                    str += `</div>  
+                                <div class="main--heading">
+                                <h2 class="waver">Your current and ongoing orders</h2>
+                            </div>
+                            <div class="alig-horz text-dark_green">`
+
+                    if (ongoing.length > 0) {
+                        for (let index = 0; index < ongoing.length; index++) {
+                            str += `<div class="testing--dash p-2 cursor-pointer text-center some">
+                                        <div>
+                                            <img src="${ongoing[index].service_id.main_img}" alt="Service picture">
+                                        </div>
+                                        <p class="hidden" id="viewOrder">${ongoing[index]['_id']}</p>
+                                        <div class="description mx-2 px-4 py-1 my-1 text-center">
+                                            ${ongoing[index].service_id.seller_title}
+                                        </div>
+                                        <div class="price count">
+                                            Seller : ${ongoing[index].service_id.seller_name}
+                                        </div>
+                                    </div>`
+                        }
+                    } else {
+                        str += `<h1 class="text-center text-white mx-auto text-2xl"> No Orders Placed Yet!</h1>`
+                    }
+
+                    str += `</div>`
+
+                    document.getElementById('somethin').innerHTML = str;
+
+                    document.getElementById('prof_card').innerHTML = `
+                        <div class="text-center flex mx-auto">
+                            <img src="${user.user_img}"
+                                class="w-14 h-14 rounded-full flex-shrink-0 object-cover object-center">
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
+                            <h5 class="mt-2 mb-0">
+                                ${user.username}
+                            </h5>
+
+                            <div class="px-4 mt-1">
+                                <p class="fonts text-center">
+                                    ${user.email}
+                                </p>
+                            </div>
+
+                            <ul class="social-list">
+                                <li><i class="fa-solid fa-envelope"></i> <a href="mailto:${user.email}" _target="blank" >
+                                        Email </a> </li>
+                            </ul>
+
+                            <div class="buttons">
+                                <button class="btn btn-outline-primary px-4"
+                                    onclick="window.location.href='/app/user/edit'">Update Profile</button>
+                                <button class="btn btn-outline-primary px-4" id="delete">Delete Profile</button>
+                            </div>
+                        </div>
+                    `
+                }
+
+                try {
+                    func();
+                    setTimeout(() => {
+                        func2();
+                    }, 1000);
+                } catch (err) {
+                    alert('some error occurred');
+                }
             </script>
 
 

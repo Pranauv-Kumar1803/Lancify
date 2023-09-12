@@ -45,9 +45,15 @@ app.get("/", async (req, res) => {
   const services = await Service.find();
   console.log(services);
   if (req.cookies.user) {
-    return res.render("pages/home", { loggedIn: true, services });
+    return res.render("pages/home", { loggedIn: true });
   }
-  return res.render("pages/home", { loggedIn: false, services:[]});
+  return res.render("pages/home", { loggedIn: false});
+});
+
+app.get("/home", async (req, res) => {
+  const services = await Service.find();
+  console.log(services);
+  return res.json(services);
 });
 
 // routes
