@@ -30,7 +30,7 @@
             <div class="step form-group row">
                 <p class="text-center mb-4">Provide your Personal Details</p>
                 <div class="mb-3 row">
-                    <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
+                    <label class="required" for="fullname" class="col-sm-2 col-form-label">Full Name</label>
                     <div class="col">
                         <input type="text" id="fname" placeholder="First name" oninput="this.className = ''"
                             name="fname">
@@ -41,19 +41,18 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <label class="required" for="description" class="col-sm-2 col-form-label">Description</label>
                     <textarea name="description" cols="30" rows="10" class="border-2 border-dark_green"
                         placeholder="Professional Description in abt 50-200 words" id="description"></textarea>
                 </div>
                 <div class="mb-3 row">
-                    <label for="photo" class="col-sm-2 col-form-label">Profile Pic</label>
+                    <label class="required" for="photo" class="col-sm-2 col-form-label">Profile Pic</label>
                     <div class="custom-file col">
-                        <label class="custom-file-label" for="profile">Choose file</label>
                         <input type="file" class="custom-file-input" id="profile">
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="photo" class="col-sm-2 col-form-label">Languages You Speak</label>
+                    <label class="required" for="photo" class="col-sm-2 col-form-label">Languages You Speak</label>
                     <div class="col flex align-items-center">
                         <select id="languages" multiple="multiple">
                             <option value="None" selected>None</option>
@@ -138,9 +137,9 @@
             <div class="step">
                 <p class="text-center mb-4">Your Skils, Occupation and Experience</p>
                 <div class="mb-3 row">
-                    <label for="occupation" class="col-sm-2 col-form-label">Occupation</label>
+                    <label class="required" for="occupation" class="col-sm-2 col-form-label">Occupation</label>
                     <div class="col">
-                        <select class="custom-select" id="occupation">
+                        <select class="occupation" class="custom-select" id="occupation">
                             <option selected>None</option>
                             <option value="student">Student</option>
                             <option value="working">Working Professional(>1 yr experience)</option>
@@ -150,7 +149,7 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="education" class=" col-form-label">Education</label>
+                    <label class="required" for="education" class=" col-form-label">Education</label>
                     <div class="col">
                         <div class="mb-2 row">
                             <div class="col p-3">
@@ -169,13 +168,13 @@
                                 <input type="text" name="major" id="major" placeholder="Major">
                             </div>
                             <div class="col">
-                                <input type="number" name="year" id="year" placeholder="Year" min="1950" max="2023">
+                                <input type="number" name="year" id="year" placeholder="Year" min="1950" max="2050">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="education" class="col-sm-2 col-form-label">Certifications</label>
+                    <label class="req" for="education" class="col-sm-2 col-form-label">Certifications</label>
                     <div class="col">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="certification" multiple>
@@ -183,7 +182,7 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="email" class="col-sm-2 col-form-label">Personal Website</label>
+                    <label class="req" for="email" class="col-sm-2 col-form-label">Personal Website</label>
                     <div class="col">
                         <input type="text" id="portfolio" placeholder="Personal Website Link here..."
                             oninput="this.className = ''" name="personal_website">
@@ -195,24 +194,24 @@
             <div class="step">
                 <p class="text-center mb-4">Please provide your Social and Professional accounts</p>
                 <div class="mb-3 row">
-                    <label for="github" class="col-sm-2 col-form-label">Github</label>
+                    <label class="req" for="github" class="col-sm-2 col-form-label">Github</label>
                     <div class="col">
                         <input type="text" id="github" placeholder="Github Account link ..."
                             oninput="this.className = ''" name="github">
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="stackOverflow" class="col-sm-2 col-form-label">Stack Overflow</label>
+                    <label class="req" for="twitter" class="col-sm-2 col-form-label">Twitter</label>
                     <div class="col">
-                        <input type="text" id="stack-overflow" placeholder="stackOverflow Account link ..."
-                            oninput="this.className = ''" name="stackOverflow">
+                        <input type="text" id="twiter" placeholder="Twitter Account link ..."
+                            oninput="this.className = ''" name="twitter">
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="linkedin" class="col-sm-2 col-form-label">Linkedin</label>
+                    <label class="required" for="linkedin" class="col-sm-2 col-form-label">Linkedin</label>
                     <div class="col">
                         <input type="text" id="linkedin" placeholder="Linkedin Account link ..."
-                            oninput="this.className = ''" name="linkedin" required>
+                            oninput="this.className = ''" name="linkedin">
                     </div>
                 </div>
             </div>

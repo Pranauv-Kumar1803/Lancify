@@ -35,7 +35,8 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(
   cors({
-    origin:'*',
+    origin: ["http://localhost:5500"],
+    methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
     credentials: true,
   })
 );

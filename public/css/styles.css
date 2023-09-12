@@ -758,9 +758,6 @@ video {
 .w-5 {
   width: 1.25rem;
 }
-.w-5\/6 {
-  width: 83.333333%;
-}
 .w-6 {
   width: 1.5rem;
 }
@@ -1121,9 +1118,6 @@ video {
 }
 .pt-4 {
   padding-top: 1rem;
-}
-.text-left {
-  text-align: left;
 }
 .text-center {
   text-align: center;
@@ -1530,10 +1524,6 @@ video {
     padding-bottom: 2rem;
   }
 
-  .md\:pr-16 {
-    padding-right: 4rem;
-  }
-
   .md\:text-left {
     text-align: left;
   }
@@ -1560,14 +1550,6 @@ video {
     width: 16rem;
   }
 
-  .lg\:w-full {
-    width: 100%;
-  }
-
-  .lg\:max-w-lg {
-    max-width: 32rem;
-  }
-
   .lg\:flex-grow {
     flex-grow: 1;
   }
@@ -1584,10 +1566,6 @@ video {
   .lg\:py-7 {
     padding-top: 1.75rem;
     padding-bottom: 1.75rem;
-  }
-
-  .lg\:pr-24 {
-    padding-right: 6rem;
   }
 
   .lg\:text-2xl {
