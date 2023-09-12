@@ -35,18 +35,20 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
-    methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
+    origin:'*',
     credentials: true,
   })
 );
 
-app.use((req, res, next) => {
-  res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
-  res.header("Expires", "-1");
-  res.header("Pragma", "no-cache");
-  next();
+app.get("/", async (req, res) => {
+  const services = await Service.find();
+  console.log(services);
+  if (req.cookies.user) {
+    return res.render("pages/home", { loggedIn: true, services });
+  }
+  return res.render("pages/home", { loggedIn: false, services:[]});
 });
+
 // routes
 app.use("/domains", domainRouter);
 app.use("/auth", authRouter);
@@ -56,13 +58,6 @@ app.use("/forum", forumRouter);
 app.use("/app", verifyCookie, appRouter);
 
 // main
-app.get("/", async (req, res) => {
-  const services = await Service.find();
-  if (req.cookies.user) {
-    return res.render("pages/home", { loggedIn: true, services });
-  }
-  res.render("pages/home", { loggedIn: false, services });
-});
 
 app.get("/blogs", (req, res) => {
   if (!req.cookies.user) {
@@ -143,87 +138,6 @@ app.get("/admin-dash", async (req, res) => {
   const sellers = await Seller.find();
   res.render("pages/adminDash", { login: true, sellers });
 });
-
-// app.get('/discussions/:id', async (req, res) => {
-// 	const id = req.params.id;
-// 	// const docs = await Comment.find({$expr: {$gte: [{$size: "$parents"}, 2]}}).populate('parents').sort({'time':1});
-// 	const docs = await Comment.find({ "$expr": { $gt: [{ $size: "$parents" }, 0] }, discussion_id: new mongoose.Types.ObjectId(id) }).populate('parents').populate('discussion_id').sort({ 'time': 1 });
-// 	// console.log(docs);
-
-// 	let dis = [];
-// 	let final = [];
-// 	let c = 0;
-// 	let b = true;
-// 	docs.forEach((e) => {
-// 		if (e.parents.length < 1) {
-// 			b = false;
-// 		}
-// 	})
-
-// 	if (b) {
-// 		let len = 0;
-// 		let arr = docs.map(doc => {
-// 			// console.log(doc.user_name, doc.comment);
-// 			dis = doc.discussion_id;
-// 			let obj = {}
-// 			let r = obj;
-// 			let count = 0;
-// 			doc.parents.forEach(ele => {
-// 				obj['comment'] = ele.comment;
-// 				obj['user'] = { name: doc.user_name, image: doc.user_img }
-// 				obj['time'] = ele.time;
-// 				count++;
-// 				obj['forum'] = ele.forum;
-// 				obj['next'] = {}
-// 				obj = obj['next'];
-// 			})
-// 			r.level = count;
-// 			r.id = doc.parents[0]._id;
-// 			return r;
-// 		})
-
-// 		// console.log(arr);
-
-// 		let check = {};
-
-// 		arr.forEach(a => {
-// 			if (Object.keys(check) && !Object.keys(check).includes(a.id)) {
-// 				check[`${a.id}`] = a.level;
-// 			}
-// 			else {
-// 				check[`${a.id}`] = Math.max(check[`${a.id}`], a.level);
-// 			}
-// 		})
-
-// 		// console.log('before check');
-// 		// console.log(check);
-
-// 		// console.log(check);
-// 		// console.log(arr);
-
-// 		final = arr.map(each => {
-// 			if (each.level === check[`${each.id}`]) {
-// 				return each;
-// 			}
-// 		})
-
-// 		// console.log(final);
-
-// 		final.forEach((f) => {
-// 			if (f !== undefined) {
-// 				len++;
-// 			}
-// 		})
-
-// 		c = len;
-// 	}
-// 	else {
-// 		dis = docs[0].discussion_id;
-// 		final = [];
-// 	}
-
-// 	res.render('pages/discussions', { discussions: final, dis: dis, length: c, start_margin: 2 });
-// })
 
 app.post("/create-checkout-session", verifyCookie, async (req, res) => {
   const service = JSON.parse(req.body.service);
@@ -345,10 +259,6 @@ app.get('/success', verifyCookie, (req, res) => {
 })
 
 
-app.get("/*", (req, res) => {
-	res.render("pages/error", { data: 'Page Not Found' });
-})
-
 app.get("/success", verifyCookie, (req, res) => {
   res.render("pages/success", { login: true });
 });
@@ -368,6 +278,10 @@ app.get("/users/:email", async (req, res) => {
   // console.log(data);
   return res.json(data.data);
 });
+
+app.get("/*", (req, res) => {
+	res.render("pages/error", { data: 'Page Not Found' });
+})
 
 mongoose.connect(
   "mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/Lancify?retryWrites=true&w=majority",
