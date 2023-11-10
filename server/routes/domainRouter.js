@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require("../sqlite/config");
+// const db = require("../sqlite/config");
 const Service = require('../models/Service');
 const Seller = require('../models/Seller');
 
