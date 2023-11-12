@@ -116,12 +116,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { chakra, Box, FormControl, useToast, Input, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-
+import { Link } from 'react-router-dom'
 const SignupForm = () => {
   const { register, handleSubmit, watch, formState: { errors, } } = useForm();
   const toast = useToast();
   const onSubmit = (data) => {
     //give this only when account is created successfully
+    //you can integrate with promise based toast as well 
+    //TODO
     toast({
       title: 'Account created.',
       description: "We've created your account for you.",
@@ -160,11 +162,25 @@ const SignupForm = () => {
           borderRadius="lg"
           bg='white'
           minW='356px'
+          maxW='400px'
           boxShadow="lg"
         >
           <chakra.form onSubmit={handleSubmit(onSubmit)}>
             <HStack alignItems='center' justifyContent='center' m='2' >
-              <Text fontSize='2xl' mb={2} color='teal.300'>Join Lancify Now</Text>
+              <Text
+                bgGradient='linear(to-l, #7928CA, #FF0080)'
+                bgClip='text'
+                fontSize='2xl'
+                fontWeight='bold'
+                _hover={{
+                  bgGradient: 'linear(to-r, red.500, yellow.500)',
+                }}
+              >
+                Join Lancify Today
+              </Text>
+              {/* <Text fontSize='2xl' mb={2} color='#1A202C'>Join Lancify</Text> */}
+              {/* <Text fontSize='2xl' mb={2} color='#A0AEC0'>Join Lancify Now</Text> */}
+              {/* <Text fontSize='2xl' mb={2} color='orange.400'>Join Lancify Now</Text> */}
             </HStack>
             <FormControl id="email" isInvalid={!!errors.email}>
               <Text color='black.200' p={1}>Email</Text>
@@ -273,10 +289,14 @@ const SignupForm = () => {
                 Passwords do not match
               </Box>
             )}
-
-            <Button mt={4} colorScheme="teal" type="submit">
-              Sign Up
-            </Button>
+            <HStack mt={5} >
+              <Button colorScheme="teal" type="submit">
+                Sign Up
+              </Button>
+              <Button colorScheme='blue'>
+                <Link to='/auth/login'>Login If Account Already exists</Link>
+              </Button>
+            </HStack>
           </chakra.form>
         </Box>
       </motion.div>
