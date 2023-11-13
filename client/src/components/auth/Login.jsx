@@ -1,9 +1,120 @@
-import React from 'react'
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { chakra, Box, FormControl, useToast, Input, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom'
 
 const Login = () => {
-  return (
-    <div>Login</div>
-  )
-}
+  const { register, handleSubmit, formState: { errors, } } = useForm();
+  const toast = useToast();
+  const onSubmit = (data) => {
+    //give this only when account is created successfully
+    //you can integrate with promise based toast as well 
+    //TODO
+    toast({
+      title: 'Account created.',
+      description: "We've created your account for you.",
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    })
+    console.log(data);
+  };
 
-export default Login
+
+  return (
+    <Box
+      bg='#90CDF4'
+      bgGradient="linear(to-r, teal.300, blue.500)"
+      minHeight="100vh"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        style={{ width: '100%', maxWidth: '400px' }}
+      >
+        <Box
+          p={8}
+          borderRadius="lg"
+          bg='white'
+          minW='356px'
+          boxShadow="lg"
+        >
+          <chakra.form onSubmit={handleSubmit(onSubmit)}>
+            <HStack alignItems='center' justifyContent='center' m='2' >
+              <Text fontSize='2xl' mb={2}
+                bgGradient='linear(to-r, red.500, yellow.500)'
+                bgClip='text'
+                fontWeight='bold'
+                _hover={{
+
+                  bgGradient: 'linear(to-l, #7928CA, #FF0080)',
+                }}
+
+              >Login to Lancify</Text>
+              {/* <Text fontSize='2xl' mb={2} color='teal.300'>Login to Lancify</Text> */}
+            </HStack>
+            <FormControl id="email" isInvalid={!!errors.email}>
+              <Text color='black.200' p={1}>Email</Text>
+              <Input
+
+                variant='filled'
+                {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
+                borderColor="white"
+                _focus={{
+                  borderColor: 'white.200',
+                  boxShadow: '0 0 0 2px rgba(66, 153, 225, 0.6)',
+                }}
+                _hover={{
+                  borderColor: 'white.200',
+                }}
+                boxShadow="md"
+                borderRadius="md"
+                transition="border-color 0.2s, box-shadow 0.2s"
+              />
+              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl mt={4} id="password" isInvalid={!!errors.password}>
+              <Text color='black.200' p={1}>Password</Text>
+              <Input
+                type="password"
+                variant='filled'
+                {...register('password', {
+                  required: 'Password is required',
+                })}
+                borderColor="white"
+                _focus={{
+                  borderColor: 'white.200',
+                  boxShadow: '0 0 0 2px rgba(66, 153, 225, 0.6)',
+                }}
+                _hover={{
+                  borderColor: 'white.200',
+                }}
+                boxShadow="md"
+                borderRadius="md"
+                transition="border-color 0.2s, box-shadow 0.2s"
+              />
+
+              <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+            </FormControl>
+            <HStack mt={8} >
+              <Button colorScheme="teal" type="submit">
+                Login
+              </Button>
+              <Button colorScheme='blue'>
+                <Link to='/auth/signup'>Signup If Account Doesnot Exist</Link>
+              </Button>
+            </HStack>
+          </chakra.form>
+        </Box>
+      </motion.div>
+    </Box>
+  );
+};
+
+export default Login;
