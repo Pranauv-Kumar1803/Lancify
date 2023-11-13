@@ -1,19 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
-const authController = require('../controllers/authControllers');
+const { loginController, registerController, checkUser, logout, deleteUser, getUserDetails, updateUser } = require('../controllers/authControllers');
+const { default: verifyJWT } = require('../middleware/verifyJWT');
 
-router.post('/login',authController.loginController);
+router.post('/login', loginController);
 
-router.post('/register',authController.registerController);
+router.post('/register', registerController);
 
-router.get("/login", async (req, res) => {
-    res.render('pages/login');
-});
+router.use(verifyJWT);
 
-router.get("/register", async (req, res) => {
-    res.render('pages/login');
-});
+router.delete("/", deleteUser);
 
+router.put("/", updateUser);
+
+router.get("/getUserDetails", getUserDetails);
+
+router.get('/check', checkUser);
+
+router.get("/logout", logout);
 
 module.exports = router;

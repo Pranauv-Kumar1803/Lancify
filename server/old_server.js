@@ -20,12 +20,14 @@ const forumRouter = require("./routes/forumRouter");
 const verifyCookie = require("./verifyCookie");
 const Order = require("./models/Order");
 const Payment = require("./models/Payment");
-const { default: verifyJWT } = require("./middleware/verifyJWT");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
 // middleware
+app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.urlencoded({ extended: false, limit: "300mb" }));
+app.use(bodyParser.json({ limit: "300mb" }));
 app.use(express.urlencoded({ extended: true, limit: "300mb" }));
 app.use(express.json({ limit: "3000mb" }));
 app.use(express.json());
@@ -39,14 +41,110 @@ app.use(
   })
 );
 
+app.get("/", async (req, res) => {
+  const services = await Service.find();
+  console.log(services);
+  if (req.cookies.user) {
+    return res.render("pages/home", { loggedIn: true });
+  }
+  return res.render("pages/home", { loggedIn: false});
+});
+
+app.get("/home", async (req, res) => {
+  const services = await Service.find();
+  console.log(services);
+  return res.json(services);
+});
+
 // routes
 app.use("/domains", domainRouter);
 app.use("/auth", authRouter);
 app.use("/forum", forumRouter);
 
 // protected routes
-app.use("/app", verifyJWT, appRouter);
+app.use("/app", verifyCookie, appRouter);
 
+// main
+
+app.get("/blogs", (req, res) => {
+  if (!req.cookies.user) {
+    res.render("pages/blog", { login: false });
+  }
+  res.render("pages/blog", { login: true });
+});
+
+app.get('/community-hub', (req, res) => {
+	if (!req.cookies.user) {
+		res.render('pages/community', { login: false });
+	}
+	res.render('pages/community', { login: true });
+})
+
+app.get("/domain", (req, res) => {
+  if (!req.cookies.user) {
+    res.render("pages/domain", { login: false });
+  }
+  res.render("pages/domain", { login: true });
+});
+
+app.post("/discussions", async (req, res) => {
+  console.log(req.body);
+
+  console.log(req.cookies.user);
+
+  const user = await User.findOne({ user_id: req.cookies.user });
+
+  if (!user) {
+    return res.status(404).json({ msg: "user not found!" });
+  }
+
+  console.log(user._id, typeof user._id);
+
+  const d = await new Discussion({
+    discussion: req.body.msg,
+    forum: req.body.forum,
+    time: new Date(),
+    user_name: user.username,
+    user_img: user.user_img,
+    user_id: user._id,
+  });
+  const r = await d.save();
+
+  const id = new mongoose.Types.ObjectId();
+  const c = new Comment({
+    _id: id,
+    discussion_id: d._id,
+    parents: [id],
+  });
+
+  await c.save();
+
+  return res.status(201).json(r);
+});
+
+app.get("/discussions/:id", async (req, res) => {
+  let login = false;
+  if (req.cookies.user) {
+    login = true;
+  }
+
+  const id = req.params.id;
+  const discussion = await Discussion.findById(new mongoose.Types.ObjectId(id))
+    .populate("comments")
+    .sort({ "comments.time": -1 });
+  console.log(discussion);
+
+  return res.render("pages/discussions", {
+    login,
+    dis: discussion,
+    comments: discussion.comments,
+  });
+});
+
+app.get("/admin-dash", async (req, res) => {
+  const sellers = await Seller.find();
+  res.render("pages/adminDash", { login: true, sellers });
+});
 
 app.post("/create-checkout-session", verifyCookie, async (req, res) => {
   const service = JSON.parse(req.body.service);
@@ -134,6 +232,18 @@ app.post("/create-checkout-session", verifyCookie, async (req, res) => {
   }
 });
 
+app.post('/deleteOrder',async(req,res)=>{
+  console.log('in');
+  const {order, payment} = req.body;
+
+  
+  const o = await Order.findByIdAndDelete(order._id);
+  const p = await Payment.findByIdAndDelete(payment._id);
+  
+  console.log(o,p);
+  return res.status(200).json({msg: 'deleted successfully'});
+})
+
 app.get('/profile/:id',async(req,res)=>{
 	console.log('in');
 	const seller = await Seller.findOne({seller_id: req.params.id});
@@ -149,6 +259,35 @@ app.get('/profile/:id',async(req,res)=>{
 		return res.render('pages/profile',{login: true,user,seller, services});
 	}
 	res.render('pages/profile',{login:false,user,seller,services})
+})
+
+app.get('/success', verifyCookie, (req, res) => {
+	res.render('pages/success', { login: true });
+})
+
+
+app.get("/success", verifyCookie, (req, res) => {
+  res.render("pages/success", { login: true });
+});
+
+app.get("/*", (req, res) => {
+  res.render("pages/error", { data: "Page Not Found" });
+});
+
+app.get("/users", async (req, res) => {
+  const data = await db.getAllUser();
+  // console.log(data);
+  return res.json(data.data);
+});
+
+app.get("/users/:email", async (req, res) => {
+  const data = await db.getSomeUser(req.params.email);
+  // console.log(data);
+  return res.json(data.data);
+});
+
+app.get("/*", (req, res) => {
+	res.render("pages/error", { data: 'Page Not Found' });
 })
 
 mongoose.connect(
