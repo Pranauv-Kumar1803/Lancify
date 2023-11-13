@@ -1,122 +1,9 @@
-// import React from 'react';
-// import { useForm } from 'react-hook-form';
-// import { chakra, Box, FormControl, FormLabel, Input, FormErrorMessage, Button, Text } from '@chakra-ui/react';
-// import { motion } from 'framer-motion';
-
-// const SignupForm = () => {
-//   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
-//   const onSubmit = (data) => {
-//     // Your signup logic here
-//     console.log(data);
-//   };
-
-//   const password = watch('password');
-//   const confirmPassword = watch('confirmPassword');
-//   const passwordsMatch = !!password && password === confirmPassword
-
-
-//   return (
-//     <Box
-//       bg='teal.100'
-//       minHeight="100vh"
-//       display="flex"
-//       alignItems="center"
-//       justifyContent="center"
-//     >
-
-//       <motion.div
-//         initial={{ opacity: 0, y: -20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ duration: 0.5 }}
-//         style={{ width: '100%', maxWidth: '400px' }}
-//       >
-//         <Box
-//           p={8}
-//           borderRadius="xl"
-//           bg='white'
-//           boxShadow="lg"
-//         >
-//           <chakra.form onSubmit={handleSubmit(onSubmit)}>
-//             <FormControl id="email" isInvalid={!!errors.email}>
-//               <FormLabel>Email</FormLabel>
-//               <Input
-//                 {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
-//                 borderColor="black"
-//               />
-//               <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
-//             </FormControl>
-
-//             <FormControl mt={4} id="name" isInvalid={!!errors.name}>
-//               <FormLabel>Name</FormLabel>
-//               <Input
-//                 {...register('name', { required: 'Name is required' })}
-//                 borderColor="black"
-//               />
-//               <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
-//             </FormControl>
-
-//             <FormControl mt={4} id="password" isInvalid={!!errors.password}>
-//               <FormLabel>Password</FormLabel>
-//               <Input
-//                 type="password"
-//                 {...register('password', {
-//                   required: 'Password is required',
-//                   minLength: {
-//                     value: 5,
-//                     message: 'Password should be at least 5 characters',
-//                   },
-//                   pattern: {
-//                     value: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/,
-//                     message: 'Password should contain at least one digit and one special character',
-//                   },
-//                 })
-//                 }
-//                 borderColor="black"
-//               />
-//               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
-//             </FormControl>
-
-//             <FormControl mt={4} id="confirmPassword" isInvalid={!!errors.confirmPassword}>
-//               <FormLabel>Confirm Password</FormLabel>
-//               <Input
-//                 type="password"
-//                 {...register('confirmPassword', { required: 'Confirm Password is required' })}
-//                 borderColor="black"
-//               />
-//               <FormErrorMessage>{errors.confirmPassword?.message}</FormErrorMessage>
-//             </FormControl>
-
-//             {passwordsMatch && (
-//               <Text color="green.500" mt={2}>
-//                 Passwords match!
-//               </Text>
-//             )}
-
-//             {password !== confirmPassword && !passwordsMatch && (
-//               <Box color="red.500" mt={2}>
-//                 Passwords do not match
-//               </Box>
-//             )}
-
-//             <Button mt={4} colorScheme="teal" type="submit">
-//               Sign Up
-//             </Button>
-//           </chakra.form>
-//         </Box>
-//       </motion.div>
-//     </Box>
-//   );
-// };
-
-// export default SignupForm;
-
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { chakra, Box, FormControl, useToast, Input, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom'
+
 const SignupForm = () => {
   const { register, handleSubmit, watch, formState: { errors, } } = useForm();
   const toast = useToast();
@@ -140,11 +27,6 @@ const SignupForm = () => {
 
   return (
     <Box
-      // bg='teal.100'
-      // bg='#90CDF4'
-      // style={{
-      //   background: 'linear-gradient(to right, #FF6B6B, #91EAE4)',
-      // }}
       bgGradient="linear(to-r, teal.300, blue.500)"
       minHeight="100vh"
       display="flex"

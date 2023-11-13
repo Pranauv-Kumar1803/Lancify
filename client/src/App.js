@@ -3,12 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 
 import Home from "./components/Home";
-import Something from "./components/Something";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
-import Navbar from './components/Navbar'
-import Footer from "./components/Footer";
+import Navbar from './components/partials/Navbar'
+import Footer from "./components/partials/Footer";
 import PageNotFound from "./components/auth/PageNotFound";
+import Community from "./components/CommunityHub/Community";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
 
         <Route path="/">
           <Route index element={<Home />} />
-          <Route path="something" element={<Something />} />
+          <Route path="community-hub" element={<Community />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

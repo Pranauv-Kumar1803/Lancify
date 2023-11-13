@@ -85,7 +85,7 @@ function Footer() {
                     </Stack>
                     <Stack align={'flex-start'}>
                         <ListHeader>Company</ListHeader>
-                        <Box as="a" href={'#'}>
+                        <Box as="a" href={'/community-hub'}>
                             Community Hub
                         </Box>
                         <Box as="a" href={'#'}>
@@ -103,19 +103,19 @@ function Footer() {
                     </Stack>
                     <Stack align={'flex-start'}>
                         <ListHeader>Service Categories Offered</ListHeader>
-                        <Box as="a" href={'#'}>
+                        <Box as="a" href={'/domains/pt'}>
                             Programming and Technology
                         </Box>
-                        <Box as="a" href={'#'}>
+                        <Box as="a" href={'/domains/gd'}>
                             Graphics and Design
                         </Box>
-                        <Box as="a" href={'#'}>
+                        <Box as="a" href={'/domains/cdw'}>
                             Content and Digital Writing
                         </Box>
-                        <Box as="a" href={'#'}>
+                        <Box as="a" href={'/domains/va'}>
                             Video and Animation
                         </Box>
-                        <Box as="a" href={'#'}>
+                        <Box as="a" href={'/domains/dm'}>
                             Digital Marketing
                         </Box>
                     </Stack>

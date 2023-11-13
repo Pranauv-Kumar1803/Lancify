@@ -41,7 +41,7 @@ const NavLink = (props) => {
 
 function WithAction() {
     const isLoggedin = false;
-    const Links = isLoggedin ? [{name: 'Discover Projects', link: 'domains'}, {name: 'Explore the Community', link:'/community-hub'}] : [{name: 'Discover Projects', link:'domains'}, {name: 'Explore the Community', link: '/community-hub'}, {name: 'Register as a User', link: '/user/register'}]
+    const Links = isLoggedin ? [{name: 'Discover Projects', link: 'domains'}, {name: 'Explore the Community', link:'/community-hub'}] : [{name: 'Discover Projects', link:'domains'}, {name: 'Explore the Community', link: '/community-hub'}, {name: 'Register as a User', link: '/auth/signup'}]
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const handleLogout = () => {
@@ -82,6 +82,7 @@ function WithAction() {
                             mr={4}>
                             Register as a Seller
                         </Button>
+                        {isLoggedin && 
                         <Menu>
                             <MenuButton
                                 as={Button}
@@ -115,6 +116,7 @@ function WithAction() {
                                 </MenuItem>
                             </MenuList>
                         </Menu>
+                        }
                     </Flex>
                 </Flex>
 
