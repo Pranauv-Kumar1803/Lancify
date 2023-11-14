@@ -11,7 +11,7 @@ import {
     Container,
     Box, SimpleGrid, Icon
 } from '@chakra-ui/react'
-import { FcAssistant, FcDonate, FcInTransit } from 'react-icons/fc'
+import { FcAssistant, FcDonate, FcInTransit } from 'react-icons/fc';
 
 const Feature = ({ title, text, icon }) => {
     return (

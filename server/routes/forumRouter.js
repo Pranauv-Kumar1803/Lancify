@@ -1,6 +1,6 @@
 const express = require('express')
 const { getAllDiscussions, getForumDiscussions, postDiscussion, getDiscussion } = require('../controllers/forumController');
-const { default: verifyJWT } = require('../middleware/verifyJWT');
+const verifyJWT = require('../middleware/verifyJWT');
 const router = express.Router();
 
 router.get('/', getAllDiscussions);

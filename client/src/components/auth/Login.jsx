@@ -2,27 +2,47 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { chakra, Box, FormControl, useToast, Input, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../../api/axios';
+import {toast} from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginError, loginStart, loginSuccess } from '../../features/userSlice';
+import Loader from '../loader/Loader';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors, } } = useForm();
-  const toast = useToast();
+  const {loading} = useSelector((state)=>state.user);
+  const nav = useNavigate();
+  const dispatch = useDispatch();
+
+  async function handleLogin (data) {
+    try {
+      dispatch(loginStart());
+      const res = await api.post('/auth/login', data);
+      console.log(res.data);
+
+      dispatch(loginSuccess(res.data));
+
+      toast.success('Login Successful',{
+        position: 'top-right'
+      })
+
+      nav('/dashboard')
+    } catch (err) {
+      dispatch(loginError());
+      toast.error(err.message, {
+        position: 'top-right'
+      })
+    }
+  }
+  
   const onSubmit = (data) => {
-    //give this only when account is created successfully
-    //you can integrate with promise based toast as well 
-    //TODO
-    toast({
-      title: 'Account created.',
-      description: "We've created your account for you.",
-      status: 'success',
-      duration: 2000,
-      isClosable: true,
-    })
-    console.log(data);
+    handleLogin(data);
   };
 
-
   return (
+    <>
+    {loading && <Loader></Loader>}
     <Box
       bg='#90CDF4'
       bgGradient="linear(to-r, teal.300, blue.500)"
@@ -114,6 +134,7 @@ const Login = () => {
         </Box>
       </motion.div>
     </Box>
+    </>
   );
 };
 

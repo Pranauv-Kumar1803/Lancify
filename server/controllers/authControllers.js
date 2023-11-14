@@ -8,6 +8,7 @@ const Order = require('../models/Order');
 const Service = require('../models/Service');
 
 const loginController = async (req, res) => {
+	console.log(req.body);
 	const email = req.body.email;
 	const password = req.body.password;
 	try {
@@ -22,7 +23,9 @@ const loginController = async (req, res) => {
 		}
 
 		if (email === process.env.ADMIN_EMAIL) {
-			const token = await jwt.sign({ id: user.user_id, type: 'admin' }, process.env.ACCESS_TOKEN_SECRET)
+			const token = await jwt.sign({ id: user.user_id, type: 'admin' }, String(process.env.ACCESS_TOKEN_SECRET),{
+				expiresIn: '2h'
+			})
 			res.cookie('admin', token, {
 				maxAge: 60 * 60 * 1000,
 				httpOnly: true
@@ -31,11 +34,15 @@ const loginController = async (req, res) => {
 			return res.status(200).json(user);
 		}
 
-		const token = await jwt.sign({ id: user.user_id, type: 'user' }, process.env.ACCESS_TOKEN_SECRET)
+		const token = await jwt.sign({ id: user.user_id, type: 'user' }, String(process.env.ACCESS_TOKEN_SECRET),{
+			expiresIn: '2h'
+		})
 		res.cookie('user', token, {
 			maxAge: 60 * 60 * 1000,
 			httpOnly: true
 		});
+
+		return res.status(200).json(user);
 
 	} catch (err) {
 		console.log(err);
@@ -80,10 +87,11 @@ const registerController = async (req, res) => {
 }
 
 const checkUser = async (req, res) => {
-	if (!req.id) return res.status(401).json({ message: "Unauthorized!" })
+	console.log('inside check function')
+	if (!req._id) return res.status(401).json({ message: "Unauthorized!" })
 
 	try {
-		const data = await User.findById(req.id);
+		const data = await User.findOne({ user_id: req._id }, {password: 0} );
 
 		return res.status(200).json({ data, type: req.type });
 	} catch (err) {
@@ -191,9 +199,10 @@ const getUserDetails = async (req, res) => {
 }
 
 const logout = (req, res) => {
+	console.log('inside logout')
 	res.clearCookie("user");
 	res.clearCookie("admin");
-	res.redirect("/");
+	return res.status(200).json({message:'logout successful'});
 }
 
 module.exports = { loginController, registerController, checkUser, getUserDetails, updateUser, deleteUser, logout };

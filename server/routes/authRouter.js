@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { loginController, registerController, checkUser, logout, deleteUser, getUserDetails, updateUser } = require('../controllers/authControllers');
-const { default: verifyJWT } = require('../middleware/verifyJWT');
+const verifyJWT = require('../middleware/verifyJWT');
 
 router.post('/login', loginController);
 

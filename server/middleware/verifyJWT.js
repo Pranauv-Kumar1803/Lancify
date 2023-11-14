@@ -1,5 +1,5 @@
-import express from "express";
-import jwt from "jsonwebtoken"
+const express = require("express");
+const jwt = require("jsonwebtoken");
 
 const verifyJWT = (req, res, next) => {
     console.log("verifyJwt");
@@ -15,8 +15,8 @@ const verifyJWT = (req, res, next) => {
     if(!flag1)
     {
         jwt.verify(
-            token,
-            String(process.env.ACCESS_TOKEN_SECRET),
+            tokenUser,
+            process.env.ACCESS_TOKEN_SECRET,
             (err, decoded) => {
                 if (err) return res.status(401).json({message: "unauthorised! login again!"});  //invalid token
                 req._id = decoded.id;
@@ -28,8 +28,8 @@ const verifyJWT = (req, res, next) => {
     else
     {
         jwt.verify(
-            token,
-            String(process.env.ACCESS_TOKEN_SECRET),
+            tokenAdmin,
+            process.env.ACCESS_TOKEN_SECRET,
             (err, decoded) => {
                 if (err) return res.status(401).json({message: "unauthorised! login again!"});  //invalid token
                 req._id = decoded.id;
@@ -40,4 +40,4 @@ const verifyJWT = (req, res, next) => {
     }
 }
 
-export default verifyJWT;
+module.exports =  verifyJWT;
