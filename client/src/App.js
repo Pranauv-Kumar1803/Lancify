@@ -15,6 +15,7 @@ import Community from "./components/CommunityHub/Community";
 import AuthProtected from "./components/partials/AuthProtected";
 import Protected from "./components/partials/Protected";
 import Dashboard from "./components/Dashboard";
+import Domains from "./components/Domains/Domains";
 
 
 function App() {
@@ -26,8 +27,6 @@ function App() {
       const res = await api.get('/auth/check');
       dispatch(loginSuccess(res.data.data))
     } catch (err) {
-      console.log(err.response.data)
-      nav('/auth/login')
     }
   }
 
@@ -40,15 +39,17 @@ function App() {
       <ToastContainer />
       <Navbar />
       <Routes>
+        <Route path="/" >
+          <Route index element={<Home />} />
+          <Route path="community-hub" element={<Community />} />
+          <Route path="explore/:param" element={<Domains />} />
+        </Route>
+
         <Route path="/auth" element={<AuthProtected />}>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
         </Route>
 
-        <Route path="/" >
-          <Route index element={<Home />} />
-          <Route path="/community-hub" element={<Community />} />
-        </Route>
 
         <Route path="/app" element={<Protected />}>
           <Route index element={<Dashboard />} />

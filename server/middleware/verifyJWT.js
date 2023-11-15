@@ -2,7 +2,6 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const verifyJWT = (req, res, next) => {
-    console.log("verifyJwt");
     let tokenUser = req.cookies.user;
     let tokenAdmin = req.cookies.admin;
 

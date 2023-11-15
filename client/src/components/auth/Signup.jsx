@@ -2,9 +2,12 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { chakra, Box, FormControl, Input, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Loader from '../loader/Loader';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginStart, loginError, loginSuccess } from '../../features/userSlice';
+import api from '../../api/axios';
+import {toast} from 'react-toastify';
 
 const SignupForm = () => {
   const { register, handleSubmit, watch, formState: { errors, } } = useForm();
