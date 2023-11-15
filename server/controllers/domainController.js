@@ -1,10 +1,14 @@
 const Service = require("../models/Service");
 
 const getServicesOfDomain = async (req, res) => {
+    console.log('inside this')
     const q = req.query;
     const param = req.params.param;
     const domain = param.split('-')[0];
     const service = param.split('-')[1];
+
+    console.log(q);
+    console.log(domain, service);
 
     try {
         if (JSON.stringify(q) === "{}") {
@@ -34,4 +38,4 @@ const getServicesOfDomain = async (req, res) => {
     }
 }
 
-module.exports = {getServicesOfDomain}
+module.exports = { getServicesOfDomain }
