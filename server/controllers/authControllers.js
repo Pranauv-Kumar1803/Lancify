@@ -23,7 +23,7 @@ const loginController = async (req, res) => {
 		}
 
 		if (email === process.env.ADMIN_EMAIL) {
-			const token = await jwt.sign({ id: user.user_id, type: 'admin' }, String(process.env.ACCESS_TOKEN_SECRET),{
+			const token =  jwt.sign({ id: user.user_id, type: 'admin' }, String(process.env.ACCESS_TOKEN_SECRET),{
 				expiresIn: '2h'
 			})
 			res.cookie('admin', token, {
@@ -34,7 +34,7 @@ const loginController = async (req, res) => {
 			return res.status(200).json(user);
 		}
 
-		const token = await jwt.sign({ id: user.user_id, type: 'user' }, String(process.env.ACCESS_TOKEN_SECRET),{
+		const token =  jwt.sign({ id: user.user_id, type: 'user' }, String(process.env.ACCESS_TOKEN_SECRET),{
 			expiresIn: '2h'
 		})
 		res.cookie('user', token, {

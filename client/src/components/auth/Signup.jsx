@@ -1,21 +1,21 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { chakra, Box, FormControl, Input, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
+import { chakra, Box, FormControl, Input, HStack, Stack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom'
 import Loader from '../loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginStart, loginError, loginSuccess } from '../../features/userSlice';
 import api from '../../api/axios';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const SignupForm = () => {
   const { register, handleSubmit, watch, formState: { errors, } } = useForm();
-  const {loading} = useSelector((state)=>state.user);
+  const { loading } = useSelector((state) => state.user);
   const nav = useNavigate();
   const dispatch = useDispatch();
 
-  async function handleRegister (data) {
+  async function handleRegister(data) {
     try {
       dispatch(loginStart());
       const res = await api.post('/auth/signup', data);
@@ -23,7 +23,7 @@ const SignupForm = () => {
 
       dispatch(loginSuccess());
 
-      toast.success('Signup Successful',{
+      toast.success('Signup Successful', {
         position: 'top-right'
       })
 
@@ -82,9 +82,6 @@ const SignupForm = () => {
                 >
                   Join Lancify Today
                 </Text>
-                {/* <Text fontSize='2xl' mb={2} color='#1A202C'>Join Lancify</Text> */}
-                {/* <Text fontSize='2xl' mb={2} color='#A0AEC0'>Join Lancify Now</Text> */}
-                {/* <Text fontSize='2xl' mb={2} color='orange.400'>Join Lancify Now</Text> */}
               </HStack>
               <FormControl id="email" isInvalid={!!errors.email}>
                 <Text color='black.200' p={1}>Email</Text>
@@ -193,16 +190,16 @@ const SignupForm = () => {
                   Passwords do not match
                 </Box>
               )}
-              <HStack mt={5} >
+              <Stack mt={5} >
                 <Button colorScheme="teal" type="submit">
                   Sign Up
                 </Button>
                 <Link to='/auth/login'>
-                  <Button colorScheme='blue'>
+                  <Button colorScheme='blue' w='100%'>
                     Login If Account Already exists
                   </Button>
                 </Link>
-              </HStack>
+              </Stack>
             </chakra.form>
           </Box>
         </motion.div>
