@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { chakra, Box, FormControl, useToast, Input, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
+import { chakra, Box, FormControl, useToast, Input, Stack,HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../api/axios';
@@ -122,14 +122,14 @@ const Login = () => {
 
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
-            <HStack mt={8} >
+            <Stack mt={8} >
               <Button colorScheme="teal" type="submit">
                 Login
               </Button>
               <Button colorScheme='blue'>
                 <Link to='/auth/signup'>Signup If Account Doesnot Exist</Link>
               </Button>
-            </HStack>
+            </Stack>
           </chakra.form>
         </Box>
       </motion.div>
