@@ -16,6 +16,7 @@ import AuthProtected from "./components/partials/AuthProtected";
 import Protected from "./components/partials/Protected";
 import Dashboard from "./components/Dashboard";
 import Domains from "./components/Domains/Domains";
+import Order from "./components/Order";
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="signup" element={<Signup />} />
         </Route>
 
+        <Route path="/order/:id" element={<Order />} />
 
         <Route path="/app" element={<Protected />}>
           <Route index element={<Dashboard />} />

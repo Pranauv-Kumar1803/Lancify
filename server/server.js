@@ -6,6 +6,7 @@ const crypto = require("crypto");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const verifyJWT = require("./middleware/verifyJWT");
 
 const Seller = require("./models/Seller");
 const User = require("./models/User");
@@ -17,10 +18,11 @@ const authRouter = require("./routes/authRouter");
 const appRouter = require("./routes/appRouter");
 const domainRouter = require("./routes/domainRouter");
 const forumRouter = require("./routes/forumRouter");
-const Order = require("./models/Order");
-const Payment = require("./models/Payment");
-const verifyJWT = require("./middleware/verifyJWT");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const orderRouter = require('./routes/orderRouter');
+
+// const Order = require("./models/Order");
+// const Payment = require("./models/Payment");
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
@@ -42,6 +44,7 @@ app.use(
 app.use("/domains", domainRouter);
 app.use("/auth", authRouter);
 app.use("/forum", forumRouter);
+app.use('/order', verifyJWT, orderRouter)
 
 // protected routes
 app.use("/app", verifyJWT, appRouter);

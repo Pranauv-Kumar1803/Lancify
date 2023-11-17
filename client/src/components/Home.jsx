@@ -9,9 +9,11 @@ import {
     Text,
     useBreakpointValue,
     Container,
-    Box, SimpleGrid, Icon
+    Box, SimpleGrid, Icon, Center, Card, CardBody, CardFooter
 } from '@chakra-ui/react'
-import { FcAssistant, FcDonate, FcInTransit } from 'react-icons/fc';
+import { FcAssistant, FcDonate, FcInTransit, FcApproval } from 'react-icons/fc';
+import { FaCode, FaPaintbrush, FaPenNib, FaSearchengin, FaVideo } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 const Feature = ({ title, text, icon }) => {
     return (
@@ -68,12 +70,12 @@ function Home() {
                             </Text>
                             <br />{' '}
                             <Text color={'blue.400'} as={'span'}>
-                                Design Projects
+                                Build and Buy High Quality Projects
                             </Text>{' '}
                         </Heading>
                         <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-                            The project board is an exclusive resource for contract work. It&apos;s
-                            perfect for freelancers, agencies, and moonlighters.
+                            Lancify is an exclusive resource for contract work. It&apos;s
+                            the perfect spot for freelancers!
                         </Text>
                         <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
                             <Button
@@ -83,7 +85,16 @@ function Home() {
                                 _hover={{
                                     bg: 'blue.500',
                                 }}>
-                                Create Project
+                                Create Service
+                            </Button>
+                            <Button
+                                rounded={'full'}
+                                bg={'blue.400'}
+                                color={'white'}
+                                _hover={{
+                                    bg: 'blue.500',
+                                }}>
+                                Explore Service
                             </Button>
                             <Button rounded={'full'}>How It Works</Button>
                         </Stack>
@@ -91,41 +102,97 @@ function Home() {
                 </Flex>
                 <Flex flex={1}>
                     <Image
+                        p={10}
                         alt={'Login Image'}
                         objectFit={'cover'}
                         src={
                             'https://images.unsplash.com/photo-1527689368864-3a821dbccc34?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
                         }
+                        rounded={'full'}
                     />
                 </Flex>
             </Stack>
-            <Box p={4}>
-                <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
-                    <Feature
-                        icon={<Icon as={FcAssistant} w={10} h={10} />}
-                        title={'Lifetime Support'}
-                        text={
-                            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
-                        }
-                    />
-                    <Feature
-                        icon={<Icon as={FcDonate} w={10} h={10} />}
-                        title={'Unlimited Donations'}
-                        text={
-                            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
-                        }
-                    />
-                    <Feature
-                        icon={<Icon as={FcInTransit} w={10} h={10} />}
-                        title={'Instant Delivery'}
-                        text={
-                            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
-                        }
-                    />
-                </SimpleGrid>
+            <Box p={10}>
+                <Center>
+                    <SimpleGrid columns={{ base: 1, md: 4 }} spacing={10}>
+                        <Feature
+                            icon={<Icon as={FcAssistant} w={10} h={10} />}
+                            title={'Lifetime Support'}
+                            text={
+                                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+                            }
+                        />
+                        <Feature
+                            icon={<Icon as={FcDonate} w={10} h={10} />}
+                            title={'Vareity of Projects to Choose From '}
+                            text={
+                                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+                            }
+                        />
+                        <Feature
+                            icon={<Icon as={FcInTransit} w={10} h={10} />}
+                            title={'Fast Delivery'}
+                            text={
+                                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+                            }
+                        />
+                        <Feature
+                            icon={<Icon as={FcApproval} w={10} h={10} />}
+                            title={'Quality Assurance'}
+                            text={
+                                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+                            }
+                        />
+                    </SimpleGrid>
+                </Center>
             </Box>
-        </Container>
 
+            <Flex direction={'column'} justify={'center'} align={'center'} p={5}>
+                <Heading>Domains that we offer!</Heading>
+                <SimpleGrid columns={{ sm: 1, md: 5 }} spacing={10} padding={10}>
+                    <Link to='/explore/pt'>
+                        <Stack bgColor={'#98E4FF'} padding={10} rounded={'md'} direction={'column'} spacing={4} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} minHeight={'20%'} height={'100%'}>
+                            <Icon as={FaCode} w={10} h={10} />
+                            <Text data-type='Text' align={'center'}>
+                                Programming and Technology
+                            </Text>
+                        </Stack>
+                    </Link>
+                    <Link to='/explore/gd'>
+                        <Stack bgColor={'#98E4FF'} padding={10} rounded={'md'} direction={'column'} spacing={4} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} minHeight={'20%'} height={'100%'}>
+                            <Icon as={FaPaintbrush} w={10} h={10} />
+                            <Text data-type='Text' align={'center'}>
+                                Graphics and Design
+                            </Text>
+                        </Stack>
+                    </Link>
+                    <Link to='/explore/cdw'>
+                        <Stack bgColor={'#98E4FF'} padding={10} rounded={'md'} direction={'column'} spacing={4} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} minHeight={'20%'} height={'100%'}>
+                            <Icon as={FaPenNib} w={10} h={10} />
+                            <Text data-type='Text' align={'center'}>
+                                Content & Digital Writing
+                            </Text>
+                        </Stack>
+                    </Link>
+                    <Link to='/explore/va'>
+                        <Stack bgColor={'#98E4FF'} padding={10} rounded={'md'} direction={'column'} spacing={4} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} minHeight={'20%'} height={'100%'}>
+                            <Icon as={FaVideo} w={10} h={10} />
+                            <Text data-type='Text' align={'center'}>
+                                Video and Animation
+                            </Text>
+                        </Stack>
+                    </Link>
+                    <Link to='/explore/dm'>
+                        <Stack bgColor={'#98E4FF'} padding={10} rounded={'md'} direction={'column'} spacing={4} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} minHeight={'20%'} height={'100%'}>
+                            <Icon as={FaSearchengin} w={10} h={10} />
+                            <Text data-type='Text' align={'center'}>
+                                Digital Marketing
+                            </Text>
+                        </Stack>
+                    </Link>
+                </SimpleGrid>
+            </Flex>
+        </Container>
     )
 }
 

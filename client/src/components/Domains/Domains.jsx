@@ -2,6 +2,7 @@ import {
   Box,
   Center,
   Container,
+  Flex,
   Radio,
   RadioGroup,
   SimpleGrid,
@@ -48,6 +49,7 @@ function Domains() {
       toast.error("Server Error", {
         position: "top-right",
       });
+      setLoading(false);
       window.location.href = "/explore/" + params;
     }
   };
@@ -80,6 +82,7 @@ function Domains() {
       toast.error("Server Error", {
         position: "top-right",
       });
+      setLoading(false);
     }
   };
 
@@ -95,6 +98,7 @@ function Domains() {
       setIsFilter(false);
       setFilter({ min: 0, max: 0, time: null });
     } catch (err) {
+      setLoading(false);
       toast.error("Server Error", {
         position: "top-right",
       });
@@ -104,7 +108,8 @@ function Domains() {
 
   useEffect(() => {
     const reg = /[A-Za-z]+-[A-Za-z]+_[A-Za-z]+/i;
-    if (!reg.test(params.param)) {
+    const reg1 = /[A-Za-z]+/i
+    if (!reg.test(params.param) && !reg1.test(params.param)) {
       nav("/error");
     }
 
@@ -123,7 +128,7 @@ function Domains() {
       alignItems={"center"}
       background={"#F5F7F8"}
     >
-      <Center>
+      <Center p={5}>
         <Button onClick={onOpen}>Apply Filters</Button>
         <Button
           onClick={(e) => {
@@ -198,20 +203,20 @@ function Domains() {
         {loading ? (
           <Loader />
         ) : (
-          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} padding={10}>
+          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} padding={10} >
             {data.length >= 1 ? (
               data.map((d, i) => {
                 return (
-                  <Card
-                    key={i}
-                    price={d.starting_price}
-                    body={d.seller_desc}
-                    title={d.seller_title}
-                    name={d.seller_name}
-                    img={d.main_img}
-                    min_dur={d.min_duration}
-                    seller_img={d.seller_img}
-                  />
+                    <Card
+                      key={i}
+                      price={d.starting_price}
+                      body={d.seller_desc}
+                      title={d.seller_title}
+                      name={d.seller_name}
+                      img={d.main_img}
+                      min_dur={d.min_duration}
+                      seller_img={d.seller_img}
+                    />
                 );
               })
             ) : (

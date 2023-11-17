@@ -29,7 +29,7 @@ const Logo = (props) => {
     )
 }
 
-const SocialButton = ({children,label,href}) => {
+const SocialButton = ({ children, label, href }) => {
     return (
         <chakra.button
             bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
@@ -63,7 +63,7 @@ const ListHeader = ({ children }) => {
 function Footer() {
     return (
         <Box
-            bg={useColorModeValue('gray.50', 'gray.900')}
+            bg={useColorModeValue('gray.100', 'gray.900')}
             color={useColorModeValue('gray.700', 'gray.200')}>
             <Container as={Stack} maxW={'6xl'} py={10}>
                 <SimpleGrid
@@ -103,19 +103,19 @@ function Footer() {
                     </Stack>
                     <Stack align={'flex-start'}>
                         <ListHeader>Service Categories Offered</ListHeader>
-                        <Box as="a" href={'/domains/pt'}>
+                        <Box as="a" href={'/explore/pt'}>
                             Programming and Technology
                         </Box>
-                        <Box as="a" href={'/domains/gd'}>
+                        <Box as="a" href={'/explore/gd'}>
                             Graphics and Design
                         </Box>
-                        <Box as="a" href={'/domains/cdw'}>
+                        <Box as="a" href={'/explore/cdw'}>
                             Content and Digital Writing
                         </Box>
-                        <Box as="a" href={'/domains/va'}>
+                        <Box as="a" href={'/explore/va'}>
                             Video and Animation
                         </Box>
-                        <Box as="a" href={'/domains/dm'}>
+                        <Box as="a" href={'/explore/dm'}>
                             Digital Marketing
                         </Box>
                     </Stack>

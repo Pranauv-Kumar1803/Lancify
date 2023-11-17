@@ -20,8 +20,11 @@ function ReCard({ img, seller_img, title, body, price, name, min_dur }) {
           src={img}
           alt="Green double couch with wooden legs"
           borderRadius="lg"
+          width={'100%'}
+          height={'40%'}
+          objectFit={'cover'}
         />
-        <Stack mt="6" spacing="3">
+        <Stack p="6" spacing="3">
           <Heading size="md">{title}</Heading>
           <Flex direction={"row"} justify={"flex-start"} align={"center"}>
             <Image borderRadius="full" boxSize="30px" src={seller_img} />
@@ -38,7 +41,6 @@ function ReCard({ img, seller_img, title, body, price, name, min_dur }) {
           </Text>
         </Stack>
       </CardBody>
-      <Divider />
       <CardFooter display={"flex"} justifyContent={"space-around"}>
         <ButtonGroup spacing={{ sm: "0px", md: "1px" }} padding={1}>
           <Button variant="solid" colorScheme="blue">

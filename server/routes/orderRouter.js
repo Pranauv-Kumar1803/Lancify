@@ -1,15 +1,17 @@
-import express from 'express';
-import { acceptOrderAndClose, addToOrderTimeline, addToTimelineDone, getOrder, rateOrder } from '../controllers/orderController';
+const express = require('express');
+const { acceptOrderAndClose, addToOrderTimeline, addToTimelineDone, getOrder, rateOrder } = require('../controllers/orderController');
 const router = express.Router();
 
-router.get("/order/:id", getOrder);
+router.get("/:id", getOrder);
 
-router.delete("/order/:id", deleteOrder);
+// router.delete("/:id", deleteOrder);
 
-router.post("/order/:id/rate", rateOrder);
+router.post("/:id/rate", rateOrder);
 
-router.post("/order/:id/addTimeline", addToOrderTimeline);
+router.post("/:id/addTimeline", addToOrderTimeline);
 
-router.post("/order/:id/acceptAndClose", acceptOrderAndClose);
+router.post("/:id/acceptAndClose", acceptOrderAndClose);
 
-router.post("/order/:id/addTimeline/done", addToTimelineDone);
+router.post("/:id/addTimeline/done", addToTimelineDone);
+
+module.exports = router;

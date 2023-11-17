@@ -7,7 +7,7 @@ const Payment = require('../models/Payment');
 
 const getOrder = async (req, res) => {
     const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
-    const user = await User.findOne({ user_id: req.user });
+    const user = await User.findOne({ user_id: req._id });
 
     if (!order) {
         return res.status(404).json({ message: "order not found" });
