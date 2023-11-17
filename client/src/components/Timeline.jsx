@@ -3,7 +3,6 @@ import {
   Box,
   chakra,
   Container,
-  Link,
   Text,
   HStack,
   VStack,
@@ -15,24 +14,25 @@ import {
 import { FaRegNewspaper } from 'react-icons/fa';
 import { BsGithub } from 'react-icons/bs';
 import { IconType } from 'react-icons';
+import { Link } from 'react-router-dom';
 
 const Timeline = ({ timeline }) => {
   const [data, setData] = useState([]);
 
-  useEffect(()=>{
-    const newTimeline = timeline.map((t)=>{
+  useEffect(() => {
+    const newTimeline = timeline.map((t) => {
       const name = t.title.split(':')[0];
       const title = t.title.split(':')[1];
-      const p = {...t, title, name};
+      const p = { ...t, title, name };
       return p;
     })
 
     setData(newTimeline);
 
-  },[timeline])
+  }, [timeline])
 
   return (
-    <Container maxWidth="xl" p={{ base: 2, sm: 10 }}>
+    <Container maxWidth="lg" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="lg" fontWeight="bold" mb={18} textAlign="center">
         Order Timeline
       </chakra.h3>
@@ -47,7 +47,7 @@ const Timeline = ({ timeline }) => {
   );
 };
 
-const Card = ({ title, name, description, date }) => {
+const Card = ({ title, name, description, date, files }) => {
   return (
     <HStack
       p={{ base: 3, sm: 6 }}
@@ -86,6 +86,11 @@ const Card = ({ title, name, description, date }) => {
           <Text fontSize="md" noOfLines={2}>
             {description}
           </Text>
+          {files &&
+            <a href={`${files[0]}`} target='_blank'>
+              Click here to see the file!
+            </a>
+          }
         </VStack>
         <Text fontSize="sm">{new Date(date).toDateString()}</Text>
       </Box>

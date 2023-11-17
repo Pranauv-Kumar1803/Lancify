@@ -9,6 +9,8 @@ const getOrder = async (req, res) => {
     const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
     const user = await User.findOne({ user_id: req._id });
 
+    console.log()
+
     if (!order) {
         return res.status(404).json({ message: "order not found" });
     }
@@ -73,7 +75,7 @@ const rateOrder = async (req, res) => {
 
 const addToOrderTimeline = async (req, res) => {
     const order = await Order.findById(req.params.id);
-    const user = await User.findOne({ user_id: req.user });
+    const user = await User.findOne({ user_id: req._id });
     if (!order) {
         return res.status(404).json({ msg: "order not found" });
     }
@@ -108,7 +110,7 @@ const addToOrderTimeline = async (req, res) => {
 
 const addToTimelineDone = async (req, res) => {
     const order = await Order.findById(req.params.id);
-    const user = await User.findOne({ user_id: req.user });
+    const user = await User.findOne({ user_id: req._id });
     if (!order) {
         return res.status(404).json({ msg: "order not found" });
     }
@@ -135,7 +137,7 @@ const addToTimelineDone = async (req, res) => {
 
 const acceptOrderAndClose = async (req, res) => {
     const order = await Order.findById(req.params.id);
-    const user = await User.findOne({ user_id: req.user });
+    const user = await User.findOne({ user_id: req._id });
     const seller = await Seller.findOne({ seller_id: order.seller_id });
     const service = await Service.findOne({ seller_id: order.seller_id });
 
