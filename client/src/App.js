@@ -17,11 +17,12 @@ import Protected from "./components/partials/Protected";
 import Dashboard from "./components/Dashboard";
 import Domains from "./components/Domains/Domains";
 import Order from "./components/Order";
+import Success from "./components/Success";
 
 
 function App() {
   const dispatch = useDispatch();
-  const nav = useNavigate();
+  // const nav = useNavigate();
 
   const getUserData = async () => {
     try {
@@ -44,6 +45,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="community-hub" element={<Community />} />
           <Route path="explore/:param" element={<Domains />} />
+          <Route path="success" element={<Success />} />
         </Route>
 
         <Route path="/auth" element={<AuthProtected />}>

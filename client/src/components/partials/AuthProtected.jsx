@@ -15,7 +15,7 @@ function AuthProtected() {
         setLoading(true);
         if (user.currentUser) {        
             toast.warning("Already logged In!", {position: "top-right"})
-            navigate("/", {replace: true});
+            navigate("/");
         }
 
         setLoading(false);

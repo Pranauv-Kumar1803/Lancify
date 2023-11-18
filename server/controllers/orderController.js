@@ -117,11 +117,12 @@ const addToTimelineDone = async (req, res) => {
 
     try {
         const { title, message } = req.body;
+        console.log(req.body);
         const d = new Date();
         console.log("in");
 
         order.timeline.push({
-            title: `${user.username} ${title}`,
+            title: `${user.username} : ${title}`,
             message,
             date: d,
         });
@@ -147,6 +148,7 @@ const acceptOrderAndClose = async (req, res) => {
 
     try {
         order.pending = false;
+
         let d = new Date();
         order.timeline.push({
             title: `This Order has been accepted and closed by ${user.username}`,
@@ -169,4 +171,37 @@ const acceptOrderAndClose = async (req, res) => {
     }
 }
 
-module.exports = { getOrder, deleteOrder, rateOrder, addToOrderTimeline, addToTimelineDone, acceptOrderAndClose }
+const sellerCancelOrder = async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    const seller = await Seller.findOne({ seller_id: req._id });
+    const service = await Service.findOne({ seller_id: seller.seller_id });
+    const user = await User.findOne({ user_id: order.user_id });
+
+    if (!order) {
+        return res.status(404).json({ msg: "order not found" });
+    }
+
+    try {
+        order.pending = false;
+
+        let d = new Date();
+        order.timeline.push({
+            title: `This Order has been cancelled and closed by ${seller.seller_fname}`,
+            date: d,
+        });
+
+        order.cancelled = true;
+        await order.save();
+
+        seller.balance -= order.payment.price;
+        seller.ongoing -= 1;
+        await seller.save();
+
+        await service.save();
+        return res.status(200).json({ msg: "successfuly cancelled and closed" });
+    } catch (err) {
+        return res.status(500).json({ msg: err.message });
+    }
+}
+
+module.exports = { getOrder, deleteOrder, rateOrder, addToOrderTimeline, addToTimelineDone, acceptOrderAndClose, sellerCancelOrder }

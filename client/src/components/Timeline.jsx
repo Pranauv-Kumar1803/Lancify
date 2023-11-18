@@ -8,15 +8,18 @@ import {
   VStack,
   Flex,
   Icon,
-  useColorModeValue
+  useColorModeValue,
+  Button
 } from '@chakra-ui/react';
 // Here we have used react-icons package for the icons
 import { FaRegNewspaper } from 'react-icons/fa';
 import { BsGithub } from 'react-icons/bs';
 import { IconType } from 'react-icons';
 import { Link } from 'react-router-dom';
+import api from '../api/axios';
+import { toast } from 'react-toastify';
 
-const Timeline = ({ timeline }) => {
+const Timeline = ({ timeline, order_id, pending }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -39,7 +42,7 @@ const Timeline = ({ timeline }) => {
       {data.map((milestone, index) => {
         return <Flex key={index} mb="10px">
           <LineWithDot />
-          <Card {...milestone} />
+          <Card {...{ ...milestone, order_id, pending }} />
         </Flex>
 
       })}
@@ -47,7 +50,27 @@ const Timeline = ({ timeline }) => {
   );
 };
 
-const Card = ({ title, name, description, date, files }) => {
+const Card = ({ title, name, message, date, files, order_id, pending }) => {
+  const handleUserAccept = async () => {
+    try {
+      const res = await api.post(`/order/${order_id}/acceptAndClose`);
+      toast.success('Order Submission Accepted by User!', {
+        position: 'top-right'
+      })
+    } catch (err) {
+      window.location.reload();
+      console.log(err.message);
+    }
+  }
+
+  const handleUserCancel = async () => {
+    try {
+      const res = await api.post(`/order/${order_id}/addTimeline`, { title: 'Submission not accepted!', message: 'Please Review and Resend!' });
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
   return (
     <HStack
       p={{ base: 3, sm: 6 }}
@@ -83,9 +106,15 @@ const Card = ({ title, name, description, date, files }) => {
           >
             {title}
           </chakra.h1>
-          <Text fontSize="md" noOfLines={2}>
-            {description}
+          <Text fontSize="md">
+            {message}
           </Text>
+          {pending && title && title.includes('Finish') &&
+            <Flex direction={'row'} justify={'center'} align={'center'} gap={10}>
+              <Button colorScheme='green' onClick={handleUserAccept}>Accept and Close</Button>
+              <Button colorScheme='red' onClick={handleUserCancel} >Reject to Review</Button>
+            </Flex>
+          }
           {files &&
             <a href={`${files[0]}`} target='_blank'>
               Click here to see the file!
