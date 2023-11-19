@@ -7,7 +7,7 @@ const ItemCard = ({ data }) => {
      console.log(data)
      return (
           <Box p='10'>
-               {!!data && <HStack spacing={'6'} justifyContent={'center'} mt='2' flexDir={{
+               {!!data && <HStack spacing={'6'} justifyContent={'space-between'} mt='2' flexDir={{
                     base: "column",
                     sm: "column",
                     lg: "row"

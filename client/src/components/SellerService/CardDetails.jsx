@@ -11,7 +11,7 @@ mpp.set(2, 'Ultimate')
 
 
 const CardDetails = ({ curItem, data, otherData }) => {
-     return (<Card borderRadius={'6px'} minW={'338px'} maxW={'350px'} minH='380px' maxH='435px' boxShadow='2xl' p='2' rounded='md' bg='white'>
+     return (<Card borderRadius={'6px'} minW={'348px'} maxW={'360px'} minH='380px' maxH='435px' boxShadow='2xl' p='2' rounded='md' bg='white'>
           <CardBody>
                <Heading size={'md'} mb='3' p={3} fontSize={'xl'}>{mpp.get(curItem)}</Heading>
                <List spacing={2} >

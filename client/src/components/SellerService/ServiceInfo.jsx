@@ -4,6 +4,7 @@ import api from './../../api/axios'
 import { useNavigate, useParams } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import CardSkeleton from './CardSkeleton'
+import DescriptionSeller from "./DescriptionSeller";
 const ServiceInfo = () => {
      const { service_id } = useParams()
      console.log(service_id)
@@ -29,7 +30,14 @@ const ServiceInfo = () => {
      if (!!loading) return <CardSkeleton />
      return (
           <Box>
-               
+               {!!data && <DescriptionSeller sellerImage={data.seller_img} mainImage={data.main_img} sellerDetails={{
+                    sellerType: data.seller_type,
+                    name: data.seller_name,
+                    desc: data.seller_desc,
+                    title: data.seller_title,
+                    rating: data.rating,
+                    minDuration: data.min_duration
+               }} />}
                {!!data && <ItemCard data={data} />}
           </Box>
      )
