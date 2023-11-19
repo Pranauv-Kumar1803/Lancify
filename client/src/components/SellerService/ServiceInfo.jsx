@@ -36,7 +36,8 @@ const ServiceInfo = () => {
                     desc: data.seller_desc,
                     title: data.seller_title,
                     rating: data.rating,
-                    minDuration: data.min_duration
+                    minDuration: data.min_duration,
+                    price: data.starting_price
                }} />}
                {!!data && <ItemCard data={data} />}
           </Box>

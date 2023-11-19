@@ -8,18 +8,20 @@ const DescriptionSeller = ({ sellerImage, mainImage, sellerDetails }) => {
       mt='6'
     >
       <Card
-        direction={{ base: 'column', sm: 'column', md: 'column', lg: 'row' }}
+        direction={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }}
         w={{
           base: '80%',
           sm: '95%',
           lg: '95%'
         }}
         justifyContent={'center'}
+        alignItems={'center'}
         overflow='hidden'
-        variant='outline'
+        variant='filled'
       >
         <Image
           objectFit='contain'
+          p='6'
           maxW={{ base: '100%', sm: '70%', md: '50%', lg: '40%' }}
           // margin='0 auto'
           src={mainImage}
@@ -42,14 +44,23 @@ const DescriptionSeller = ({ sellerImage, mainImage, sellerDetails }) => {
                 <ListIcon as={MdOutlineControlPoint} color='green.500' />
                 {sellerDetails.title}
               </ListItem>
+              <ListItem key={"x"}>
+                <ListIcon as={MdOutlineControlPoint} color='green.500' />
+                {`Starting price : ${sellerDetails.price}`}
+              </ListItem>
+
+              <ListItem key={"x"}>
+                <ListIcon as={MdOutlineControlPoint} color='green.500' />
+                {`Minimum Duration starts from  ${sellerDetails.minDuration}h`}
+              </ListItem>
             </List>
           </CardBody>
 
-          {/* <CardFooter>
+          <CardFooter>
             <Button variant='solid' colorScheme='blue'>
-              Buy Latte
+              Visit Profile
             </Button>
-          </CardFooter> */}
+          </CardFooter>
         </Stack>
       </Card>
     </HStack >
