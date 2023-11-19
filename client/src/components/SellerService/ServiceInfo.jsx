@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import CardSkeleton from './CardSkeleton'
 import DescriptionSeller from "./DescriptionSeller";
+import CardPricing from './CardPricing'
 const ServiceInfo = () => {
      const { service_id } = useParams()
      console.log(service_id)
@@ -39,7 +40,9 @@ const ServiceInfo = () => {
                     minDuration: data.min_duration,
                     price: data.starting_price
                }} />}
-               {!!data && <ItemCard data={data} />}
+               {/* {!!data && <ItemCard data={data} />} */}
+               {!!data && <CardPricing data={data.services} />}
+
           </Box>
      )
 }
