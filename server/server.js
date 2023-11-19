@@ -18,7 +18,8 @@ const authRouter = require("./routes/authRouter");
 const appRouter = require("./routes/appRouter");
 const domainRouter = require("./routes/domainRouter");
 const forumRouter = require("./routes/forumRouter");
-const orderRouter = require('./routes/orderRouter');
+const orderRouter = require("./routes/orderRouter");
+const serviceRouter = require("./routes/serviceRouter");
 
 // const Order = require("./models/Order");
 // const Payment = require("./models/Payment");
@@ -44,11 +45,11 @@ app.use(
 app.use("/domains", domainRouter);
 app.use("/auth", authRouter);
 app.use("/forum", forumRouter);
-app.use('/order', verifyJWT, orderRouter)
+app.use("/services", serviceRouter);
+app.use("/order", verifyJWT, orderRouter);
 
 // protected routes
 app.use("/app", verifyJWT, appRouter);
-
 
 // app.post("/create-checkout-session", verifyCookie, async (req, res) => {
 //   const service = JSON.parse(req.body.service);
@@ -136,22 +137,22 @@ app.use("/app", verifyJWT, appRouter);
 //   }
 // });
 
-app.get('/profile/:id',async(req,res)=>{
-	console.log('in');
-	const seller = await Seller.findOne({seller_id: req.params.id});
-	const services = await Service.find({seller_id: seller.seller_id});
-	if(!seller) {
-		return res.render('pages/error',{data: 'User Not Found'});
-	}
+app.get("/profile/:id", async (req, res) => {
+  console.log("in");
+  const seller = await Seller.findOne({ seller_id: req.params.id });
+  const services = await Service.find({ seller_id: seller.seller_id });
+  if (!seller) {
+    return res.render("pages/error", { data: "User Not Found" });
+  }
 
-	const user = await User.findOne({user_id: req.params.id});
-	console.log(user);
+  const user = await User.findOne({ user_id: req.params.id });
+  console.log(user);
 
-	if(req.cookies.user) {
-		return res.render('pages/profile',{login: true,user,seller, services});
-	}
-	res.render('pages/profile',{login:false,user,seller,services})
-})
+  if (req.cookies.user) {
+    return res.render("pages/profile", { login: true, user, seller, services });
+  }
+  res.render("pages/profile", { login: false, user, seller, services });
+});
 
 mongoose.connect(
   "mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/Lancify?retryWrites=true&w=majority",

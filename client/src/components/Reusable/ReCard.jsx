@@ -4,7 +4,6 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Divider,
   Flex,
   Heading,
   Image,
@@ -36,7 +35,7 @@ function ReCard({ img, seller_img, title, body, price, name, min_dur }) {
           <Text color="blue.600" fontSize="medium">
             Fastest Service in : {min_dur / 24} day(s)
           </Text>
-          <Text color="blue.600" fontSize="2xl">
+          <Text color="blue.600" fontSize="xl">
             Starting at : ₹{price}
           </Text>
         </Stack>

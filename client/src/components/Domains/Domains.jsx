@@ -1,33 +1,28 @@
 import {
   Box,
+  Button,
   Center,
-  Container,
-  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Radio,
   RadioGroup,
   SimpleGrid,
   Stack,
-} from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  FormControl,
-  FormLabel,
-  FormHelperText,
-  Input,
-  ModalFooter,
-  Button,
   useDisclosure,
 } from "@chakra-ui/react";
-import Card from "../Reusable/ReCard";
-import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../../api/axios";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import api from "../../api/axios";
+import Card from "../Reusable/ReCard";
 import Loader from "../loader/Loader";
 
 function Domains() {
@@ -116,9 +111,6 @@ function Domains() {
     getServices(params.param);
   }, []);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <Box
@@ -207,6 +199,7 @@ function Domains() {
             {data.length >= 1 ? (
               data.map((d, i) => {
                 return (
+                  <Link to={`/services/${d._id}`}>
                     <Card
                       key={i}
                       price={d.starting_price}
@@ -217,6 +210,7 @@ function Domains() {
                       min_dur={d.min_duration}
                       seller_img={d.seller_img}
                     />
+                  </Link>
                 );
               })
             ) : (
