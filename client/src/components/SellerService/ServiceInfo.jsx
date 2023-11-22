@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react"
+import { Box, Center, Flex } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import api from './../../api/axios'
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,35 +15,36 @@ const ServiceInfo = () => {
 
      const getDetails = async () => {
           try {
-               setLoading(true);
                const details = await api.get(`/services/${service_id}`)
-               setLoading(false);
                setData(details.data)
                return details.data;
           } catch (error) {
-               setLoading(false)
                nav('/error')
           }
      }
      useEffect(() => {
+          setLoading(true);
           getDetails()
+          setLoading(false);
      }, [])
      if (!!loading) return <CardSkeleton />
      return (
-          <Box>
-               {!!data && <DescriptionSeller sellerImage={data.seller_img} mainImage={data.main_img} sellerDetails={{
-                    sellerType: data.seller_type,
-                    name: data.seller_name,
-                    desc: data.seller_desc,
-                    title: data.seller_title,
-                    rating: data.rating,
-                    minDuration: data.min_duration,
-                    price: data.starting_price
-               }} />}
+          <Flex direction={'column'} justify={'center'} align={'center'}>
+               {!!data && <Flex justify={'center'} align={'center'} width={{base: 'md', md: '2xl'}}>
+                    <DescriptionSeller sellerImage={data.seller_img} mainImage={data.main_img} sellerDetails={{
+                         sellerType: data.seller_type,
+                         name: data.seller_name,
+                         desc: data.seller_desc,
+                         title: data.seller_title,
+                         rating: data.rating,
+                         minDuration: data.min_duration,
+                         price: data.starting_price
+                    }} />
+               </Flex>}
                {/* {!!data && <ItemCard data={data} />} */}
-               {!!data && <CardPricing data={data.services} />}
+               {!!data && <CardPricing data={data} />}
 
-          </Box>
+          </Flex>
      )
 }
 

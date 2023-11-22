@@ -102,7 +102,7 @@ function WithAction() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                        <Link to={(currentUser && currentUser.user_type=='Seller')?'/register_seller':'/auth/login' }>
+                        <Link to={(currentUser && currentUser.user_type !='Seller')?'/app/register':'/auth/login' }>
                             <Button
                                 variant={'solid'}
                                 background={'blue.400'}

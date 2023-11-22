@@ -19,6 +19,7 @@ import Domains from "./components/Domains/Domains";
 import Order from "./components/Order";
 import Success from "./components/Success";
 import ServiceInfo from "./components/SellerService/ServiceInfo";
+import RegisterSeller from "./components/Register_Seller/RegisterSeller";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function App() {
         <Route path="/services/:service_id" element={<ServiceInfo />} />
 
         <Route path="/app" element={<Protected />}>
+          <Route path="register" element={<RegisterSeller />} />
           <Route index element={<Dashboard />} />
         </Route>
 

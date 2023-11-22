@@ -6,17 +6,19 @@ const DescriptionSeller = ({ sellerImage, mainImage, sellerDetails }) => {
     <HStack
       justifyContent={'center'}
       mt='6'
+      w={{
+        base: 'lg',
+        md: 'xl'
+      }}
     >
       <Card
-        direction={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }}
+        direction={{ base: 'column', md: 'row' }}
         w={{
-          base: '80%',
-          sm: '95%',
-          lg: '95%'
+          base: 'sm',
+          md: 'xl'
         }}
         justifyContent={'center'}
         alignItems={'center'}
-        overflow='hidden'
         variant='filled'
       >
         <Image

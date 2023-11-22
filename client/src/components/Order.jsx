@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Timeline from './Timeline'
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Divider, Flex, FormControl, FormLabel, Heading, Image, Input, Radio, RadioGroup, SimpleGrid, Stack, StackDivider, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Divider, Flex, FormControl, FormLabel, Heading, Image, Input, Radio, RadioGroup, SimpleGrid, Spinner, Stack, StackDivider, Text, useColorModeValue } from '@chakra-ui/react';
 import api from '../api/axios';
 import Loader from './loader/Loader';
 import { toast } from 'react-toastify';
@@ -208,11 +208,11 @@ const Order = () => {
                             </Box>
                         </Center>
                         {data != {} && data.order ? <Timeline timeline={data.order.timeline} order_id={data.order._id} pending={data.order.pending} /> : <Loader />}
-                        {currentUser && currentUser.user_type == 'seller' &&
+                        {currentUser && currentUser.user_type == 'seller' && data.order.pending &&
                             <Center p={5}>
                                 <Flex direction={'row'} justify={'center'} align={'center'} gap={10}>
-                                    {loading ? <Loader /> : <Button colorScheme='green' onClick={handleSellerFinish}>Finish and Close</Button>}
-                                    {loading ? <Loader /> : <Button colorScheme='red' onClick={handleSellerCancel} >Cancel and Close</Button>}
+                                    {loading ? <Spinner color='blue.500' /> : <Button colorScheme='green' onClick={handleSellerFinish}>Finish and Close</Button>}
+                                    {loading ? <Spinner color='blue.500' /> : <Button colorScheme='red' onClick={handleSellerCancel} >Cancel and Close</Button>}
                                 </Flex>
                             </Center>
                         }
@@ -251,7 +251,7 @@ const Order = () => {
                                                 onChange={handleFiles}
                                             />
                                             <Button onClick={handleSubmit} colorScheme='blue' > Add! </Button>
-                                            {loading && <Loader />}
+                                            {loading && <Spinner color='blue.500' />}
                                         </FormControl>
                                     </form>
                                 </Flex>

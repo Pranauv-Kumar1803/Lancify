@@ -14,11 +14,37 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { MdOutlineCurrencyRupee } from "react-icons/md";
 
 import PriceWrapper from './WrapperCard';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import api from '../../api/axios';
 
 export default function CardPricing({ data }) {
+     const services = data.services;
+     const [tier0, tier1, tier2] = services;
+     const {currentUser} = useSelector(state=>state.user);
+     const [disable, setDisable] = useState(false);
 
-     const services = data;
-     const [tier0, tier1, tier2] = services
+     useEffect(()=>{
+          if(currentUser && currentUser.user_type!='seller')
+          {
+               setDisable(true);
+          }
+          else if(currentUser && currentUser.user_type=='seller' && currentUser.user_id==data.seller_id )
+          {
+               setDisable(true);
+          }
+     }, [])
+
+     const handleClick = async() => {
+          try {
+               console.log('inside');
+               const res = await api.post
+          } catch (err) {
+               
+          }
+     } 
+
      return (
           <Box py={12}>
                <VStack spacing={2} textAlign="center">
@@ -59,8 +85,8 @@ export default function CardPricing({ data }) {
 
                               </List>
                               <Box w="80%" pt={7}>
-                                   <Button w="full" colorScheme="red" variant="outline">
-                                        Buy
+                                   <Button w="full" isDisabled={disable} onClick={handleClick} colorScheme="blue" variant="outline">
+                                          Buy
                                    </Button>
                               </Box>
                          </VStack>
@@ -75,7 +101,7 @@ export default function CardPricing({ data }) {
                                    style={{ transform: 'translate(-50%)' }}>
                                    <Text
                                         textTransform="uppercase"
-                                        bg={useColorModeValue('red.300', 'red.700')}
+                                        bg={useColorModeValue('blue.400', 'blue.700')}
                                         px={3}
                                         py={1}
                                         color={useColorModeValue('gray.900', 'gray.300')}
@@ -109,7 +135,7 @@ export default function CardPricing({ data }) {
                                         </ListItem>)}
                                    </List>
                                    <Box w="80%" pt={7}>
-                                        <Button w="full" colorScheme="red">
+                                        <Button isDisabled={disable} onClick={handleClick} w="full" colorScheme="blue">
                                              Buy
                                         </Button>
                                    </Box>
@@ -141,7 +167,7 @@ export default function CardPricing({ data }) {
                                    </ListItem>)}
                               </List>
                               <Box w="80%" pt={7}>
-                                   <Button w="full" colorScheme="red" variant="outline">
+                                   <Button isDisabled={disable} onClick={handleClick} w="full" colorScheme="blue" variant="outline">
                                         Buy
                                    </Button>
                               </Box>
