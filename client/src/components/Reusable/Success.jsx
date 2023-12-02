@@ -1,6 +1,6 @@
 import { Button, Flex } from '@chakra-ui/react'
 import React from 'react'
-import img from '../PAYMENT-SUCCESS.png'
+import img from '../../PAYMENT-SUCCESS.png'
 import { Link } from 'react-router-dom'
 
 const Success = () => {
