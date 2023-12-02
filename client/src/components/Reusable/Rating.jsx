@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ReactStars from "react-rating-stars-component";
-import api from '../api/axios';
+import api from '../../api/axios';
 import { toast } from 'react-toastify';
 import { Box, Button, Center, Flex, Heading } from '@chakra-ui/react';
 

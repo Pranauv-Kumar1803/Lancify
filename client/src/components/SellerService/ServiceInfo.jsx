@@ -5,8 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import CardSkeleton from './CardSkeleton'
 import DescriptionSeller from "./DescriptionSeller";
-import CardPricing from './CardPricing'
+import CardPricing from './CardPricing';
+
 const ServiceInfo = () => {
+
      const { service_id } = useParams()
      console.log(service_id)
      const [data, setData] = useState();
@@ -22,14 +24,16 @@ const ServiceInfo = () => {
                nav('/error')
           }
      }
+
      useEffect(() => {
           setLoading(true);
           getDetails()
           setLoading(false);
      }, [])
-     if (!!loading) return <CardSkeleton />
+
      return (
           <Flex direction={'column'} justify={'center'} align={'center'}>
+               {loading && <CardSkeleton />}
                {!!data && <Flex justify={'center'} align={'center'} width={{base: 'md', md: '2xl'}}>
                     <DescriptionSeller sellerImage={data.seller_img} mainImage={data.main_img} sellerDetails={{
                          sellerType: data.seller_type,

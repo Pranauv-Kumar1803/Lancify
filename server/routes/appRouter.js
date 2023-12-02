@@ -267,13 +267,13 @@ router.post("/register_seller", async (req, res) => {
       seller_from: new Date(),
       occupation: req.body.occupation,
       country: req.body.country,
-      institute: req.body.institute_name,
+      institute: req.body.inst_name,
       degree_title: req.body.title,
       degree_major: req.body.major,
       year_education: req.body.year,
       portfolio_website: req.body.portfolio,
       github: req.body.github,
-      StackOverflow: req.body.stack,
+      twitter: req.body.twitter,
       linkedin: req.body.linkedin,
       languages: req.body.languages,
       certificates: req.body.certificates,
@@ -284,9 +284,16 @@ router.post("/register_seller", async (req, res) => {
     });
     await result.save();
 
+
+    console.log(result);
+    console.log(obj);
+
+    const data = await User.findOne({user_id: req.body.seller_id});
+    console.log(data);
+
     const res2 = await User.findOneAndUpdate(
-      { user_id: req.body.seller_id },
-      { $set: { user_type: "seller", user_img: obj.profile } }
+      { user_id: req._id },
+      { $set: { user_type: "seller", user_img: obj.profile.value } }
     ).exec();
 
     return res.status(201).json(req.body);

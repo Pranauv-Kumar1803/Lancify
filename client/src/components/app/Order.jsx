@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import Timeline from './Timeline'
+import Timeline from '../Reusable/Timeline'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Divider, Flex, FormControl, FormLabel, Heading, Image, Input, Radio, RadioGroup, SimpleGrid, Spinner, Stack, StackDivider, Text, useColorModeValue } from '@chakra-ui/react';
-import api from '../api/axios';
-import Loader from './loader/Loader';
+import api from '../../api/axios';
+import Loader from '../Loader/Loader';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import Rating from './Rating';
-import Rate from './Rating';
+import Rating from '../Reusable/Rating';
+import Rate from '../Reusable/Rating';
 
 
 const Order = () => {

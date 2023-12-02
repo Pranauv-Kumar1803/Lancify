@@ -15,28 +15,98 @@ import {
   NumberDecrementStepper,
   InputLeftAddon,
   InputGroup,
+  ButtonGroup,
+  Button,
+  Text,
 } from "@chakra-ui/react";
+import { toast } from "react-toastify";
 
-const Form2 = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [error, setError] = useState("");
+const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const handleChange = (e) => {
+    setData(prev => {
+      return { ...prev, [e.target.name]: e.target.value }
+    })
+  }
 
-    if (file) {
+  const handleChange2 = (e) => {
+    setData(prev => {
+      return { ...prev, ['year']: e }
+    })
+  }
+
+  const toBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files;
+
+    if (file.length > 0) {
       const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-      if (allowedExtensions.test(file.name)) {
-        setSelectedFile(file);
-        setError("");
-      } else {
-        setSelectedFile(null);
-        setError(
-          "Invalid file format. Please select a jpg, jpeg, or png file."
-        );
-      }
+
+      let files = [];
+      file.forEach(async (f) => {
+        if (allowedExtensions.test(file.name)) {
+          const f = await toBase64(file);
+          files.push(f);
+        } else toast.warning('file format not supported!');
+      })
+
+      setData((prev) => {
+        return { ...prev, ['certificates']: files }
+      })
     }
   };
+
+  const handleSelect = (e) => {
+    console.log(e.target.value);
+    setData((prev) => {
+      return { ...prev, ['occupation']: e.target.value }
+    })
+  }
+
+  const checkInputs = () => {
+    console.log(data);
+
+    const regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+
+    if (data.occupation.length == 0) {
+      toast.warning('one occupation must be selected!');
+      return false;
+    }
+
+    if (data.country.length < 2) {
+      toast.warning('country name must be atleast 2 characters in length');
+      return false;
+    }
+
+    if (data.title.length < 2) {
+      toast.warning('education title must be atleast 2 characters in length');
+      return false;
+    }
+
+    if (data.inst_name.length < 5) {
+      toast.warning('description must be atleast 5 characters in length');
+      return false;
+    }
+
+    const y = new Date().getFullYear() + 4;
+    if (data.year > y || y - data.year > 100) {
+      toast.warning('invalid year provided');
+      return false;
+    }
+
+    if (data.portfolio.length > 0 && (data.portfolio.length < 10 || !regex.test(data.portfolio))) {
+      toast.warning('Ensure you give a proper link for portfolio!');
+      return false;
+    }
+
+    return true;
+  }
 
   return (
     <>
@@ -65,8 +135,10 @@ const Form2 = () => {
           shadow="sm"
           size="sm"
           w="full"
+          value={data.occupation}
           rounded="md"
           colorScheme="teal.600"
+          onChange={handleSelect}
         >
           <option value="none">None</option>
           <option value="student">Student</option>
@@ -98,6 +170,9 @@ const Form2 = () => {
               placeholder="Country of Institute"
               focusBorderColor="teal.600"
               size="sm"
+              name="country"
+              value={data.country}
+              onChange={handleChange}
             />
           </FormControl>
 
@@ -107,6 +182,9 @@ const Form2 = () => {
               placeholder="Name of Institute"
               focusBorderColor="teal.600"
               size="sm"
+              name="inst_name"
+              value={data.inst_name}
+              onChange={handleChange}
             />
           </FormControl>
         </Flex>
@@ -120,6 +198,9 @@ const Form2 = () => {
               placeholder="Title"
               focusBorderColor="teal.600"
               size="sm"
+              name="title"
+              value={data.title}
+              onChange={handleChange}
             />
           </FormControl>
 
@@ -129,6 +210,9 @@ const Form2 = () => {
               placeholder="Major"
               focusBorderColor="teal.600"
               size="sm"
+              name="major"
+              value={data.major}
+              onChange={handleChange}
             />
           </FormControl>
         </Flex>
@@ -153,6 +237,9 @@ const Form2 = () => {
             min={1950}
             max={2050}
             focusBorderColor="teal.600"
+            name="year"
+            value={data.year}
+            onChange={handleChange2}
           >
             <NumberInputField />
             <NumberInputStepper>
@@ -167,7 +254,10 @@ const Form2 = () => {
         <FormLabel htmlFor="email" fontWeight="md">
           Certifications
         </FormLabel>
-        <Input type="file" onChange={handleFileChange} accept=".pdf" />
+        <Input type="file" onChange={handleFileChange} multiple="multiple" accept=".pdf" />
+        {data.certificates && <Text>Selected Files: {data.certificates && data.certificates.map(file=>{
+          return <Text> file.name </Text>
+        })}</Text>}
       </FormControl>
 
       <FormControl as={GridItem} colSpan={[3, 2]} mt="5%">
@@ -197,9 +287,71 @@ const Form2 = () => {
             placeholder="www.example.com"
             focusBorderColor="teal.600"
             rounded="md"
+            value={data.portfolio}
+            name="portfolio"
+            onChange={handleChange}
           />
         </InputGroup>
       </FormControl>
+
+      <ButtonGroup mt="5%" w="100%">
+        <Flex w="100%" justify="space-around">
+          <Flex>
+            <Button
+              onClick={() => {
+                setStep(step - 1);
+                setProgress(progress - 33.33);
+              }}
+              isDisabled={step === 1}
+              colorScheme="blue"
+              variant="solid"
+              w="7rem"
+              mr="5%"
+            >
+              Back
+            </Button>
+
+            <Button
+              w="7rem"
+              isDisabled={step === 3}
+              onClick={() => {
+                if (checkInputs()) {
+                  setStep(step + 1);
+                  if (step === 3) {
+                    setProgress(100);
+                  } else {
+                    setProgress(progress + 33.33);
+                  }
+                }
+              }}
+              colorScheme="blue"
+              variant="outline"
+            >
+              Next
+            </Button>
+          </Flex>
+          {step === 3 ? (
+            <Button
+              w="7rem"
+              colorScheme="teal"
+              variant="solid"
+              onClick={() => {
+                toast({
+                  title: "Registration Successfull.",
+                  description: "You have been Successfully registered as a Seller.",
+                  status: "success",
+                  duration: 4000,
+                  isClosable: true,
+                  colorScheme: "blue",
+                  variant: "solid"
+                });
+              }}
+            >
+              Submit
+            </Button>
+          ) : null}
+        </Flex>
+      </ButtonGroup>
 
     </>
   );

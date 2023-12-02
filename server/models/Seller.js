@@ -18,7 +18,7 @@ const sellerSchema = new schema({
     year_education: Number,
     portfolio_website: String,
     github: String,
-    StackOverflow: String,
+    twitter: String,
     linkedin: String,
     languages: Array,
     certificates: Array,

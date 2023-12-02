@@ -9,10 +9,71 @@ import {
   InputGroup,
   Textarea,
   FormHelperText,
+  Button,
+  ButtonGroup,
+  Flex,
 } from "@chakra-ui/react";
-const Form3 = () => {
+import { toast } from "react-toastify";
+import api from "../../api/axios";
+import {useNavigate} from 'react-router-dom'
+import { useState } from "react";
+import Loader from '../Loader/Loader'
+
+
+const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
+  const nav = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setData(prev => {
+      return { ...prev, [e.target.name]: e.target.value }
+    })
+  }
+
+  const checkInputs = () => {
+    console.log(data);
+
+    const regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+
+    if (data.github.length == 0 && data.linkedin.length==0) {
+      toast.warning('Github or Linkedin is a must to be registered as a user!');
+      return false;
+    }
+
+    if (data.github.length > 0 && !regex.test(data.github)) {
+      toast.warning('Ensure you give a proper link for github!');
+      return false;
+    }
+
+    if (data.linkedin.length > 0 && !regex.test(data.linkedin)) {
+      toast.warning('Ensure you give a proper link for linkedin!');
+      return false;
+    }
+
+    if (data.twitter.length > 0 && !regex.test(data.twitter)) {
+      toast.warning('Ensure you give a proper link for twitter!');
+      return false;
+    }
+
+    return true;
+  }
+
+  const handleSubmit = async (e) => {
+    try {
+      setLoading(true);
+      const res = await api.post('/app/register_seller', data);
+      toast.success("Registration as a Seller Successfull!");
+      setLoading(false);
+      nav('/app/dashboard');
+    } catch (err) {
+      setLoading(false);
+      toast.error(err.response.message);
+    }
+  }
+
   return (
     <>
+      {loading && <Loader />}
       <Heading w="100%" textAlign={"center"} fontWeight="normal">
         Social Profiles
       </Heading>
@@ -45,6 +106,9 @@ const Form3 = () => {
               placeholder="www.example.com"
               focusBorderColor="teal.600"
               rounded="md"
+              name="github"
+              value={data.github}
+              onChange={handleChange}
             />
           </InputGroup>
         </FormControl>
@@ -76,6 +140,9 @@ const Form3 = () => {
               placeholder="www.example.com"
               focusBorderColor="teal.600"
               rounded="md"
+              name="twitter"
+              value={data.twitter}
+              onChange={handleChange}
             />
           </InputGroup>
         </FormControl>
@@ -106,12 +173,46 @@ const Form3 = () => {
               type="tel"
               placeholder="www.example.com"
               focusBorderColor="teal.600"
-              rounded="md"
+              rounded="md" name="linkedin"
+              value={data.linkedin}
+              onChange={handleChange}
             />
           </InputGroup>
         </FormControl>
-        
+
       </SimpleGrid>
+
+      <ButtonGroup mt="5%" w="100%">
+        <Flex w="100%" justify="space-around">
+          <Flex direction={'row'} justify={'center'} align={'center'}>
+            <Button
+              onClick={() => {
+                setStep(step - 1);
+                setProgress(progress - 33.33);
+              }}
+              isDisabled={step === 1}
+              colorScheme="blue"
+              variant="solid"
+              w="7rem"
+              mr="5%"
+            >
+              Back
+            </Button>
+            <Button
+              w="7rem"
+              colorScheme="teal"
+              variant="solid"
+              onClick={() => {
+                if (checkInputs()) {
+                  handleSubmit();
+                }
+              }}
+            >
+              Submit
+            </Button>
+          </Flex>
+        </Flex>
+      </ButtonGroup>
     </>
   );
 };

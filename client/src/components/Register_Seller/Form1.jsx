@@ -12,35 +12,80 @@ import {
   Textarea,
   Text,
   Select,
+  ButtonGroup,
 } from "@chakra-ui/react";
+import { toast } from "react-toastify";
 
-const Form1 = () => {
-  const [value, setValue] = useState("");
-
-  const [selectedFile, setSelectedFile] = useState(null);
+const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
   const [error, setError] = useState("");
+  const [langs, setLangs] = useState([]);
 
-  const handleInputChange = (e) => {
-    let inputValue = e.target.value;
-    setValue(inputValue);
-  };
+  const handleChange = (e) => {
+    setData(prev => {
+      return { ...prev, [e.target.name]: e.target.value }
+    })
+  }
 
-  const handleFileChange = (event) => {
+  const toBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
 
     if (file) {
       const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
       if (allowedExtensions.test(file.name)) {
-        setSelectedFile(file);
-        setError("");
-      } else {
-        setSelectedFile(null);
-        setError(
-          "Invalid file format. Please select a jpg, jpeg, or png file."
-        );
-      }
+
+        const f = await toBase64(file);
+        console.log(f);
+        setData((prev)=>{
+          return {...prev, ['profile']: {name: file.name, value: f}}
+        })
+      } else
+        toast.warning('file format not supported!');
     }
   };
+
+  const checkInputs = () => {
+    console.log(data);
+    if (data.fname.length < 5) {
+      toast.warning('first name must be atleast 5 characters in length');
+      return false;
+    }
+
+    if (data.lname.length < 5) {
+      toast.warning('last name must be atleast 5 characters in length');
+      return false;
+    }
+
+    if (data.desc.length < 50) {
+      toast.warning('description must be atleast 50 characters in length');
+      return false;
+    }
+
+    if (!data.profile) {
+      toast.warning('you must select one file as profile picture');
+      return false;
+    }
+
+    if (!data.languages) {
+      toast.warning('select atleast one language');
+      return false;
+    }
+
+    return true;
+  }
+
+  const handleLang = (e) => {
+    console.log(e.target.value)
+    if(!data.languages.includes(e.target.value)) {
+      data.languages.push(e.target.value)
+    }
+  }
 
   return (
     <div>
@@ -58,6 +103,9 @@ const Form1 = () => {
             placeholder="First name"
             focusBorderColor="teal.600"
             isRequired={true}
+            name="fname"
+            value={data.fname}
+            onChange={handleChange}
           />
         </FormControl>
 
@@ -69,6 +117,9 @@ const Form1 = () => {
             id="last-name"
             placeholder="Last name"
             focusBorderColor="teal.600"
+            name="lname"
+            value={data.lname}
+            onChange={handleChange}
           />
         </FormControl>
       </Flex>
@@ -78,11 +129,12 @@ const Form1 = () => {
           Description
         </FormLabel>
         <Textarea
-          value={value}
-          onChange={handleInputChange}
           placeholder="Professional Description in abt 50-200 words"
           size="sm"
           focusBorderColor="teal.600"
+          name="desc"
+          value={data.desc}
+          onChange={handleChange}
         />
       </FormControl>
 
@@ -93,14 +145,18 @@ const Form1 = () => {
         <Input
           type="file"
           onChange={handleFileChange}
+          // value={data.profile ? 'Selected File Already!' : '' }
           accept=".jpg, .jpeg, .png"
         />
+        {data.profile && <Text>Selected File: {data.profile.name}</Text>}
         {error && <Text color="red">{error}</Text>}
-        {/* {selectedFile && <Text>Selected File: {selectedFile.name}</Text>} */}
       </FormControl>
 
       <FormControl mt="5%">
-        <Select placeholder="Languages You Speak" focusBorderColor="teal.600" >
+        <FormLabel fontWeight={'md'}>
+          Languages
+        </FormLabel>
+        <select placeholder="Languages You Speak" onChange={handleLang} multiple="multiple" focusBorderColor="teal.600" >
           <option value="Afrikaans">Afrikaans</option>
           <option value="Albanian">Albanian</option>
           <option value="Arabic">Arabic</option>
@@ -173,8 +229,47 @@ const Form1 = () => {
           <option value="Vietnamese">Vietnamese</option>
           <option value="Welsh">Welsh</option>
           <option value="Xhosa">Xhosa</option>
-        </Select>
+        </select>
       </FormControl>
+
+      <ButtonGroup mt="5%" w="100%">
+        <Flex w="100%" justify="space-around">
+          <Flex direction={'row'} justify={'center'} align={'center'}>
+            <Button
+              onClick={() => {
+                setStep(step - 1);
+                setProgress(progress - 33.33);
+              }}
+              isDisabled={step === 1}
+              colorScheme="blue"
+              variant="solid"
+              w="7rem"
+              mr="5%"
+            >
+              Back
+            </Button>
+
+            <Button
+              w="7rem"
+              isDisabled={step === 3}
+              onClick={() => {
+                if (checkInputs()) {
+                  setStep(step + 1);
+                  if (step === 3) {
+                    setProgress(100);
+                  } else {
+                    setProgress(progress + 33.33);
+                  }
+                }
+              }}
+              colorScheme="blue"
+              variant="outline"
+            >
+              Next
+            </Button>
+          </Flex>
+        </Flex>
+      </ButtonGroup>
 
     </div>
   );

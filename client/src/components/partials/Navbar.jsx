@@ -49,7 +49,7 @@ function WithAction() {
     const dispatch = useDispatch();
     const nav = useNavigate();
 
-    let Links = currentUser?.isLoggedin ? [{ name: 'Discover Projects', link: 'domains' }, { name: 'Explore the Community', link: '/community-hub' }] : [{ name: 'Discover Projects', link: 'domains' }, { name: 'Explore the Community', link: '/community-hub' }, { name: 'Register as a User', link: '/auth/signup' }]
+    let Links = currentUser?.isLoggedin ? [{ name: 'Discover Projects', link: 'explore' }, { name: 'Explore the Community', link: '/community-hub' }] : [{ name: 'Discover Projects', link: 'explore' }, { name: 'Explore the Community', link: '/community-hub' }, { name: 'Register as a User', link: '/auth/signup' }]
 
     useEffect(() => {
         ;
@@ -65,7 +65,7 @@ function WithAction() {
             })
             nav('/auth/login');
         } catch (err) {
-            toast.error('Server Error',{
+            toast.error('Server Error', {
                 position: 'top-right'
             })
         }
@@ -102,7 +102,7 @@ function WithAction() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                        <Link to={(currentUser && currentUser.user_type !='Seller')?'/app/register':'/auth/login' }>
+                        <Link to={(currentUser && currentUser.user_type != 'Seller') ? '/app/register' : '/auth/login'}>
                             <Button
                                 variant={'solid'}
                                 background={'blue.400'}
@@ -126,15 +126,11 @@ function WithAction() {
                                     />
                                 </MenuButton>
                                 <MenuList>
-                                    <MenuItem>
-                                        <Link to={'/dashboard'}>
-                                            Dashboard
-                                        </Link>
+                                    <MenuItem as={'a'} href='/app/dashboard'>
+                                        Dashboard
                                     </MenuItem>
-                                    <MenuItem>
-                                        <Link to={'/profile'}>
-                                            Profile
-                                        </Link>
+                                    <MenuItem as={'a'} href='/app/profile'>
+                                        Profile
                                     </MenuItem>
                                     <MenuDivider />
                                     <MenuItem onClick={handleLogout}>

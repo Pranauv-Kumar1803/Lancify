@@ -7,7 +7,7 @@ import api from '../../api/axios';
 import {toast} from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginError, loginStart, loginSuccess } from '../../features/userSlice';
-import Loader from '../loader/Loader';
+import Loader from '../Loader/Loader';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors, } } = useForm();
@@ -27,7 +27,7 @@ const Login = () => {
         position: 'top-right'
       })
 
-      nav('/dashboard')
+      nav('/app/dashboard')
     } catch (err) {
       dispatch(loginError());
       toast.error(err.message, {

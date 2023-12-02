@@ -1,25 +1,31 @@
-"use client";
-
-import { useState } from "react";
 import {
   Progress,
   Box,
-  ButtonGroup,
-  Button,
-  Flex,
-  ChakraProvider,
-  theme,
 } from "@chakra-ui/react";
 
-import { useToast } from "@chakra-ui/react";
 import Form1 from "./Form1";
 import Form2 from "./Form2";
 import Form3 from "./Form3";
+import { useState, useEffect } from "react";
+import {useSelector} from 'react-redux'
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function RegisterSeller() {
-  const toast = useToast();
+  const nav = useNavigate();
+
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
+  const {currentUser} = useSelector(state=>state.user);
+  const [data, setData] = useState({fname: '', lname: '', desc: '', profile: null, languages: [], occupation: '', country: '', inst_name: '', title: '', major: '', year: '', certs: null, portfolio: '', github: '', twitter: '', linkedin: '' })
+
+
+  useEffect(()=>{
+    if(currentUser.user_type=='seller') {
+      nav('/app/dashboard')
+      toast.warning('Already logged in!');
+    }
+  },[])
 
   return (
     <>
@@ -41,67 +47,7 @@ export default function RegisterSeller() {
           mx="5%"
           isAnimated
         ></Progress>
-        {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
-
-        <ButtonGroup mt="5%" w="100%">
-
-          <Flex w="100%" justifyContent="space-between">
-
-            <Flex>
-              
-              <Button
-                onClick={() => {
-                  setStep(step - 1);
-                  setProgress(progress - 33.33);
-                }}
-                isDisabled={step === 1}
-                colorScheme="blue"
-                variant="solid"
-                w="7rem"
-                mr="5%"
-              >
-                Back
-              </Button>
-
-              <Button
-                w="7rem"
-                isDisabled={step === 3}
-                onClick={() => {
-                  setStep(step + 1);
-                  if (step === 3) {
-                    setProgress(100);
-                  } else {
-                    setProgress(progress + 33.33);
-                  }
-                }}
-                colorScheme="blue"
-                variant="outline"
-              >
-                Next
-              </Button>
-            </Flex>
-            {step === 3 ? (
-              <Button
-                w="7rem"
-                colorScheme="teal"
-                variant="solid"
-                onClick={() => {
-                  toast({
-                    title: "Registration Successfull.",
-                    description: "You have been Successfully registered as a Seller.",
-                    status: "success",
-                    duration: 4000,
-                    isClosable: true,
-                    colorScheme:"blue",
-                    variant:"solid"
-                  });
-                }}
-              >
-                Submit
-              </Button>
-            ) : null}
-          </Flex>
-        </ButtonGroup>
+        {step === 1 ? <Form1 step={step} setStep={setStep} progress={progress} setProgress={setProgress} data={data} setData={setData} /> : step === 2 ? <Form2 step={step} setStep={setStep} progress={progress} setProgress={setProgress} data={data} setData={setData} /> : <Form3 step={step} setStep={setStep} progress={progress} setProgress={setProgress} data={data} setData={setData} />}
       </Box>
     </>
   );

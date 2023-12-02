@@ -16,7 +16,7 @@ import { FaRegNewspaper } from 'react-icons/fa';
 import { BsGithub } from 'react-icons/bs';
 import { IconType } from 'react-icons';
 import { Link } from 'react-router-dom';
-import api from '../api/axios';
+import api from '../../api/axios';
 import { toast } from 'react-toastify';
 
 const Timeline = ({ timeline, order_id, pending }) => {
