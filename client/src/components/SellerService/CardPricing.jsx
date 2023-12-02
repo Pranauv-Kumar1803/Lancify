@@ -22,28 +22,26 @@ import api from '../../api/axios';
 export default function CardPricing({ data }) {
      const services = data.services;
      const [tier0, tier1, tier2] = services;
-     const {currentUser} = useSelector(state=>state.user);
+     const { currentUser } = useSelector(state => state.user);
      const [disable, setDisable] = useState(false);
 
-     useEffect(()=>{
-          if(currentUser && currentUser.user_type!='seller')
-          {
-               setDisable(true);
+     useEffect(() => {
+          if (currentUser && currentUser.user_type != 'seller') {
+               setDisable(false);
           }
-          else if(currentUser && currentUser.user_type=='seller' && currentUser.user_id==data.seller_id )
-          {
+          else if (currentUser && currentUser.user_type == 'seller' && currentUser.user_id == data.seller_id) {
                setDisable(true);
           }
      }, [])
 
-     const handleClick = async() => {
+     const handleClick = async () => {
           try {
                console.log('inside');
                const res = await api.post
           } catch (err) {
-               
+
           }
-     } 
+     }
 
      return (
           <Box py={12}>
@@ -86,7 +84,7 @@ export default function CardPricing({ data }) {
                               </List>
                               <Box w="80%" pt={7}>
                                    <Button w="full" isDisabled={disable} onClick={handleClick} colorScheme="blue" variant="outline">
-                                          Buy
+                                        Buy
                                    </Button>
                               </Box>
                          </VStack>

@@ -21,9 +21,12 @@ function ReCard({ img, seller_img, title, body, price, name, min_dur }) {
           borderRadius="lg"
           width={'100%'}
           height={'40%'}
+          minH={'200px'} //here hardcoded
           objectFit={'cover'}
         />
-        <Stack p="6" spacing="3">
+        <Stack p="6" spacing="3"
+          minH={'300px'} //here also hardcoded
+        >
           <Heading size="md">{title}</Heading>
           <Flex direction={"row"} justify={"flex-start"} align={"center"}>
             <Image borderRadius="full" boxSize="30px" src={seller_img} />
