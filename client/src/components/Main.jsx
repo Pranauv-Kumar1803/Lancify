@@ -12,10 +12,10 @@ import Community from "./CommunityHub/Community";
 import AuthProtected from "./partials/AuthProtected";
 import Protected from "./partials/Protected";
 import Dashboard from "./app/Dashboard";
-import Profile from "./Profile";
+import Profile from './app/Profile';
 import Domains from "./Domains/Domains";
 import Order from "./app/Order";
-import Success from "./Success";
+import Success from "./Reusable/Success";
 import ServiceInfo from "./SellerService/ServiceInfo";
 import RegisterSeller from "./Register_Seller/RegisterSeller";
 
