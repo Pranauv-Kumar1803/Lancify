@@ -1,20 +1,40 @@
 import React, { useEffect } from "react";
-import { Box, Flex, Text, VStack, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  VStack,
+  Image,
+  Center,
+  Button,
+} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import api from "../../api/axios";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 const FinishedOrders = () => {
   // Sample data for finished orders
   const { currentUser } = useSelector((state) => state.user);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
 
+  let str = currentUser.user_type != null ? "seller" : "user";
+  const res = api.get("/app/getProfileData?" + `type=${str}`);
   const getOrders = async () => {
+    setLoading(true);
     console.log(currentUser);
     try {
       let str = currentUser.user_type != null ? "seller" : "user";
       const res = await api.get("/app/getProfileData?" + `type=${str}`);
-      console.log(res.data);
+      setData(res.data);
+      setLoading(false);
+      // console.log(res.data);
     } catch (err) {
-      console.log(err.message);
+      setLoading(false);
+      console.log(err.response.data);
     }
   };
 
@@ -22,83 +42,22 @@ const FinishedOrders = () => {
     getOrders();
   }, []);
 
-  const ongoingOrders = [
-    {
-      id: 1,
-      title: "Ongoing Project 1",
-      user: "User A",
-      amount: "$50",
-      main_img: "https://via.placeholder.com/150",
-    },
-    {
-      id: 2,
-      title: "Ongoing Project 2",
-      user: "User B",
-      amount: "$50",
-      main_img: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      title: "Ongoing Project 3",
-      user: "User C",
-      amount: "$50",
-      main_img: "https://via.placeholder.com/150",
-    },
-    {
-      id: 4,
-      title: "Ongoing Project 4",
-      user: "User D",
-      amount: "$50",
-      main_img: "https://via.placeholder.com/150",
-    },
-    {
-      id: 5,
-      title: "Ongoing Project 5",
-      user: "User E",
-      amount: "$50",
-      main_img: "https://via.placeholder.com/150",
-    },
-  ];
-  const finishedOrders = [
-    // Sample data for five finished orders (replace with your actual data)
-    {
-      id: 1,
-      title: "Order 1",
-      user: "User 1",
-      amount: "$50",
-      main_img: "https://via.placeholder.com/150",
-    },
-    {
-      id: 2,
-      title: "Order 2",
-      user: "User 2",
-      amount: "$70",
-      main_img: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      title: "Order 3",
-      user: "User 3",
-      amount: "$90",
-      main_img: "https://via.placeholder.com/150",
-    },
-    {
-      id: 4,
-      title: "Order 4",
-      user: "User 4",
-      amount: "$110",
-      main_img: "https://via.placeholder.com/150",
-    },
-    {
-      id: 5,
-      title: "Order 5",
-      user: "User 5",
-      amount: "$130",
-      main_img: "https://via.placeholder.com/150",
-    },
-  ];
+  useEffect(() => {
+    console.log(data);
+    let sum = 0;
+    if (data.ongoing && data.orders) {
+      data.ongoing.forEach((d) => {
+        sum += d.grand_total;
+      });
 
-  // Sample summary data (replace with your actual data)
+      data.orders.forEach((d) => {
+        sum += d.grand_total;
+      });
+
+      setTotal(sum);
+    }
+  }, [, data]);
+
   const summaryData = {
     ongoingOrders: 20,
     finishedOrders: 75,
@@ -110,98 +69,205 @@ const FinishedOrders = () => {
   if (currentUser.user_type == null) {
     content = (
       <Box bg="gray.200" p={4} borderRadius="md" textAlign="center">
-        <Text>Ongoing Orders: {summaryData.ongoingOrders}</Text>
-        <Text>Finished Orders: {summaryData.finishedOrders}</Text>
-        <Text>Total Money Spent: {summaryData.totalSpent}</Text>
+        <Text>
+          Ongoing Orders: {data && data.ongoing && data.ongoing.length}
+        </Text>
+        <Text>
+          Finished Orders: {data && data.orders && data.orders.length}
+        </Text>
+        <Text>Total Money Spent: ₹{total}</Text>
       </Box>
     );
   } else {
     content = (
       <Box bg="gray.200" p={4} borderRadius="md" textAlign="center">
-        <Text>Ongoing Orders: {summaryData.ongoingOrders}</Text>
-        <Text>Finished Orders: {summaryData.finishedOrders}</Text>
-        <Text>Account balance: {summaryData.acc_bal}</Text>
-        <Text>Average rating: {summaryData.avg_rat}</Text>
+        <Text>
+          Ongoing Orders: {data && data.ongoing && data.ongoing.length}
+        </Text>
+        <Text>
+          Finished Orders: {data && data.orders && data.orders.length}
+        </Text>
+        <Text>
+          Account balance: {data && data.seller && data.seller.balance}
+        </Text>
+        <Text>Average rating: {data && data.seller && data.seller.rating}</Text>
       </Box>
     );
   }
 
   return (
-    <VStack spacing={6} align="stretch" p={8}>
-      return <div>{content}</div>
-      <Text fontSize="3xl" fontWeight="bold" mb={6}>
-        Finished Orders
-      </Text>
-      <Flex flexWrap="wrap" justifyContent="space-between">
-        {ongoingOrders.map((order) => (
-          <Box
-            key={order.id}
-            bg="white"
-            borderRadius="md"
-            boxShadow="md"
-            p={4}
-            mb={4}
-            w={["100%", "48%", "32%"]}
-            maxW="300px"
-            borderWidth="1px"
-            borderColor="gray.200"
-            _hover={{ boxShadow: "lg" }}
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <VStack spacing={6} align="stretch" p={8}>
+          return <div>{content}</div>
+          <Text fontSize="3xl" fontWeight="bold" mb={6}>
+            Ongoing Orders
+          </Text>
+          <Flex
+            wrap="wrap"
+            direction={"row"}
+            justify="flex-start"
+            gap={10}
+            align={"center"}
           >
-            <Image
-              src={order.main_img}
-              alt="Project Image"
-              borderRadius="md"
-              mb="4"
-            />
-            <Text fontWeight="bold" fontSize="lg" mb={2}>
-              {order.title}
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              User: {order.user}
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              Amount: {order.amount}
-            </Text>
-          </Box>
-        ))}
-      </Flex>
-      <Text fontSize="3xl" fontWeight="bold" mb={6}>
-        Finished Orders
-      </Text>
-      <Flex flexWrap="wrap" justifyContent="space-between">
-        {finishedOrders.map((order) => (
-          <Box
-            key={order.id}
-            bg="white"
-            borderRadius="md"
-            boxShadow="md"
-            p={4}
-            mb={4}
-            w={["100%", "48%", "32%"]}
-            maxW="300px"
-            borderWidth="1px"
-            borderColor="gray.200"
-            _hover={{ boxShadow: "lg" }}
-          >
-            <Image
-              src={order.main_img}
-              alt="Project Image"
-              borderRadius="md"
-              mb="4"
-            />
-            <Text fontWeight="bold" fontSize="lg" mb={2}>
-              {order.title}
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              User: {order.user}
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              Amount: {order.amount}
-            </Text>
-          </Box>
-        ))}
-      </Flex>
-    </VStack>
+            {data &&
+              data.ongoing &&
+              data.ongoing.map((order) => (
+                <Box
+                  key={order.id}
+                  bg="white"
+                  borderRadius="md"
+                  boxShadow="md"
+                  p={4}
+                  mb={4}
+                  w={["100%", "48%", "32%"]}
+                  maxW="300px"
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                  _hover={{ boxShadow: "lg" }}
+                >
+                  <Image
+                    src={order.service_id.main_img}
+                    alt="Project Image"
+                    borderRadius="md"
+                    mb="4"
+                    minHeight="150px"
+                  />
+                  <Text fontWeight="bold" fontSize="lg" mb={2}>
+                    {order.service_id.seller_title}
+                  </Text>
+                  {currentUser.user_type == "seller" ? (
+                    <Text fontSize="sm" color="gray.600">
+                      Buyer : {order.user_name}
+                    </Text>
+                  ) : (
+                    <Text fontSize="sm" color="gray.600">
+                      Seller : {order.service_id.seller_name}
+                    </Text>
+                  )}
+                  <Text fontSize="sm" color="gray.600">
+                    Amount : {order.grand_total}
+                  </Text>
+
+                  <Link to={`/order/${order._id}`}>
+                    <Button my="4" colorScheme="blue">
+                      Learn more
+                    </Button>
+                  </Link>
+                </Box>
+              ))}
+          </Flex>
+          <Text fontSize="3xl" fontWeight="bold" mb={6}>
+            Finished Orders
+          </Text>
+          <Flex wrap={"wrap"} justify="flex-start" gap={10} align={"center"}>
+            {data &&
+              data.orders &&
+              data.orders.map((order) => (
+                <Box
+                  key={order.id}
+                  bg="white"
+                  borderRadius="md"
+                  boxShadow="md"
+                  p={4}
+                  mb={4}
+                  w={["100%", "48%", "32%"]}
+                  maxW="300px"
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                  _hover={{ boxShadow: "lg" }}
+                >
+                  <Image
+                    src={order.service_id.main_img}
+                    alt="Project Image"
+                    borderRadius="md"
+                    mb="4"
+                    minHeight="150px"
+                  />
+                  <Text fontWeight="bold" fontSize="lg" mb={2}>
+                    {order.service_id.seller_title}
+                  </Text>
+                  {currentUser.user_type == "seller" ? (
+                    <Text fontSize="sm" color="gray.600">
+                      Buyer : {order.user_name}
+                    </Text>
+                  ) : (
+                    <Text fontSize="sm" color="gray.600">
+                      Seller : {order.service_id.seller_name}
+                    </Text>
+                  )}
+                  <Text fontSize="sm" color="gray.600">
+                    Amount : {order.grand_total}
+                  </Text>
+                  <Link to={`/order/${order._id}`}>
+                    <Button my="4" colorScheme="blue">
+                      Learn more
+                    </Button>
+                  </Link>
+                </Box>
+              ))}
+          </Flex>
+          {currentUser.user_type == "seller" && (
+            <>
+              <Text fontSize="3xl" fontWeight="bold" mb={6}>
+                Your Services
+              </Text>
+              <Flex
+                wrap={"wrap"}
+                justify="flex-start"
+                gap={10}
+                align={"center"}
+              >
+                {data &&
+                  data.gigs &&
+                  data.gigs.map((order) => (
+                    <Box
+                      key={order.id}
+                      bg="white"
+                      borderRadius="md"
+                      boxShadow="md"
+                      p={4}
+                      mb={4}
+                      w={["100%", "48%", "32%"]}
+                      maxW="300px"
+                      borderWidth="1px"
+                      borderColor="gray.200"
+                      _hover={{ boxShadow: "lg" }}
+                    >
+                      <Image
+                        src={order.main_img}
+                        alt="Project Image"
+                        borderRadius="md"
+                        mb="4"
+                        minHeight="150px"
+                      />
+                      <Text fontWeight="bold" fontSize="lg" mb={2}>
+                        {order.seller_title}
+                      </Text>
+                      <Text fontWeight="sm" fontSize="lg" mb={2}>
+                        {order.seller_desc}
+                      </Text>
+                      <Text fontSize="sm" color="gray.600">
+                        Service Type : {order.service_type.replace("_", " ")}
+                      </Text>
+                      <Text fontSize="sm" color="gray.600">
+                        Starting Price : {order.starting_price}
+                      </Text>
+                      <Link to={`/services/${order._id}`}>
+                        <Button my="4" colorScheme="blue">
+                          Learn more
+                        </Button>
+                      </Link>
+                    </Box>
+                  ))}
+              </Flex>
+            </>
+          )}
+        </VStack>
+      )}
+    </>
   );
 };
 
