@@ -1,5 +1,31 @@
 const Service = require("../models/Service");
 
+const getServices = async (req, res) => {
+    const q = req.query;
+
+    console.log('inside this!', q);
+
+    try {
+        let services;
+        if (JSON.stringify(q) === "{}") {
+            const data = await Service.find().exec();
+            return res.status(200).json({data: data});
+        } else {
+            if (q.hours) {
+                services = await Service.find({ min_duration: { $lte: q.hours }, starting_price: { $gte: q.min, $lte: q.max } }).exec();
+                console.log(services);
+            }
+            else {
+                services = await Service.find({ starting_price: { $gte: q.min, $lte: q.max } }).exec();
+                console.log(services);
+            }
+            return res.status(200).json({data: services});
+        }
+    } catch (err) {
+        return res.status(500).json({ message: 'Server Error1!' })
+    }
+}
+
 const getServicesOfDomain = async (req, res) => {
     console.log('inside this')
     const q = req.query;
@@ -12,14 +38,13 @@ const getServicesOfDomain = async (req, res) => {
 
     try {
         let services = [];
-        if(!service)
-        {
+        if (!service) {
             console.log('service type not present!')
             if (JSON.stringify(q) === "{}") {
                 if (!domain) {
                     return res.status(400).json({ message: "no domain selected!" });
                 }
-    
+
                 const services = await Service.find({ domain_type: domain }).exec();
                 return res.status(200).json({ data: services });
             }
@@ -33,7 +58,7 @@ const getServicesOfDomain = async (req, res) => {
                 console.log(services);
             }
 
-            return res.status(200).json({data: services});
+            return res.status(200).json({ data: services });
         }
 
         if (JSON.stringify(q) === "{}") {
@@ -60,8 +85,8 @@ const getServicesOfDomain = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        return res.status(500).json({ message: 'Server Error' });
+        return res.status(500).json({ message: 'Server Error2' });
     }
 }
 
-module.exports = { getServicesOfDomain }
+module.exports = { getServicesOfDomain, getServices }

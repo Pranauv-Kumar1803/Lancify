@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { chakra, Box, FormControl, Input, HStack, Stack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom'
-import Loader from '../loader/Loader';
+import Loader from '../Loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginStart, loginError, loginSuccess } from '../../features/userSlice';
 import api from '../../api/axios';
@@ -18,7 +18,7 @@ const SignupForm = () => {
   async function handleRegister(data) {
     try {
       dispatch(loginStart());
-      const res = await api.post('/auth/signup', data);
+      const res = await api.post('/auth/register', data);
       console.log(res.data);
 
       dispatch(loginSuccess());
@@ -29,11 +29,11 @@ const SignupForm = () => {
 
       nav('/auth/login')
 
-    } catch (err) {
-      dispatch(loginError());
-      toast.error(err.message, {
+    } catch (error) {
+      toast.error(error?.response?.data?.error || "Some error", {
         position: 'top-right'
       })
+      dispatch(loginError());
     }
   }
 

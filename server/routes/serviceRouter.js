@@ -15,7 +15,7 @@ router.get("/:serviceId", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const servies = await Service.find();
+  const services = await Service.find();
 
   return res.status(200).json(services);
 });

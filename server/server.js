@@ -13,6 +13,7 @@ const User = require("./models/User");
 const Service = require("./models/Service");
 const Comment = require("./models/Comment");
 const Discussion = require("./models/Discussion");
+const Order = require("./models/Order");
 
 const authRouter = require("./routes/authRouter");
 const appRouter = require("./routes/appRouter");
@@ -20,10 +21,10 @@ const domainRouter = require("./routes/domainRouter");
 const forumRouter = require("./routes/forumRouter");
 const orderRouter = require("./routes/orderRouter");
 const serviceRouter = require("./routes/serviceRouter");
+const { paymentSuccess } = require("./controllers/appController");
 
 // const Order = require("./models/Order");
 // const Payment = require("./models/Payment");
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
@@ -51,43 +52,29 @@ app.use("/order", verifyJWT, orderRouter);
 // protected routes
 app.use("/app", verifyJWT, appRouter);
 
-app.post("/create-checkout-session", verifyJWT, async (req, res) => {
-  const service = JSON.parse(req.body.service);
-  const user = await User.findOne({ user_id: req._id });
-  const seller = await Seller.findOne({ seller_id: service.seller_id });
-  const items = req.body.items;
-  const price = items[0].unit_price.substring(1, items[0].unit_price.length);
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      line_items: items.map((item) => {
-        console.log(price);
-        return {
-          price_data: {
-            currency: "inr",
-            product_data: {
-              name: item.title,
-              description:
-                "paying : " +
-                item.name.toUpperCase() +
-                " for the service type - " +
-                item.type.toUpperCase(),
-            },
-            unit_amount: price + "00",
-          },
-          quantity: 1,
-        };
-      }),
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
-    });
+// other methods
+app.get("/admin/analytics", async (req, res) => {
+  const sellers = await Seller.find();
+  const services = await Service.find();
+  const users = await User.find();
+  const orders = await Order.find();
 
-    res.json({ url: session.url, order: order, payment: payment });
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({ error: e.message });
+  const ratings = await Service.find({ rating: true });
+  console.log(ratings);
+  const rating = await Seller.find({ rating: { $ne: 0 } });
+  let r = 0,
+    n = 0;
+  rating.forEach((p) => {
+    r += p.rating;
+    n += 1;
+  });
+  r = r / n;
+
+  if (ratings.length == 0) {
+    r = 0;
   }
+
+  return res.json({ sellers, services, users, orders, ratings, r });
 });
 
 app.get("/profile/:id", async (req, res) => {

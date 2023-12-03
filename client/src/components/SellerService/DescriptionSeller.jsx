@@ -1,5 +1,6 @@
 import { ListItem, ListIcon, List, Button, Card, CardBody, CardFooter, HStack, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { MdOutlineControlPoint } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const DescriptionSeller = ({ sellerImage, mainImage, sellerDetails }) => {
   return (
@@ -59,9 +60,11 @@ const DescriptionSeller = ({ sellerImage, mainImage, sellerDetails }) => {
           </CardBody>
 
           <CardFooter>
-            <Button variant='solid' colorScheme='blue'>
-              Visit Profile
-            </Button>
+            <Link to='/app/profile'>
+              <Button variant='solid' colorScheme='blue'>
+                Visit Profile
+              </Button>
+            </Link>
           </CardFooter>
         </Stack>
       </Card>

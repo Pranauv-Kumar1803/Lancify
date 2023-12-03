@@ -24,7 +24,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../api/axios";
 import Card from "../Reusable/ReCard";
-import Loader from "../loader/Loader";
+import Loader from "../Loader/Loader";
 
 function Domains() {
   const params = useParams();
@@ -39,6 +39,7 @@ function Domains() {
     try {
       setLoading(true);
       const res = await api.get("/domains/" + params);
+      console.log(res.data)
       setData(res.data.data);
       setLoading(false);
     } catch (err) {
@@ -64,21 +65,43 @@ function Domains() {
 
   const handleSubmit = async () => {
     console.log(filter);
-    let str = `/domains/${params.param}?`;
-    if (filter.max) str += `max=${Number(filter.max)}`;
-    str += filter.min ? `&min=${Number(filter.min)}` : `&min=0`;
-    if (filter.time) str += `&hours=${Number(filter.time * 24)}`;
 
-    try {
-      setLoading(true);
-      const res = await api.get(str);
-      setData(res.data.data);
-      setLoading(false);
-    } catch (err) {
-      toast.error("Server Error", {
-        position: "top-right",
-      });
-      setLoading(false);
+    if (JSON.stringify(params) !== '{}') {
+      let str = `/domains/${params.param}?`;
+      if (filter.max) str += `max=${Number(filter.max)}`;
+      str += filter.min ? `&min=${Number(filter.min)}` : `&min=0`;
+      if (filter.time) str += `&hours=${Number(filter.time * 24)}`;
+
+      try {
+        setLoading(true);
+        const res = await api.get(str);
+        setData(res.data.data);
+        setLoading(false);
+      } catch (err) {
+        toast.error("Server Error", {
+          position: "top-right",
+        });
+        setLoading(false);
+      }
+    }
+    else {
+      let str = `/domains?`;
+      if (filter.max) str += `max=${Number(filter.max)}`;
+      str += filter.min ? `&min=${Number(filter.min)}` : `&min=0`;
+      if (filter.time) str += `&hours=${Number(filter.time * 24)}`;
+
+      try {
+        setLoading(true);
+        const res = await api.get(str);
+        console.log(res.data);
+        setData(res.data.data);
+        setLoading(false);
+      } catch (err) {
+        toast.error("Server Error", {
+          position: "top-right",
+        });
+        setLoading(false);
+      }
     }
   };
 
@@ -86,21 +109,40 @@ function Domains() {
     console.log("inside here");
     if (!isFilter) return;
 
-    try {
-      setLoading(true);
-      const res = await api.get("/domains/" + params.param);
-      setData(res.data.data);
-      setLoading(false);
-      setIsFilter(false);
-      setFilter({ min: 0, max: 0, time: null });
-    } catch (err) {
-      setLoading(false);
-      toast.error("Server Error", {
-        position: "top-right",
-      });
-      window.location.href = "/explore/" + params;
+    if (JSON.stringify(params) !== '{}') {
+      try {
+        setLoading(true);
+        const res = await api.get("/domains/" + params.param);
+        setData(res.data.data);
+        setLoading(false);
+        setIsFilter(false);
+        setFilter({ min: 0, max: 0, time: null });
+      } catch (err) {
+        setLoading(false);
+        toast.error("Server Error", {
+          position: "top-right",
+        });
+        window.location.href = "/explore/" + params;
+      }
     }
-  };
+    else {
+      try {
+        setLoading(true);
+        const res = await api.get("/domains");
+        setData(res.data.data);
+        setLoading(false);
+        setIsFilter(false);
+        setFilter({ min: 0, max: 0, time: null });
+      } catch (err) {
+        setLoading(false);
+        toast.error("Server Error", {
+          position: "top-right",
+        });
+        window.location.href = "/explore";
+      }
+    }
+  }
+
 
   useEffect(() => {
     const reg = /[A-Za-z]+-[A-Za-z]+_[A-Za-z]+/i;
@@ -109,7 +151,11 @@ function Domains() {
       nav("/error");
     }
 
-    getServices(params.param);
+    if (JSON.stringify(params) !== '{}') {
+      getServices(params.param);
+    }
+
+    getServices('');
   }, []);
 
 
@@ -197,7 +243,7 @@ function Domains() {
           <Loader />
         ) : (
           <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} padding={10} >
-            {data.length >= 1 ? (
+            {data && data.length >= 1 ? (
               data.map((d, i) => {
                 return (
                   <Link to={`/services/${d._id}`}>

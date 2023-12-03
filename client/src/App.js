@@ -1,72 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import api from "./api/axios";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "./features/userSlice";
-
-import Home from "./components/Home";
-import Login from "./components/auth/Login";
-import Signup from "./components/auth/Signup";
-import Navbar from "./components/partials/Navbar";
-import Footer from "./components/partials/Footer";
-import PageNotFound from "./components/auth/PageNotFound";
-import Community from "./components/CommunityHub/Community";
-import AuthProtected from "./components/partials/AuthProtected";
-import Protected from "./components/partials/Protected";
-import Dashboard from "./components/Dashboard";
-import Domains from "./components/Domains/Domains";
-import Order from "./components/Order";
-import Success from "./components/Success";
-import ServiceInfo from "./components/SellerService/ServiceInfo";
-import RegisterSeller from "./components/Register_Seller/RegisterSeller";
+import { loginStart, loginSuccess } from "./features/userSlice";
+import Loader from "./components/Loader/Loader";
+import Main from "./components/Main";
 
 function App() {
   const dispatch = useDispatch();
-  // const nav = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const getUserData = async () => {
     try {
+      setLoading(true);
       const res = await api.get("/auth/check");
+      console.log(res.data);
       dispatch(loginSuccess(res.data.data));
-    } catch (err) {}
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     getUserData();
   }, []);
 
-  return (
-    <>
-      <ToastContainer />
-      <Navbar />
-      <Routes>
-        <Route path="/">
-          <Route index element={<Home />} />
-          <Route path="community-hub" element={<Community />} />
-          <Route path="explore/:param" element={<Domains />} />
-          <Route path="success" element={<Success />} />
-        </Route>
-
-        <Route path="/auth" element={<AuthProtected />}>
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-        </Route>
-
-        <Route path="/order/:id" element={<Order />} />
-
-        <Route path="/services/:service_id" element={<ServiceInfo />} />
-
-        <Route path="/app" element={<Protected />}>
-          <Route path="register" element={<RegisterSeller />} />
-          <Route index element={<Dashboard />} />
-        </Route>
-
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      <Footer />
-    </>
-  );
+  return loading ? <Loader /> : <Main />;
 }
 
 export default App;
