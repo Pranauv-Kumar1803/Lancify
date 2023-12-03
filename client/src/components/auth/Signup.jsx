@@ -29,12 +29,11 @@ const SignupForm = () => {
 
       nav('/auth/login')
 
-    } catch (err) {
-      dispatch(loginError());
-      console.log(err.response.data)
-      toast.error(err.response.data, {
+    } catch (error) {
+      toast.error(error?.response?.data?.error || "Some error", {
         position: 'top-right'
       })
+      dispatch(loginError());
     }
   }
 
