@@ -1,17 +1,24 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const router = express.Router();
+
 const User = require("../models/User");
 const Seller = require("../models/Seller");
 const Service = require("../models/Service");
 const Comment = require("../models/Comment");
 const Order = require("../models/Order");
-const bcrypt = require("bcrypt");
-const crypto = require("crypto");
 const Discussion = require("../models/Discussion");
+const verifyJWT = require("../middleware/verifyJWT");
+const { checkoutsession, paymentSuccess } = require("../controllers/appController");
 
 router.post("/discussions", async (req, res) => {
   return res.status(500);
 });
+
+router.post('/create-checkout-session', checkoutsession);
+
+router.post('/payment-success', paymentSuccess)
 
 router.get("/getProfileData", async (req, res) => {
   const user = await User.findOne({ user_id: req.user });

@@ -12,7 +12,7 @@ import Community from "./CommunityHub/Community";
 import AuthProtected from "./partials/AuthProtected";
 import Protected from "./partials/Protected";
 import Dashboard from "./app/Dashboard";
-import Profile from "./app/Profile";
+import Profile from './app/Profile';
 import Domains from "./Domains/Domains";
 import Order from "./app/Order";
 import Success from "./Reusable/Success";
@@ -31,7 +31,6 @@ const Main = () => {
                 <Route path="explore" element={<Domains />} />
                 <Route path="explore/:param" element={<Domains />} />
                 <Route path="success" element={<Success />} />
-                <Route path="xyz" element={<AdDashBoard />} />
             </Route>
 
             <Route path="/auth" element={<AuthProtected />}>
@@ -47,6 +46,7 @@ const Main = () => {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="register" element={<RegisterSeller />} />
+                <Route path="@dm^n" element={<AdDashBoard />} />
                 {/* <Route path="admin-dashboard" element={<AdDashBoard />} /> */}
             </Route>
 

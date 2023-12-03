@@ -34,8 +34,13 @@ const Order = () => {
             setData(res.data);
         } catch (err) {
             setLoading(false);
-            nav('/auth/login');
             console.log(err.message);
+            if(err.response.status==404)
+            {
+                toast.error('Order Not Found!');
+                nav('/');
+            }
+            else nav('/auth/login');
         }
     }
 
