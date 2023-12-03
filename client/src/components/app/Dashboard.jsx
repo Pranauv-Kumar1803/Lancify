@@ -1,14 +1,26 @@
 import React, { useEffect } from "react";
 import { Box, Flex, Text, VStack, Image } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import api from "../../api/axios";
 
 const FinishedOrders = () => {
   // Sample data for finished orders
-  const user = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
 
-  // useEffect(() => {
-  // }, []);
-  console.log(user);
+  const getOrders = async () => {
+    console.log(currentUser);
+    try {
+      let str = currentUser.user_type != null ? "seller" : "user";
+      const res = await api.get("/app/getProfileData?" + `type=${str}`);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getOrders();
+  }, []);
 
   const ongoingOrders = [
     {
@@ -95,7 +107,7 @@ const FinishedOrders = () => {
     avg_rat: 7.5,
   };
   let content;
-  if (user.currentUser.user_type == null) {
+  if (currentUser.user_type == null) {
     content = (
       <Box bg="gray.200" p={4} borderRadius="md" textAlign="center">
         <Text>Ongoing Orders: {summaryData.ongoingOrders}</Text>

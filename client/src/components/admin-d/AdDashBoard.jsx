@@ -3,7 +3,7 @@ import { Heading } from '@chakra-ui/react'
 import { HStack, Box } from '@chakra-ui/react'
 import netReq from './data.json'
 import api from './../../api/axios'
-import Loader from './../Loader/Loader'
+import Loader from '../Loader/Loader'
 import UserAnalytics from "./userAnalytics"
 import OrderAnalytics from "./orderAnalytics"
 import ServicePriceScatter from './ServicePriceScatter'
