@@ -6,5 +6,4 @@ router.get("/", getServices);
 
 router.get("/:param", getServicesOfDomain);
 
-
 module.exports = router;

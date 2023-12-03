@@ -39,6 +39,9 @@ export default function CardPricing({ data }) {
           else if (currentUser && currentUser.user_type == 'seller' && currentUser.user_id == data.seller_id) {
                setDisable(true);
           }
+          else if(currentUser && currentUser.user_type == 'seller') {
+               setDisable(true);
+          }
      }, [])
 
      const handleClick = async (e) => {

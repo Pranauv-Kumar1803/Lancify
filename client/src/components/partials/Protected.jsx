@@ -7,7 +7,7 @@ function Protected() {
     const location = useLocation();
     const user = useSelector((state) => state.user);
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
