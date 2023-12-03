@@ -37,7 +37,7 @@ const ServicePriceScatter = ({ data }) => {
                },
           },
      };
-     return <Box height='46vh'>
+     return <Box height='46vh' p='4'>
           <Text textAlign='center' mb='6'>Services & Prices</Text>
           <Scatter data={scatterData} options={options} />
      </Box>

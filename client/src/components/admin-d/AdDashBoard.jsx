@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
-import { HStack } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
+import { HStack, Box } from '@chakra-ui/react'
 import netReq from './data.json'
 import api from './../../api/axios'
 import Loader from './../Loader/Loader'
 import UserAnalytics from "./userAnalytics"
 import OrderAnalytics from "./orderAnalytics"
 import ServicePriceScatter from './ServicePriceScatter'
+import UsersPaginated from "./UsersPaginated"
+import OrdersDetails from "./OrdersDetails"
 
 const AdDashBoard = () => {
      const [loading, setLoading] = useState(false)
@@ -30,13 +33,25 @@ const AdDashBoard = () => {
      }, [])
      return (<>
           {loading ? <Loader /> :
-               <HStack alignItems='top' mt='6' mb='6' justifyContent='space-around'>
-                    {services && <ServicePriceScatter data={dataX} />}
-                    {(orders) && <OrderAnalytics orders={orders} />}
-                    {(users && sellers) && <UserAnalytics users={users} sellers={sellers} />}
+               <>
+                    <HStack alignItems='center' mt='6' mb='6' justifyContent='space-around' flexDir={{
+                         base: 'column',
+                         lg: 'row'
+                    }} >
+                         {(orders) && <OrderAnalytics orders={orders} />}
+                         {services && <ServicePriceScatter data={dataX} />}
+                         {(users && sellers) && <UserAnalytics users={users} sellers={sellers} />}
+                    </HStack >
+                    <HStack mb='6' justifyContent='space-around' flexDir={{
+                         base: 'column',
+                         lg: 'row'
+                    }} >
+                         <UsersPaginated dataList={sellers} type={"seller"} />
+                         <UsersPaginated dataList={users} type={"user"} />
+                         <OrdersDetails dataList={orders} />
+                    </HStack>
+               </>
 
-
-               </HStack >
           }
      </>)
 }
