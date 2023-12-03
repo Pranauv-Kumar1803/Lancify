@@ -31,7 +31,6 @@ const Main = () => {
                 <Route path="explore" element={<Domains />} />
                 <Route path="explore/:param" element={<Domains />} />
                 <Route path="success" element={<Success />} />
-                <Route path="xyz" element={<AdDashBoard />} />
             </Route>
 
             <Route path="/auth" element={<AuthProtected />}>
@@ -47,6 +46,7 @@ const Main = () => {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="register" element={<RegisterSeller />} />
+                <Route path="@dm^n" element={<AdDashBoard />} />
                 {/* <Route path="admin-dashboard" element={<AdDashBoard />} /> */}
             </Route>
 
