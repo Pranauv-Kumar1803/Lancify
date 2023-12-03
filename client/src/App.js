@@ -15,6 +15,7 @@ function App() {
     try {
       setLoading(true);
       const res = await api.get("/auth/check");
+      console.log(res.data);
       dispatch(loginSuccess(res.data.data));
       setLoading(false);
     } catch (err) {
@@ -26,9 +27,7 @@ function App() {
     getUserData();
   }, []);
 
-  return (
-    loading ? <Loader /> : <Main />
-  );
+  return loading ? <Loader /> : <Main />;
 }
 
 export default App;

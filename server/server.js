@@ -13,6 +13,7 @@ const User = require("./models/User");
 const Service = require("./models/Service");
 const Comment = require("./models/Comment");
 const Discussion = require("./models/Discussion");
+const Order = require("./models/Order");
 
 const authRouter = require("./routes/authRouter");
 const appRouter = require("./routes/appRouter");
@@ -51,7 +52,30 @@ app.use("/order", verifyJWT, orderRouter);
 // protected routes
 app.use("/app", verifyJWT, appRouter);
 
-// app.post('/payment-success', paymentSuccess)
+// other methods
+app.get("/admin/analytics", async (req, res) => {
+  const sellers = await Seller.find();
+  const services = await Service.find();
+  const users = await User.find();
+  const orders = await Order.find();
+
+  const ratings = await Service.find({ rating: true });
+  console.log(ratings);
+  const rating = await Seller.find({ rating: { $ne: 0 } });
+  let r = 0,
+    n = 0;
+  rating.forEach((p) => {
+    r += p.rating;
+    n += 1;
+  });
+  r = r / n;
+
+  if (ratings.length == 0) {
+    r = 0;
+  }
+
+  return res.json({ sellers, services, users, orders, ratings, r });
+});
 
 app.get("/profile/:id", async (req, res) => {
   console.log("in");
