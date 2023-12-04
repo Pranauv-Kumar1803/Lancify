@@ -85,7 +85,7 @@ function Home() {
                                 _hover={{
                                     bg: 'blue.500',
                                 }}>
-                                Create Service
+                                <Link to={'/app/rgig'}>Create Service</Link>
                             </Button>
                             <Button
                                 rounded={'full'}
