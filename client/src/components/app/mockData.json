@@ -1,0 +1,11 @@
+{
+  "profile": {
+    "name": "John Doe",
+    "role": "Front-end Developer",
+    "email": "john.doe@example.com",
+    "location": "New York, USA",
+    "age": 30,
+    "languages": ["English", "JavaScript", "CSS"],
+    "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget nisi aliquam, ullamcorper libero ac, tristique ligula."
+  }
+}
