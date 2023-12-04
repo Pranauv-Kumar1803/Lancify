@@ -19,6 +19,7 @@ import Success from "./Reusable/Success";
 import ServiceInfo from "./SellerService/ServiceInfo";
 import RegisterSeller from "./Register_Seller/RegisterSeller";
 import AdDashBoard from './admin-d/AdDashBoard';
+import RegisterGig from './gigPosting/RegisterGig';
 
 const Main = () => {
     return <>
@@ -31,6 +32,7 @@ const Main = () => {
                 <Route path="explore" element={<Domains />} />
                 <Route path="explore/:param" element={<Domains />} />
                 <Route path="success" element={<Success />} />
+                <Route path="rgig" element={<RegisterGig />} />
             </Route>
 
             <Route path="/auth" element={<AuthProtected />}>
