@@ -94,9 +94,9 @@ function Home() {
                                 _hover={{
                                     bg: 'blue.500',
                                 }}>
-                                Explore Service
+                                <Link to={'/explore'}>Explore Service</Link>
                             </Button>
-                            <Button rounded={'full'}>How It Works</Button>
+                            <Button rounded={'full'}><Link to={'/blogs'}>Blogs</Link></Button>
                         </Stack>
                     </Stack>
                 </Flex>

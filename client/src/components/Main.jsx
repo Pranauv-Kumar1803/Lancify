@@ -20,6 +20,8 @@ import ServiceInfo from "./SellerService/ServiceInfo";
 import RegisterSeller from "./Register_Seller/RegisterSeller";
 import AdDashBoard from './admin-d/AdDashBoard';
 import RegisterGig from './gigPosting/RegisterGig';
+import BlogList from './blogs/BlogList';
+import BlogDetail from './blogs/BlogDetail';
 
 const Main = () => {
     return <>
@@ -32,6 +34,8 @@ const Main = () => {
                 <Route path="explore" element={<Domains />} />
                 <Route path="explore/:param" element={<Domains />} />
                 <Route path="success" element={<Success />} />
+                <Route path="blogs" element={<BlogList />} />
+                <Route path="blogs/:blogId" element={<BlogDetail />} />
             </Route>
 
             <Route path="/auth" element={<AuthProtected />}>

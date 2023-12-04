@@ -36,8 +36,8 @@ const ProfilePage = () => {
   useEffect(() => {
     setProfileData(Data.profile);
     setFormData({
-      name: currentUser.username,
-      email: currentUser.email,
+      name: currentUser.username || Data.profile.name,
+      email: currentUser.email || Data.profile.email,
       age: String(Data.profile.age),
       languages: Data.profile.languages.join(', '),
       bio: Data.profile.bio,
@@ -114,7 +114,7 @@ const ProfilePage = () => {
       <VStack spacing={4} align="center">
         {profileData && (
           <>
-            <Avatar size="2xl" name={profileData.name} src={`${currentUser.user_img}`} />
+            <Avatar size="2xl" name={profileData.name} src={`${currentUser.user_img || 'https://via.placeholder.com/150'}`} />
 
             <Heading size="lg" color="blue.500">
               {formData.name}
