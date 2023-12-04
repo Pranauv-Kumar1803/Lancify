@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { chakra, Box, FormControl, Input, HStack, Stack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
@@ -14,6 +14,13 @@ const SignupForm = () => {
   const { loading } = useSelector((state) => state.user);
   const nav = useNavigate();
   const dispatch = useDispatch();
+  const [detailsForm,setDetailsForm] = useState({
+    emailVal:'',
+    nameVal:'',
+    passwordVal:'',
+    confirmPasswordVal:''
+  })
+  
 
   async function handleRegister(data) {
     try {
@@ -38,6 +45,7 @@ const SignupForm = () => {
   }
 
   const onSubmit = (data) => {
+    console.log(data);
     handleRegister(data);
   };
 
@@ -87,7 +95,11 @@ const SignupForm = () => {
                 <Text color='black.200' p={1}>Email</Text>
                 <Input
 
+                  onChange={(e)=>{
+                      setDetailsForm({...detailsForm,emailVal:e.target.value})
+                  }}
                   variant='filled'
+                  
                   {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
                   borderColor="white"
                   _focus={{
@@ -110,6 +122,9 @@ const SignupForm = () => {
                 <Input
 
                   variant='filled'
+                  onChange={(e)=>{
+                    setDetailsForm({...detailsForm,nameVal:e.target.value})
+                  }}
                   {...register('name', { required: 'Name is required' })}
                   borderColor="white"
                   _focus={{
@@ -131,6 +146,9 @@ const SignupForm = () => {
                 <Input
                   type="password"
                   variant='filled'
+                  onChange={(e)=>{
+                    setDetailsForm({...detailsForm,passwordVal:e.target.value})
+                  }}
                   {...register('password', {
                     required: 'Password is required',
                     minLength: {
@@ -162,6 +180,9 @@ const SignupForm = () => {
 
                 <Input
                   type="password"
+                  onChange={(e)=>{
+                    setDetailsForm({...detailsForm,confirmPasswordVal:e.target.value})
+                  }}
                   variant='filled'
                   {...register('confirmPassword', { required: 'Confirm Password is required' })}
                   borderColor="white"

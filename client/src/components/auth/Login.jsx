@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { chakra, Box, FormControl, useToast, Input, Stack, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
@@ -14,7 +14,10 @@ const Login = () => {
   const { loading } = useSelector((state) => state.user);
   const nav = useNavigate();
   const dispatch = useDispatch();
-
+  const [details,setDetails] = useState({
+    email:'',
+    password:'',
+  })
   async function handleLogin(data) {
     try {
       dispatch(loginStart());
@@ -38,6 +41,7 @@ const Login = () => {
   }
 
   const onSubmit = (data) => {
+    console.log(data)
     handleLogin(data);
   };
 
@@ -82,7 +86,9 @@ const Login = () => {
               <FormControl id="email" isInvalid={!!errors.email}>
                 <Text color='black.200' p={1}>Email</Text>
                 <Input
-
+                  onChange={(e)=>{
+                    setDetails({...details,email:e.target.value})
+                  }}
                   variant='filled'
                   {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
                   borderColor="white"
@@ -104,6 +110,10 @@ const Login = () => {
                 <Text color='black.200' p={1}>Password</Text>
                 <Input
                   type="password"
+                  onChange={(e)=>{
+                    console.log(e.target.value)
+                    setDetails({...details,password:e.target.value})
+                  }}
                   variant='filled'
                   {...register('password', {
                     required: 'Password is required',
