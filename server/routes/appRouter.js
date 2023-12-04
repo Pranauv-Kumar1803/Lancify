@@ -10,57 +10,62 @@ const Comment = require("../models/Comment");
 const Order = require("../models/Order");
 const Discussion = require("../models/Discussion");
 const verifyJWT = require("../middleware/verifyJWT");
-const { checkoutsession, paymentSuccess } = require("../controllers/appController");
+const {
+  checkoutsession,
+  paymentSuccess,
+} = require("../controllers/appController");
 
 router.post("/discussions", async (req, res) => {
   return res.status(500);
 });
 
-router.post('/create-checkout-session', checkoutsession);
+router.post("/create-checkout-session", checkoutsession);
 
-router.post('/payment-success', paymentSuccess)
+router.post("/payment-success", paymentSuccess);
 
 router.get("/getProfileData", async (req, res) => {
-  const user = await User.findOne({ user_id: req.user });
-  console.log('inside getProfileData');
+  console.log(req.query, req._id);
+  const user = await User.findOne({ user_id: req._id });
+  console.log("inside getProfileData");
 
-  if (req.query.type=="admin") {
-	  const sellers = await Seller.find();
+  if (req.query.type == "admin") {
+    const sellers = await Seller.find();
     const services = await Service.find();
     const users = await User.find();
     const orders = await Order.find();
 
-    const ratings = await Service.find({rating: true});
-    console.log(ratings);
-    const rating = await Seller.find({rating: {$ne: 0}});
-    let r = 0, n=0;
-    rating.forEach((p)=>{
+    const ratings = await Service.find({ rating: true });
+    // console.log(ratings);
+    const rating = await Seller.find({ rating: { $ne: 0 } });
+    let r = 0,
+      n = 0;
+    rating.forEach((p) => {
       r += p.rating;
       n += 1;
-    })
-    r = r/n;
+    });
+    r = r / n;
 
-    if(ratings.length == 0) {
+    if (ratings.length == 0) {
       r = 0;
     }
 
-  	return res.json({ sellers, services, users, orders, ratings, r });
+    return res.json({ sellers, services, users, orders, ratings, r });
   }
 
   if (req.query.type === "seller") {
-    console.log(req.user);
-    const gigs = await Service.find({ seller_id: req.user });
-    const seller = await Seller.findOne({ seller_id: req.user });
+    console.log(req._id);
+    const gigs = await Service.find({ seller_id: req._id });
+    const seller = await Seller.findOne({ seller_id: req._id });
     const seller_orders = await Order.find({
-      seller_id: req.user,
+      seller_id: req._id,
       pending: false,
     }).populate("service_id");
 
     const ongoing = await Order.find({
-      seller_id: req.user,
+      seller_id: req._id,
       pending: true,
     }).populate("service_id");
-    
+
     return res.json({
       user,
       seller,
@@ -71,24 +76,23 @@ router.get("/getProfileData", async (req, res) => {
   }
 
   const orders = await Order.find({
-    user_id: req.user,
+    user_id: req._id,
     pending: false,
   }).populate("service_id");
 
   const ongoing = await Order.find({
-    user_id: req.user,
+    user_id: req._id,
     pending: true,
   }).populate("service_id");
-  console.log(orders);
+  // console.log(orders);
 
   return res.json({ user, orders, ongoing });
-
 });
 
 // preview gigs
 router.get("/product/:id/preview", async (req, res) => {
   const service = await Service.findById(req.params.id);
-  const seller = await Seller.findOne({ seller_id: req.user });
+  const seller = await Seller.findOne({ seller_id: req._id });
 
   if (!service) {
     return res.render("pages/error", { data: "page not found" });
@@ -105,7 +109,7 @@ router.get("/product/:id", async (req, res) => {
   }
 
   const seller = await Seller.findOne({ seller_id: service.seller_id });
-  const check = await Seller.findOne({ seller_id: req.user });
+  const check = await Seller.findOne({ seller_id: req._id });
 
   if (check) {
     console.log(check);
@@ -134,7 +138,7 @@ router.get("/product/:id", async (req, res) => {
 });
 
 router.get("/register", async (req, res) => {
-  const seller = await Seller.findOne({ seller_id: req.user });
+  const seller = await Seller.findOne({ seller_id: req._id });
 
   if (!seller) {
     return res.render("pages/register_seller", { login: true });
@@ -148,8 +152,8 @@ router.get("/create-gig", (req, res) => {
 });
 
 router.post("/create-gig", async (req, res) => {
-  const seller = await Seller.findOne({ seller_id: req.user });
-  const user = await User.findOne({ user_id: req.user });
+  const seller = await Seller.findOne({ seller_id: req._id });
+  const user = await User.findOne({ user_id: req._id });
 
   if (!seller) {
     return res.status(400).json({ msg: "seller not found" });
@@ -217,7 +221,7 @@ router.post("/create-gig", async (req, res) => {
     service_type: obj.sub.split("-")[1],
     main_img: obj.image,
     seller_desc: obj.desc,
-    seller_id: req.user,
+    seller_id: req._id,
     seller_name: seller.seller_fname,
     seller_title: obj.title,
     seller_img: user.user_img,
@@ -291,11 +295,10 @@ router.post("/register_seller", async (req, res) => {
     });
     await result.save();
 
-
     console.log(result);
     console.log(obj);
 
-    const data = await User.findOne({user_id: req.body.seller_id});
+    const data = await User.findOne({ user_id: req.body.seller_id });
     console.log(data);
 
     const res2 = await User.findOneAndUpdate(
@@ -316,7 +319,7 @@ router.post("/update_seller", async (req, res) => {
     req.body.seller_id = req.cookies.user;
     const obj = { profile: req.body.profile, seller_id: req.body.seller_id };
 
-    const seller = await Seller.findOne({ seller_id: req.user });
+    const seller = await Seller.findOne({ seller_id: req._id });
 
     if (!seller) {
       return res.status(404).json({ msg: "user not found" });
@@ -342,7 +345,7 @@ router.post("/update_seller", async (req, res) => {
     await seller.save();
 
     const res2 = await User.findOneAndUpdate(
-      { user_id: req.user },
+      { user_id: req._id },
       { $set: { user_img: obj.profile } }
     ).exec();
 
@@ -399,7 +402,7 @@ router.post("/register_seller", async (req, res) => {
 router.post("/discussions/:id/addComment", async (req, res) => {
   const comment = req.body;
 
-  const user = await User.findOne({ user_id: req.user });
+  const user = await User.findOne({ user_id: req._id });
   const discussion = await Discussion.findById(req.params.id);
 
   try {

@@ -48,7 +48,7 @@ const Main = () => {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="register" element={<RegisterSeller />} />
-                <Route path="@dm^n" element={<AdDashBoard />} />
+                <Route path="@dmin" element={<AdDashBoard />} />
                 {/* <Route path="admin-dashboard" element={<AdDashBoard />} /> */}
             </Route>
 

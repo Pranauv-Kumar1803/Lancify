@@ -3,16 +3,22 @@ import { Heading } from '@chakra-ui/react'
 import { HStack, Box } from '@chakra-ui/react'
 import netReq from './data.json'
 import api from './../../api/axios'
-import Loader from './../Loader/Loader'
+import Loader from '../Loader/Loader'
 import UserAnalytics from "./userAnalytics"
 import OrderAnalytics from "./orderAnalytics"
 import ServicePriceScatter from './ServicePriceScatter'
 import UsersPaginated from "./UsersPaginated"
 import OrdersDetails from "./OrdersDetails"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const AdDashBoard = () => {
      const [loading, setLoading] = useState(false)
      const [data, setData] = useState(netReq);
+     const {currentUser} = useSelector(state=>state.user);
+     const nav = useNavigate();
+
      const sellers = data?.sellers
      const services = data?.services
      const users = data?.users
@@ -24,6 +30,12 @@ const AdDashBoard = () => {
      console.log(dataX)
 
      useEffect(() => {
+          console.log(currentUser,process.env.REACT_APP_ADMIN_EMAIL);
+          if(currentUser && currentUser.email!=process.env.REACT_APP_ADMIN_EMAIL)
+          {
+               toast.warning('Not Allowed!!')
+               nav('/');
+          }
           // setLoading(true)
           // api.get('/admin/analytics').then(e => {
           //      setData(e.data)
