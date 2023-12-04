@@ -16,7 +16,7 @@ import { toast } from "react-toastify"
 const AdDashBoard = () => {
      const [loading, setLoading] = useState(false)
      const [data, setData] = useState(netReq);
-     const {currentUser} = useSelector(state=>state.user);
+     const { currentUser } = useSelector(state => state.user);
      const nav = useNavigate();
 
      const sellers = data?.sellers
@@ -30,9 +30,8 @@ const AdDashBoard = () => {
      console.log(dataX)
 
      useEffect(() => {
-          console.log(currentUser,process.env.REACT_APP_ADMIN_EMAIL);
-          if(currentUser && currentUser.email!=process.env.REACT_APP_ADMIN_EMAIL)
-          {
+          console.log(currentUser, process.env.REACT_APP_ADMIN_EMAIL);
+          if (currentUser && currentUser.email != process.env.REACT_APP_ADMIN_EMAIL) {
                toast.warning('Not Allowed!!')
                nav('/');
           }

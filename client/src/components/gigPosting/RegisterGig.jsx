@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
      Box,
      FormControl,
@@ -11,6 +11,10 @@ import {
      Center,
 } from '@chakra-ui/react';
 
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+
 const RegisterGig = () => {
      const [formData, setFormData] = useState({
           title: '',
@@ -21,7 +25,8 @@ const RegisterGig = () => {
           tier3Price: '',
           tier3Services: '',
      });
-
+     const { currentUser } = useSelector(state => state.user);
+     const nav = useNavigate();
      const [errors, setErrors] = useState({});
 
      const handleChange = (e) => {
@@ -30,6 +35,13 @@ const RegisterGig = () => {
                [e.target.name]: e.target.value,
           });
      };
+
+     useEffect(() => {
+          if (currentUser && currentUser.user_type != "seller") {
+               toast.warning('You are not a seller and cannot create gigs')
+               nav('/');
+          }
+     })
 
      const handleSubmit = () => {
           const newErrors = {};

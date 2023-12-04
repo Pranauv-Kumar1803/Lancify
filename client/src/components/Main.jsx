@@ -32,7 +32,6 @@ const Main = () => {
                 <Route path="explore" element={<Domains />} />
                 <Route path="explore/:param" element={<Domains />} />
                 <Route path="success" element={<Success />} />
-                <Route path="rgig" element={<RegisterGig />} />
             </Route>
 
             <Route path="/auth" element={<AuthProtected />}>
@@ -48,6 +47,7 @@ const Main = () => {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="register" element={<RegisterSeller />} />
+                <Route path="rgig" element={<RegisterGig />} />
                 <Route path="@dmin" element={<AdDashBoard />} />
                 {/* <Route path="admin-dashboard" element={<AdDashBoard />} /> */}
             </Route>
