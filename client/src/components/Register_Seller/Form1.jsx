@@ -62,7 +62,7 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
       return false;
     }
 
-    if (data.desc.length < 50) {
+    if (data.desc.length < 60) {
       toast.warning('description must be atleast 50 characters in length');
       return false;
     }
