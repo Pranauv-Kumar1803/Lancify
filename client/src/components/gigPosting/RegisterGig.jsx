@@ -55,6 +55,7 @@ const RegisterGig = () => {
 
           if (Object.keys(newErrors).length === 0) {
                console.log('Form is valid:', formData);
+               setErrors({})
           } else {
                setErrors(newErrors);
           }

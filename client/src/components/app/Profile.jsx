@@ -14,11 +14,14 @@ import {
 } from '@chakra-ui/react';
 import Data from './mockData.json';
 import { useSelector } from 'react-redux';
+import api from '../../api/axios';
+import Loader from '../Loader/Loader';
 
 const ProfilePage = () => {
   const { currentUser } = useSelector((state) => state.user);
-
+  const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const [data, setData] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -33,16 +36,33 @@ const ProfilePage = () => {
     age: '',
   });
 
+  const getProfiledata = async () => {
+    try {
+      setLoading(true);
+      const str = (currentUser && currentUser.user_type == null) ? 'user' : (currentUser && currentUser.user_type == 'seller') ? 'seller' : 'admin';
+      const res = await api.get('/app/getProfileData?' + `type=${str}`);
+      setData(res.data);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err.message);
+    }
+  }
+
   useEffect(() => {
-    setProfileData(Data.profile);
+    getProfiledata();
+  }, [])
+
+  useEffect(() => {
+    setProfileData(data);
     setFormData({
-      name: currentUser.username || Data.profile.name,
-      email: currentUser.email || Data.profile.email,
+      name: currentUser.username || data && data.user && data.user.username,
+      email: currentUser.email || data && data.user && data.user.email,
       age: String(Data.profile.age),
-      languages: Data.profile.languages.join(', '),
-      bio: Data.profile.bio,
+      languages: data && data.seller && data.seller.languages.join(', '),
+      bio: data && data.seller && data.seller.seller_desc,
     });
-  }, [currentUser]);
+  }, [, data])
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -51,11 +71,11 @@ const ProfilePage = () => {
   const handleCancelClick = () => {
     setEditMode(false);
     setFormData({
-      name: profileData.name,
-      email: profileData.email,
-      age: String(profileData.age),
-      languages: profileData.languages.join(', '),
-      bio: profileData.bio,
+      name: profileData.user.username,
+      email: profileData.user.email,
+      age: String(Data.profile.age),
+      languages: profileData.seller.languages.join(', '),
+      bio: profileData.seller.seller_desc,
     });
     setErrors({
       email: '',
@@ -110,130 +130,131 @@ const ProfilePage = () => {
   };
 
   return (
-    <Box p={8} bg="gray.100" rounded="md">
-      <VStack spacing={4} align="center">
-        {profileData && (
-          <>
-            <Avatar size="2xl" name={profileData.name} src={`${currentUser.user_img || 'https://via.placeholder.com/150'}`} />
+    <>
+      {loading ? <Loader /> :
+        <Box p={8} bg="white.100" rounded="md">
+          <VStack spacing={4} align="center">
+            {profileData && (
+              <>
+                <Avatar size="2xl" name={profileData.name} src={`${currentUser.user_img || 'https://via.placeholder.com/150'}`} />
 
-            <Heading size="lg" color="blue.500">
-              {formData.name}
-            </Heading>
-            <Text fontSize="md" color="gray.600">
-              {profileData.role}
-            </Text>
+                <Heading size="lg" color="blue.500">
+                  {formData.name}
+                </Heading>
+                <Text fontSize="md" color="gray.600">
+                  {profileData.role}
+                </Text>
 
-            <Divider w="100%" borderColor="blue.300" />
+                <Divider w="100%" borderColor="blue.300" />
 
-            {editMode ? (
-              <VStack align="start" spacing={4} w="100%">
-                <Input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  variant="filled"
-                />
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  variant="filled"
-                />
-                {errors.email && <Text color="red">{errors.email}</Text>}
-                <Input
-                  type="number"
-                  name="age"
-                  placeholder="Age"
-                  value={formData.age}
-                  onChange={handleChange}
-                  variant="filled"
-                />
-                {errors.age && <Text color="red">{errors.age}</Text>}
-                <Input
-                  type="text"
-                  name="languages"
-                  placeholder="Languages (comma-separated)"
-                  value={formData.languages}
-                  onChange={handleChange}
-                  variant="filled"
-                />
-                <Textarea
-                  name="bio"
-                  placeholder="Bio"
-                  value={formData.bio}
-                  onChange={handleChange}
-                  variant="filled"
-                />
-              </VStack>
-            ) : (
-              <VStack align="start" spacing={4} w="100%">
-                <HStack justify="space-between" w="100%">
-                  <Text fontWeight="bold" color="gray.700">
-                    Email:
-                  </Text>
-                  <Text>{formData.email}</Text>
-                </HStack>
+                {editMode ? (
+                  <VStack align="start" spacing={4} w="100%">
+                    <Input
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      variant="filled"
+                    />
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      variant="filled"
+                    />
+                    {errors.email && <Text color="red">{errors.email}</Text>}
+                    <Input
+                      type="number"
+                      name="age"
+                      placeholder="Age"
+                      value={formData.age}
+                      onChange={handleChange}
+                      variant="filled"
+                    />
+                    {errors.age && <Text color="red">{errors.age}</Text>}
+                    <Input
+                      type="text"
+                      name="languages"
+                      placeholder="Languages (comma-separated)"
+                      value={formData.languages}
+                      onChange={handleChange}
+                      variant="filled"
+                    />
+                    <Textarea
+                      name="bio"
+                      placeholder="Bio"
+                      value={formData.bio}
+                      onChange={handleChange}
+                      variant="filled"
+                    />
+                  </VStack>
+                ) : (
+                  <VStack align="start" spacing={4} w="100%">
+                    <HStack justify="space-between" w="100%">
+                      <Text fontWeight="bold" color="gray.700">
+                        Email:
+                      </Text>
+                      <Text>{formData.email}</Text>
+                    </HStack>
 
-                <HStack justify="space-between" w="100%">
-                  <Text fontWeight="bold" color="gray.700">
-                    Location:
-                  </Text>
-                  <Text>{profileData.location}</Text>
-                </HStack>
+                    <HStack justify="space-between" w="100%">
+                      <Text fontWeight="bold" color="gray.700">
+                        Age:
+                      </Text>
+                      <Text>{formData.age}</Text>
+                    </HStack>
 
-                <HStack justify="space-between" w="100%">
-                  <Text fontWeight="bold" color="gray.700">
-                    Age:
-                  </Text>
-                  <Text>{formData.age}</Text>
-                </HStack>
+                    {currentUser && currentUser.user_type == 'seller' &&
+                      <HStack justify="space-between" w="100%">
+                        <Text fontWeight="bold" color="gray.700">
+                          Languages:
+                        </Text>
+                        <HStack spacing={2}>
+                          {data && data.seller && data.seller.languages.map((language, index) => (
+                            <Badge key={index} colorScheme="blue">
+                              {language}
+                            </Badge>
+                          ))}
+                        </HStack>
+                      </HStack>
+                    }
+                    {currentUser && currentUser.user_type == 'seller' &&
 
-                <HStack justify="space-between" w="100%">
-                  <Text fontWeight="bold" color="gray.700">
-                    Languages:
-                  </Text>
-                  <HStack spacing={2}>
-                    {profileData.languages.map((language, index) => (
-                      <Badge key={index} colorScheme="blue">
-                        {language}
-                      </Badge>
-                    ))}
+                      <HStack justify="space-between" w="100%">
+                        <Text fontWeight="bold" color="gray.700">
+                          Bio:
+                        </Text>
+                        <Text>{data && data.seller && data.seller.seller_desc.slice(0, 50) + '... '}</Text>
+                      </HStack>
+                    }
+                  </VStack>
+                )}
+
+                {editMode ? (
+                  <HStack spacing={4}>
+                    <Button colorScheme="blue" onClick={handleSaveClick}>
+                      Save
+                    </Button>
+                    <Button colorScheme="gray" onClick={handleCancelClick}>
+                      Cancel
+                    </Button>
                   </HStack>
-                </HStack>
+                ) : (
+                  <Button colorScheme="blue" onClick={handleEditClick}>
+                    Edit Profile
+                  </Button>
+                )}
 
-                <HStack justify="space-between" w="100%">
-                  <Text fontWeight="bold" color="gray.700">
-                    Bio:
-                  </Text>
-                  <Text>{profileData.bio}</Text>
-                </HStack>
-              </VStack>
+                <Divider w="100%" borderColor="blue.300" />
+              </>
             )}
-
-            {editMode ? (
-              <HStack spacing={4}>
-                <Button colorScheme="blue" onClick={handleSaveClick}>
-                  Save
-                </Button>
-                <Button colorScheme="gray" onClick={handleCancelClick}>
-                  Cancel
-                </Button>
-              </HStack>
-            ) : (
-              <Button colorScheme="blue" onClick={handleEditClick}>
-                Edit Profile
-              </Button>
-            )}
-
-            <Divider w="100%" borderColor="blue.300" />
-          </>
-        )}
-      </VStack>
-    </Box>
+          </VStack>
+        </Box>
+      }
+    </>
   );
 };
 

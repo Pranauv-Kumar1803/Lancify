@@ -21,22 +21,22 @@ const FinishedOrders = () => {
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
 
-  let str = currentUser.user_type != null ? "seller" : "user";
-  const res = api.get("/app/getProfileData?" + `type=${str}`);
   const getOrders = async () => {
     setLoading(true);
     console.log(currentUser);
     try {
-      let str = currentUser.user_type != null ? "seller" : "user";
-      const res = await api.get("/app/getProfileData?" + `type=${str}`);
-      setData(res.data);
-      setLoading(false);
+      if (currentUser) {
+        let str = currentUser.user_type != null ? "seller" : "user";
+        const res = await api.get("/app/getProfileData?" + `type=${str}`);
+        setData(res.data);
+        setLoading(false);
+      }
       // console.log(res.data);
     } catch (err) {
       setLoading(false);
       console.log(err.response.data);
     }
-  };
+  }
 
   useEffect(() => {
     getOrders();
@@ -66,7 +66,7 @@ const FinishedOrders = () => {
     avg_rat: 7.5,
   };
   let content;
-  if (currentUser.user_type == null) {
+  if (currentUser && currentUser.user_type == null) {
     content = (
       <Box bg="gray.200" p={4} borderRadius="md" textAlign="center">
         <Text>
@@ -113,7 +113,8 @@ const FinishedOrders = () => {
             align={"center"}
           >
             {data &&
-              data.ongoing &&
+              data.ongoing && 
+              data.ongoing.length > 0 ?
               data.ongoing.map((order) => (
                 <Box
                   key={order.id}
@@ -138,7 +139,7 @@ const FinishedOrders = () => {
                   <Text fontWeight="bold" fontSize="lg" mb={2}>
                     {order.service_id.seller_title}
                   </Text>
-                  {currentUser.user_type == "seller" ? (
+                  {currentUser && currentUser.user_type == "seller" ? (
                     <Text fontSize="sm" color="gray.600">
                       Buyer : {order.user_name}
                     </Text>
@@ -157,7 +158,7 @@ const FinishedOrders = () => {
                     </Button>
                   </Link>
                 </Box>
-              ))}
+              )): <h1>Nothing here!</h1> }
           </Flex>
           <Text fontSize="3xl" fontWeight="bold" mb={6}>
             Finished Orders
@@ -165,6 +166,7 @@ const FinishedOrders = () => {
           <Flex wrap={"wrap"} justify="flex-start" gap={10} align={"center"}>
             {data &&
               data.orders &&
+              data.orders.length > 0 ?
               data.orders.map((order) => (
                 <Box
                   key={order.id}
@@ -189,7 +191,7 @@ const FinishedOrders = () => {
                   <Text fontWeight="bold" fontSize="lg" mb={2}>
                     {order.service_id.seller_title}
                   </Text>
-                  {currentUser.user_type == "seller" ? (
+                  {currentUser && currentUser.user_type == "seller" ? (
                     <Text fontSize="sm" color="gray.600">
                       Buyer : {order.user_name}
                     </Text>
@@ -207,9 +209,9 @@ const FinishedOrders = () => {
                     </Button>
                   </Link>
                 </Box>
-              ))}
+              )):  <h1>Nothing here!</h1> }
           </Flex>
-          {currentUser.user_type == "seller" && (
+          {currentUser && currentUser.user_type == "seller" && (
             <>
               <Text fontSize="3xl" fontWeight="bold" mb={6}>
                 Your Services

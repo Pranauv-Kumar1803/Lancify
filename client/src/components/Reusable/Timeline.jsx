@@ -18,8 +18,9 @@ import { IconType } from 'react-icons';
 import { Link } from 'react-router-dom';
 import api from '../../api/axios';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
-const Timeline = ({ timeline, order_id, pending }) => {
+const Timeline = ({ timeline, order_id, pending, newData, setNewData, setOrderData, orderData }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const Timeline = ({ timeline, order_id, pending }) => {
       {data.map((milestone, index) => {
         return <Flex key={index} mb="10px">
           <LineWithDot />
-          <Card {...{ ...milestone, order_id, pending }} />
+          <Card {...{ ...milestone, order_id, pending, newData, setNewData, setOrderData, orderData }} />
         </Flex>
 
       })}
@@ -50,11 +51,16 @@ const Timeline = ({ timeline, order_id, pending }) => {
   );
 };
 
-const Card = ({ title, name, message, date, files, order_id, pending }) => {
+const Card = ({ title, name, message, date, files, one_time, order_id, pending, setNewData, setOrderData, orderData }) => {
+  const {currentUser} = useSelector(state=>state.user);
   const handleUserAccept = async () => {
     try {
       const res = await api.post(`/order/${order_id}/acceptAndClose`);
       toast.success('Order Submission Accepted by User!', {
+        position: 'top-right'
+      })
+      window.location.reload();
+      toast.success('Accepted succesfully!',{
         position: 'top-right'
       })
     } catch (err) {
@@ -62,10 +68,15 @@ const Card = ({ title, name, message, date, files, order_id, pending }) => {
       console.log(err.message);
     }
   }
-
+  
   const handleUserCancel = async () => {
     try {
-      const res = await api.post(`/order/${order_id}/addTimeline`, { title: 'Submission not accepted!', message: 'Please Review and Resend!' });
+      console.log('isnide this');
+      const res = await api.post(`/order/${order_id}/addTimeline`, { title: 'Submission not accepted!', message: 'Please Review and Resend!', one_time: "hello there" });
+      window.location.reload();
+      toast.success('Cancelled succesfully!',{
+        position: 'top-right'
+      })
     } catch (err) {
       console.log(err.message);
     }
@@ -109,7 +120,7 @@ const Card = ({ title, name, message, date, files, order_id, pending }) => {
           <Text fontSize="md">
             {message}
           </Text>
-          {pending && title && title.includes('Finish') &&
+          {pending && currentUser && currentUser.user_type!=='seller' && one_time &&
             <Flex direction={'row'} justify={'center'} align={'center'} gap={10}>
               <Button colorScheme='green' onClick={handleUserAccept}>Accept and Close</Button>
               <Button colorScheme='red' onClick={handleUserCancel} >Reject to Review</Button>
