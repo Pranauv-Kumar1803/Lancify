@@ -7,8 +7,6 @@ import {
   SimpleGrid,
   InputLeftAddon,
   InputGroup,
-  Textarea,
-  FormHelperText,
   Button,
   ButtonGroup,
   Flex,
@@ -36,22 +34,30 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
     const regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
 
     if (data.github.length == 0 && data.linkedin.length==0) {
-      toast.warning('Github or Linkedin is a must to be registered as a user!');
+      toast.warning('Github or Linkedin is a must to be registered as a user!', {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return false;
     }
 
     if (data.github.length > 0 && !regex.test(data.github)) {
-      toast.warning('Ensure you give a proper link for github!');
+      toast.warning('Ensure you give a proper link for github!', {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return false;
     }
 
     if (data.linkedin.length > 0 && !regex.test(data.linkedin)) {
-      toast.warning('Ensure you give a proper link for linkedin!');
+      toast.warning('Ensure you give a proper link for linkedin!', {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return false;
     }
 
     if (data.twitter.length > 0 && !regex.test(data.twitter)) {
-      toast.warning('Ensure you give a proper link for twitter!');
+      toast.warning('Ensure you give a proper link for twitter!', {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return false;
     }
 
@@ -62,7 +68,7 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
     try {
       setLoading(true);
       const res = await api.post('/app/register_seller', data);
-      toast.success("Registration as a Seller Successfull!");
+      toast.success("Registration as a Seller Successfull!", {position: toast.POSITION.BOTTOM_CENTER,});
       setLoading(false);
       nav('/app/dashboard');
     } catch (err) {
@@ -92,7 +98,7 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
 
           <InputGroup size="sm">
             <InputLeftAddon
-              bg="teal.600"
+              bg="#4299e1"
               _dark={{
                 bg: "gray.800",
               }}
@@ -104,7 +110,7 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
             <Input
               type="tel"
               placeholder="www.example.com"
-              focusBorderColor="teal.600"
+              focusBorderColor="#4299e1"
               rounded="md"
               name="github"
               value={data.github}
@@ -126,7 +132,7 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
 
           <InputGroup size="sm">
             <InputLeftAddon
-              bg="teal.600"
+              bg="#4299e1"
               _dark={{
                 bg: "gray.800",
               }}
@@ -138,7 +144,7 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
             <Input
               type="tel"
               placeholder="www.example.com"
-              focusBorderColor="teal.600"
+              focusBorderColor="#4299e1"
               rounded="md"
               name="twitter"
               value={data.twitter}
@@ -160,7 +166,7 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
 
           <InputGroup size="sm">
             <InputLeftAddon
-              bg="teal.600"
+              bg="#4299e1"
               _dark={{
                 bg: "gray.800",
               }}
@@ -172,7 +178,7 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
             <Input
               type="tel"
               placeholder="www.example.com"
-              focusBorderColor="teal.600"
+              focusBorderColor="#4299e1"
               rounded="md" name="linkedin"
               value={data.linkedin}
               onChange={handleChange}
@@ -200,7 +206,7 @@ const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {
             </Button>
             <Button
               w="7rem"
-              colorScheme="teal"
+              colorScheme="green"
               variant="solid"
               onClick={() => {
                 if (checkInputs()) {
