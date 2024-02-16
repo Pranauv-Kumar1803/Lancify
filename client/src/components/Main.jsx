@@ -26,6 +26,7 @@ import { useSelector } from 'react-redux'
 const Main = () => {
     const { currentUser } = useSelector(store => store.user)
     console.log(currentUser)
+
     return <>
         <ToastContainer />
         <Navbar />

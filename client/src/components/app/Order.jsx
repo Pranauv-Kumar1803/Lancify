@@ -15,6 +15,7 @@ const Order = () => {
     const [data, setData] = useState({});
     const [input, setInput] = useState({ title: '', message: '', files: [] });
     const [loading, setLoading] = useState(false);
+    const [newData, setNewData] = useState(false);
     const bg = useColorModeValue('gray.100', 'gray.900');
     const { currentUser } = useSelector(state => state.user);
     const nav = useNavigate();
@@ -49,7 +50,7 @@ const Order = () => {
         setLoading(true);
         fetchData(id);
         setLoading(false);
-    }, [])
+    }, [newData])
 
     useEffect(() => {
         if (JSON.stringify(data) !== '{}') {
@@ -80,6 +81,7 @@ const Order = () => {
                 position: 'top-right'
             })
             setLoading(false);
+            setNewData(true);
             setInput({ title: '', message: '', files: null })
         } catch (err) {
             setLoading(false);
@@ -117,7 +119,9 @@ const Order = () => {
                 position: 'top-right'
             })
             setLoading(false);
+            setNewData(true);
         } catch (err) {
+            console.log(err.message);
             setLoading(false);
             toast.error('some error occurred', {
                 position: 'top-right'
@@ -128,12 +132,14 @@ const Order = () => {
     const handleSellerFinish = async () => {
         try {
             setLoading(true);
-            const res = await api.post(`/order/${param.id}/addTimeline/done`, { title: 'Finished the job', message: 'Please review and accept!' });
+            const res = await api.post(`/order/${param.id}/addTimeline/done`, { title: 'Finished the job', message: 'Please review and accept!', one_time: true });
             toast.success('Added Submission to Order Timeline! Please wait for review by the customer!', {
                 position: 'top-right'
             })
             setLoading(false);
+            setNewData(true);
         } catch (err) {
+            console.log(err.message);
             setLoading(false);
             toast.error('some error occurred', {
                 position: 'top-right'
@@ -145,7 +151,7 @@ const Order = () => {
         <>
             {loading ? <Loader />
                 :
-                !data.order ? <Loader />
+                !data.order ? <Loader></Loader>
                     :
                     <>
                         <Center p={5}>
@@ -192,13 +198,13 @@ const Order = () => {
                                 <Flex direction={'row'} justify={'space-between'} padding={5}>
                                     <Heading size="md" fontWeight={'small'}>Subtotal</Heading>
                                     <Heading as="p" size="sm">
-                                        ₹{data.order.payment.price}
+                                        ₹{data.order.payment?.price}
                                     </Heading>
                                 </Flex>
                                 <Flex direction={'row'} justify={'space-between'} padding={5}>
                                     <Heading size="md" fontWeight={'small'}>Taxes</Heading>
                                     <Heading as="p" size="sm">
-                                        ₹{data.order.payment.taxes}
+                                        ₹{data.order.payment?.taxes}
                                     </Heading>
                                 </Flex>
                                 <Box paddingTop={5}>
@@ -212,7 +218,7 @@ const Order = () => {
                                 </Flex>
                             </Box>
                         </Center>
-                        {data != {} && data.order ? <Timeline timeline={data.order.timeline} order_id={data.order._id} pending={data.order.pending} /> : <Loader />}
+                        {data != {} && data.order ? <Timeline newData={newData} setNewData={setNewData} orderData={data} setOrderData={setData} timeline={data.order.timeline} order_id={data.order._id} pending={data.order.pending} /> : <Loader />}
                         {currentUser && currentUser.user_type == 'seller' && data.order.pending &&
                             <Center p={5}>
                                 <Flex direction={'row'} justify={'center'} align={'center'} gap={10}>

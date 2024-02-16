@@ -6,12 +6,8 @@ import {
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
-  FormHelperText,
-  InputRightElement,
   Textarea,
   Text,
-  Select,
   ButtonGroup,
 } from "@chakra-ui/react";
 import { toast } from "react-toastify";
@@ -25,6 +21,7 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
       return { ...prev, [e.target.name]: e.target.value }
     })
   }
+
 
   const toBase64 = (file) => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -45,35 +42,37 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
         setData((prev)=>{
           return {...prev, ['profile']: {name: file.name, value: f}}
         })
-      } else
-        toast.warning('file format not supported!');
+      } else{
+        toast.warning('file format not supported!', {position: toast.POSITION.TOP_CENTER,});
+      }
+        
     }
   };
 
   const checkInputs = () => {
     console.log(data);
     if (data.fname.length < 5) {
-      toast.warning('first name must be atleast 5 characters in length');
+      toast.warning('first name must be atleast 5 characters in length', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     if (data.lname.length < 5) {
-      toast.warning('last name must be atleast 5 characters in length');
+      toast.warning('last name must be atleast 5 characters in length', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     if (data.desc.length < 50) {
-      toast.warning('description must be atleast 50 characters in length');
+      toast.warning('description must be atleast 50 characters in length', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     if (!data.profile) {
-      toast.warning('you must select one file as profile picture');
+      toast.warning('you must select one file as profile picture', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     if (!data.languages) {
-      toast.warning('select atleast one language');
+      toast.warning('select atleast one language', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
@@ -88,7 +87,7 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
   }
 
   return (
-    <div>
+    <>
       <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
         Personal Details
       </Heading>
@@ -100,8 +99,8 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
           </FormLabel>
           <Input
             id="first-name"
-            placeholder="First name"
-            focusBorderColor="teal.600"
+            placeholder="first name must be atleast 5 characters"
+            focusBorderColor="#4299e1"
             isRequired={true}
             name="fname"
             value={data.fname}
@@ -115,8 +114,8 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
           </FormLabel>
           <Input
             id="last-name"
-            placeholder="Last name"
-            focusBorderColor="teal.600"
+            placeholder="last name must be atleast 5 characters"
+            focusBorderColor="#4299e1"
             name="lname"
             value={data.lname}
             onChange={handleChange}
@@ -129,9 +128,9 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
           Description
         </FormLabel>
         <Textarea
-          placeholder="Professional Description in abt 50-200 words"
+          placeholder="Professional Description in about 50-200 words"
           size="sm"
-          focusBorderColor="teal.600"
+          focusBorderColor="#4299e1"
           name="desc"
           value={data.desc}
           onChange={handleChange}
@@ -156,7 +155,7 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
         <FormLabel fontWeight={'md'}>
           Languages
         </FormLabel>
-        <select placeholder="Languages You Speak" onChange={handleLang} multiple="multiple" focusBorderColor="teal.600" >
+        <select placeholder="select atleast one language" onChange={handleLang} multiple="multiple" focusBorderColor="#4299e1" >
           <option value="Afrikaans">Afrikaans</option>
           <option value="Albanian">Albanian</option>
           <option value="Arabic">Arabic</option>
@@ -270,8 +269,8 @@ const Form1 = ({ step, setStep, progress, setProgress, data, setData }) => {
           </Flex>
         </Flex>
       </ButtonGroup>
-
-    </div>
+  
+    </>
   );
 };
 

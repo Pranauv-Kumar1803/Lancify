@@ -41,7 +41,7 @@ const deleteOrder = async (req, res) => {
 }
 
 const rateOrder = async (req, res) => {
-    const order = await Order.findById(req.params.id).populate("service_id");
+    const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
     const seller = await Seller.findOne({ seller_id: order.seller_id });
 
     const { rating } = req.body;
@@ -74,17 +74,23 @@ const rateOrder = async (req, res) => {
 }
 
 const addToOrderTimeline = async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
     const user = await User.findOne({ user_id: req._id });
     if (!order) {
         return res.status(404).json({ msg: "order not found" });
     }
 
     try {
-        const { title, message, files } = req.body;
+        const { title, message, files, one_time } = req.body;
         const d = new Date();
         console.log("in");
-        if (files.length > 0) {
+
+        if(one_time)
+        {
+            order.timeline[order.timeline.length-1].one_time = false;
+        }
+
+        if (files && files.length > 0) {
             order.timeline.push({
                 title: `${user.username} : ${title}`,
                 message,
@@ -109,14 +115,14 @@ const addToOrderTimeline = async (req, res) => {
 }
 
 const addToTimelineDone = async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
     const user = await User.findOne({ user_id: req._id });
     if (!order) {
         return res.status(404).json({ msg: "order not found" });
     }
 
     try {
-        const { title, message } = req.body;
+        const { title, message, one_time } = req.body;
         console.log(req.body);
         const d = new Date();
         console.log("in");
@@ -125,6 +131,7 @@ const addToTimelineDone = async (req, res) => {
             title: `${user.username} : ${title}`,
             message,
             date: d,
+            one_time
         });
 
         await order.save();
@@ -137,7 +144,7 @@ const addToTimelineDone = async (req, res) => {
 }
 
 const acceptOrderAndClose = async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
     const user = await User.findOne({ user_id: req._id });
     const seller = await Seller.findOne({ seller_id: order.seller_id });
     const service = await Service.findOne({ seller_id: order.seller_id });
@@ -172,7 +179,7 @@ const acceptOrderAndClose = async (req, res) => {
 }
 
 const sellerCancelOrder = async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
     const seller = await Seller.findOne({ seller_id: req._id });
     const service = await Service.findOne({ seller_id: seller.seller_id });
     const user = await User.findOne({ user_id: order.user_id });
@@ -200,6 +207,7 @@ const sellerCancelOrder = async (req, res) => {
         await service.save();
         return res.status(200).json({ msg: "successfuly cancelled and closed" });
     } catch (err) {
+        console.log(err);
         return res.status(500).json({ msg: err.message });
     }
 }

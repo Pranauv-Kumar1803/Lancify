@@ -7,7 +7,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const verifyJWT = require("./middleware/verifyJWT");
-
+mongoose.set('strictQuery', true);
 const Seller = require("./models/Seller");
 const User = require("./models/User");
 const Service = require("./models/Service");
