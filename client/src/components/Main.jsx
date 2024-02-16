@@ -22,8 +22,10 @@ import AdDashBoard from './admin-d/AdDashBoard';
 import RegisterGig from './gigPosting/RegisterGig';
 import BlogList from './blogs/BlogList';
 import BlogDetail from './blogs/BlogDetail';
-
+import { useSelector } from 'react-redux'
 const Main = () => {
+    const { currentUser } = useSelector(store => store.user)
+    console.log(currentUser)
     return <>
         <ToastContainer />
         <Navbar />
@@ -48,7 +50,7 @@ const Main = () => {
             <Route path="/services/:service_id" element={<ServiceInfo />} />
 
             <Route path="/app" element={<Protected />}>
-                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="dashboard" element={!!currentUser && currentUser.email === process.env.REACT_APP_ADMIN_EMAIL ? <AdDashBoard /> : <Dashboard />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="register" element={<RegisterSeller />} />
                 <Route path="rgig" element={<RegisterGig />} />
