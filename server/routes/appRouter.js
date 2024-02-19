@@ -9,10 +9,10 @@ const Service = require("../models/Service");
 const Comment = require("../models/Comment");
 const Order = require("../models/Order");
 const Discussion = require("../models/Discussion");
-const verifyJWT = require("../middleware/verifyJWT");
 const {
   checkoutsession,
   paymentSuccess,
+  sellerAnalytics,
 } = require("../controllers/appController");
 
 router.post("/discussions", async (req, res) => {
@@ -22,6 +22,8 @@ router.post("/discussions", async (req, res) => {
 router.post("/create-checkout-session", checkoutsession);
 
 router.post("/payment-success", paymentSuccess);
+
+router.get('/seller-analytics', sellerAnalytics);
 
 router.get("/getProfileData", async (req, res) => {
   console.log(req.query, req._id);
@@ -87,68 +89,6 @@ router.get("/getProfileData", async (req, res) => {
   // console.log(orders);
 
   return res.json({ user, orders, ongoing });
-});
-
-// preview gigs
-router.get("/product/:id/preview", async (req, res) => {
-  const service = await Service.findById(req.params.id);
-  const seller = await Seller.findOne({ seller_id: req._id });
-
-  if (!service) {
-    return res.render("pages/error", { data: "page not found" });
-  }
-
-  res.render("pages/previewGig", { login: true, service, seller });
-});
-
-router.get("/product/:id", async (req, res) => {
-  const service = await Service.findById(req.params.id);
-
-  if (!service) {
-    return res.render("pages/error", { data: "page not found" });
-  }
-
-  const seller = await Seller.findOne({ seller_id: service.seller_id });
-  const check = await Seller.findOne({ seller_id: req._id });
-
-  if (check) {
-    console.log(check);
-    if (check.seller_id !== seller.seller_id) {
-      console.log("inside");
-      return res.render("pages/product", {
-        login: true,
-        service,
-        seller,
-        check,
-      });
-    } else {
-      console.log("in");
-      return res.render("pages/previewGig", { login: true, service, seller });
-    }
-  } else {
-    console.log("outside");
-    return res.render("pages/product", {
-      login: true,
-      service,
-      seller,
-      check: undefined,
-      key: process.env.STRIPE_PUBLISHABLE_KEY,
-    });
-  }
-});
-
-router.get("/register", async (req, res) => {
-  const seller = await Seller.findOne({ seller_id: req._id });
-
-  if (!seller) {
-    return res.render("pages/register_seller", { login: true });
-  }
-
-  res.redirect("/app/profile");
-});
-
-router.get("/create-gig", (req, res) => {
-  res.render("pages/createGig", { login: true });
 });
 
 router.post("/create-gig", async (req, res) => {
@@ -347,49 +287,6 @@ router.post("/update_seller", async (req, res) => {
     const res2 = await User.findOneAndUpdate(
       { user_id: req._id },
       { $set: { user_img: obj.profile } }
-    ).exec();
-
-    return res.status(201).json(req.body);
-  } catch (err) {
-    console.log(err);
-    return res.status(400).json({ message: "some error occured" });
-  }
-});
-
-router.post("/register_seller", async (req, res) => {
-  try {
-    console.log(req.body);
-    req.body.seller_id = req.cookies.user;
-    const obj = { profile: req.body.profile, seller_id: req.body.seller_id };
-
-    const result = await new Seller({
-      seller_id: req.body.seller_id,
-      seller_fname: req.body.fname,
-      seller_lname: req.body.lname,
-      seller_desc: req.body.desc,
-      seller_from: new Date(),
-      occupation: req.body.occupation,
-      country: req.body.country,
-      institute: req.body.institute_name,
-      degree_title: req.body.title,
-      degree_major: req.body.major,
-      year_education: req.body.year,
-      portfolio_website: req.body.portfolio,
-      github: req.body.github,
-      StackOverflow: req.body.stack,
-      linkedin: req.body.linkedin,
-      languages: req.body.languages,
-      certificates: req.body.certificates,
-      completed: 0,
-      numberRating: 0,
-      rating: 0,
-      ongoing: 0,
-    });
-    await result.save();
-
-    const res2 = await User.findOneAndUpdate(
-      { user_id: req.body.seller_id },
-      { $set: { user_type: "seller", user_img: obj.profile } }
     ).exec();
 
     return res.status(201).json(req.body);

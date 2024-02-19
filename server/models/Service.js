@@ -54,6 +54,10 @@ const serviceSchema = new schema({
     },
     avgResponseTime: Number,
     avgCompletionDuration: Number,
+    isAdminApproved: {
+        type: Boolean,
+        default: false
+    }
 })
 
 module.exports = mongoose.model('Service',serviceSchema);

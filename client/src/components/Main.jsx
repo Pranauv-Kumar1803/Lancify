@@ -54,7 +54,7 @@ const Main = () => {
                 <Route path="dashboard" element={!!currentUser && currentUser.email === process.env.REACT_APP_ADMIN_EMAIL ? <AdDashBoard /> : <Dashboard />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="register" element={<RegisterSeller />} />
-                <Route path="rgig" element={<RegisterGig />} />
+                <Route path="create-gig" element={<RegisterGig />} />
                 <Route path="@dmin" element={<AdDashBoard />} />
                 {/* <Route path="admin-dashboard" element={<AdDashBoard />} /> */}
             </Route>

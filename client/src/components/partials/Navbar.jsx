@@ -132,6 +132,14 @@ function WithAction() {
                                     <MenuItem as={'a'} href='/app/profile'>
                                         Profile
                                     </MenuItem>
+                                    <MenuItem as={'a'} href='/app/analytics'>
+                                        {currentUser && currentUser.user_type == "seller" ? 'Seller Analytics' : 'User Analystics'}
+                                    </MenuItem>
+                                    {currentUser && currentUser.user_type == "seller" &&
+                                        <MenuItem as={'a'} href='/app/create-gig'>
+                                            Post Gig
+                                        </MenuItem>
+                                    }
                                     <MenuDivider />
                                     <MenuItem onClick={handleLogout}>
                                         Logout

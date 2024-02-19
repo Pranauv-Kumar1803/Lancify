@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 import { Heading } from '@chakra-ui/react'
 import { HStack, Box } from '@chakra-ui/react'
-import netReq from './data.json'
-import api from './../../api/axios'
 import Loader from '../Loader/Loader'
 import UserAnalytics from "./userAnalytics"
 import OrderAnalytics from "./orderAnalytics"
@@ -12,6 +10,9 @@ import OrdersDetails from "./OrdersDetails"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+
+import netReq from './data.json'
+import api from './../../api/axios'
 
 const AdDashBoard = () => {
      const [loading, setLoading] = useState(false)
@@ -35,11 +36,11 @@ const AdDashBoard = () => {
                toast.warning('Not Allowed!!')
                nav('/');
           }
-          // setLoading(true)
-          // api.get('/admin/analytics').then(e => {
-          //      setData(e.data)
-          //      setLoading(false)
-          // }).catch(e => console.log(e));
+          setLoading(true)
+          api.get('/admin/analytics').then(e => {
+               setData(e.data)
+               setLoading(false)
+          }).catch(e => console.log(e));
           setData(netReq);
      }, [])
      return (<>

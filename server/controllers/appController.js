@@ -54,7 +54,7 @@ const paymentSuccess = async (req, res) => {
   const user = await User.findOne({ user_id: req._id });
   const seller = await Seller.findOne({ seller_id: service.seller_id });
   const items = service.services.find((s) => {
-    return s.type.replace('-', ' ') == q.tier.replace('-',' ');
+    return s.type.replace('-', ' ') == q.tier.replace('-', ' ');
   });
 
   console.log(items);
@@ -108,4 +108,53 @@ const paymentSuccess = async (req, res) => {
   return res.status(200).json({ order, payment });
 };
 
-module.exports = { checkoutsession, paymentSuccess };
+const sellerAnalytics = async (req, res) => {
+  const { seller_id } = req.body;
+  const orders = await Order.find({seller_id: seller_id}).sort({ rating: -1 });
+
+  // code for avg time taken for completing orders
+  const finished = orders.filter((o) => {
+    if(o.pending == false) return o;
+  })
+
+  console.log('initial finished orders ');
+  console.log(finished);
+
+  let time = 0;
+  for (let order of finished) {
+    const start = new Date(order.order_date);
+    const end = new Date(order.timeline[order.timeline.length - 1].date);
+    console.log('inside time ');
+    console.log(start, end);
+
+    let seconds = (end.getTime() - start.getTime()) / 1000;
+
+    console.log(seconds);
+
+    time += seconds;
+  }
+
+  console.log('total time taken is ', time);
+  let avgTime = time / finished.length; // in seconds
+  console.log('avg finishing time is in hours ', avgTime/(60 * 60 ));
+  avgTime = avgTime/(60 * 60 );
+
+  // most liked services 
+  let mostLiked = orders.filter((order) => {
+    if(order.user_rating > 0) return order;
+  })
+
+  let servicesLiked = [];
+  for (let liked of mostLiked) {
+    const service = await Service.findById(liked.service_id).select({main_img: 0, seller_img: 0});
+    // console.log('inside ', service);
+
+    servicesLiked.push(service);
+  }
+
+  console.log(servicesLiked);
+
+  return res.json({message: "successsfully got analytics data", servicesLiked: servicesLiked, avgTime})
+}
+
+module.exports = { checkoutsession, paymentSuccess, sellerAnalytics };
