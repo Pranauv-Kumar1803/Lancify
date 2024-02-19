@@ -2,12 +2,16 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const rfs = require("rotating-file-stream");
+const fs = require("fs");
+const path = require("path");
+const morgan = require("morgan");
 const crypto = require("crypto");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const verifyJWT = require("./middleware/verifyJWT");
-mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 const Seller = require("./models/Seller");
 const User = require("./models/User");
 const Service = require("./models/Service");
@@ -27,6 +31,14 @@ const { paymentSuccess } = require("./controllers/appController");
 // const Payment = require("./models/Payment");
 
 const app = express();
+const logDirectory = path.join(__dirname, "logs");
+
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+const accessLogStream = rfs.createStream("appLogs.log", {
+  interval: "1d",
+  path: logDirectory,
+});
+app.use(morgan("combined", { stream: accessLogStream }));
 
 // middleware
 app.use(express.urlencoded({ extended: true, limit: "300mb" }));
