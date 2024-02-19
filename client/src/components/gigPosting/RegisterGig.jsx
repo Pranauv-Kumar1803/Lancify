@@ -19,6 +19,8 @@ import { toast } from "react-toastify"
 const RegisterGig = () => {
      const [data, setData] = useState({
           title: '',
+          main_img: '',
+          desc: '',
           tier1Price: '',
           tier1Services: '',
           tier2Price: '',
@@ -31,8 +33,13 @@ const RegisterGig = () => {
      const nav = useNavigate();
      const [errors, setErrors] = useState({});
 
-     const handleFile = async(e) => {
+     const handleFile = async (e) => {
           setGigImage(e.target.files[0]);
+
+          const main_img = await toBase64(e.target.files[0]);
+          setData((prev)=>{
+               return {...prev, ['main_img']: main_img}
+          });
      }
 
      const handleChange = (e) => {
@@ -49,6 +56,13 @@ const RegisterGig = () => {
           }
      })
 
+     const toBase64 = file => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+     });
+
      const handleSubmit = async (e) => {
           e.preventDefault();
           const newErrors = {};
@@ -63,7 +77,7 @@ const RegisterGig = () => {
           if (Object.keys(newErrors).length === 0) {
                console.log('Form is valid:', data);
                setErrors({})
-               
+
                console.log(gigImage);
                const formData = new FormData();
                formData.append('image', gigImage);
@@ -71,12 +85,12 @@ const RegisterGig = () => {
                console.log(formData);
 
                try {
-                    const res = await api.post('/postGig', formData, { headers: {'Content-Type': 'multipart/form-data'}});
+                    const res = await api.post('/postGig', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
                     console.log(res.data);
                } catch (err) {
                     console.log(err.message);
                }
-          
+
           } else {
                setErrors(newErrors);
           }
@@ -110,6 +124,17 @@ const RegisterGig = () => {
                                    onChange={handleChange}
                               />
                               {errors.title && <Box color="red">{errors.title}</Box>}
+                         </FormControl>
+
+                         <FormControl id="desc" isRequired>
+                              <FormLabel fontSize={'sm'}>Description</FormLabel>
+                              <Input
+                                   type="text"
+                                   name="desc"
+                                   value={data.desc}
+                                   onChange={handleChange}
+                              />
+                              {errors.desc && <Box color="red">{errors.desc}</Box>}
                          </FormControl>
 
                          <FormControl id="image" isRequired>

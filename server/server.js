@@ -23,10 +23,7 @@ const domainRouter = require("./routes/domainRouter");
 const forumRouter = require("./routes/forumRouter");
 const orderRouter = require("./routes/orderRouter");
 const serviceRouter = require("./routes/serviceRouter");
-const { paymentSuccess } = require("./controllers/appController");
-
-// const Order = require("./models/Order");
-// const Payment = require("./models/Payment");
+const adminRouter = require("./routes/adminRouter");
 
 const app = express();
 
@@ -50,6 +47,7 @@ app.use("/auth", authRouter);
 app.use("/forum", forumRouter);
 app.use("/services", serviceRouter);
 app.use("/order", verifyJWT, orderRouter);
+app.use('/admin', verifyJWT, adminRouter);
 
 // protected routes
 app.use("/app", verifyJWT, appRouter);
@@ -78,7 +76,6 @@ var upload = multer({
 });
 
 // other methods
-
 
 //  the new post - create gig form.... its there in appRouter if you want more info... its the same - just copy pasted... 
 app.post('/postGig', upload.single('image'), async(req, res)=>{
@@ -162,7 +159,7 @@ app.post('/postGig', upload.single('image'), async(req, res)=>{
   const o = {
     domain_type: obj.sub.split("-")[0],
     service_type: obj.sub.split("-")[1],
-    main_img: obj.image,
+    main_img: obj.main_img,
     seller_desc: obj.desc,
     seller_id: req._id,
     seller_name: seller.seller_fname,
@@ -206,30 +203,6 @@ app.post('/postGig', upload.single('image'), async(req, res)=>{
     return res.status(500).json({ msg: "some error occurred" });
   }
 })
-
-app.get("/admin/analytics", async (req, res) => {
-  const sellers = await Seller.find();
-  const services = await Service.find();
-  const users = await User.find();
-  const orders = await Order.find();
-
-  const ratings = await Service.find({ rating: true });
-  console.log(ratings);
-  const rating = await Seller.find({ rating: { $ne: 0 } });
-  let r = 0,
-    n = 0;
-  rating.forEach((p) => {
-    r += p.rating;
-    n += 1;
-  });
-  r = r / n;
-
-  if (ratings.length == 0) {
-    r = 0;
-  }
-
-  return res.json({ sellers, services, users, orders, ratings, r });
-});
 
 app.get("/profile/:id", async (req, res) => {
   console.log("in");
