@@ -9,10 +9,10 @@ const Service = require("../models/Service");
 const Comment = require("../models/Comment");
 const Order = require("../models/Order");
 const Discussion = require("../models/Discussion");
-const verifyJWT = require("../middleware/verifyJWT");
 const {
   checkoutsession,
   paymentSuccess,
+  sellerAnalytics,
 } = require("../controllers/appController");
 
 router.post("/discussions", async (req, res) => {
@@ -22,6 +22,8 @@ router.post("/discussions", async (req, res) => {
 router.post("/create-checkout-session", checkoutsession);
 
 router.post("/payment-success", paymentSuccess);
+
+router.get('/seller-analytics', sellerAnalytics);
 
 router.get("/getProfileData", async (req, res) => {
   console.log(req.query, req._id);
