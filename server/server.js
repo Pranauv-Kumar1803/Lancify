@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const verifyJWT = require("./middleware/verifyJWT");
 const multer = require('multer');
 
+mongoose.set('strictQuery', true);
 const Seller = require("./models/Seller");
 const User = require("./models/User");
 const Service = require("./models/Service");

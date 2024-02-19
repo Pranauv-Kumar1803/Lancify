@@ -43,22 +43,28 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
   });
 
   const handleFileChange = async (event) => {
-    const file = event.target.files;
-
-    if (file.length > 0) {
-      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-
-      let files = [];
-      file.forEach(async (f) => {
-        if (allowedExtensions.test(file.name)) {
-          const f = await toBase64(file);
-          files.push(f);
-        } else toast.warning('file format not supported!');
-      })
-
+    const files = Array.from(event.target.files);
+  
+    if (files.length > 0) {
+      const allowedExtensions = /\.(jpg|jpeg|png|pdf)$/i;
+  
+      let filesArray = [];
+      await Promise.all(
+        files.map(async (file) => {
+          if (allowedExtensions.test(file.name)) {
+            const base64 = await toBase64(file);
+            filesArray.push(base64);
+          } else {
+            toast.warning('File format not supported! (jpg, jpeg, png, pdf are allowed)', {
+              position: toast.POSITION.TOP_CENTER,
+            });
+          }
+        })
+      );
+  
       setData((prev) => {
-        return { ...prev, ['certificates']: files }
-      })
+        return { ...prev, certificates: filesArray };
+      });
     }
   };
 
@@ -75,33 +81,33 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
     const regex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
 
     if (data.occupation.length == 0) {
-      toast.warning('one occupation must be selected!');
+      toast.warning('one occupation must be selected!', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     if (data.country.length < 2) {
-      toast.warning('country name must be atleast 2 characters in length');
+      toast.warning('country name must be atleast 2 characters in length', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     if (data.title.length < 2) {
-      toast.warning('education title must be atleast 2 characters in length');
+      toast.warning('education title must be atleast 2 characters in length', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     if (data.inst_name.length < 5) {
-      toast.warning('description must be atleast 5 characters in length');
+      toast.warning('description must be atleast 5 characters in length', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     const y = new Date().getFullYear() + 4;
     if (data.year > y || y - data.year > 100) {
-      toast.warning('invalid year provided');
+      toast.warning('invalid year provided', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
     if (data.portfolio.length > 0 && (data.portfolio.length < 10 || !regex.test(data.portfolio))) {
-      toast.warning('Ensure you give a proper link for portfolio!');
+      toast.warning('Ensure you give a proper link for portfolio!', {position: toast.POSITION.TOP_CENTER,});
       return false;
     }
 
@@ -131,13 +137,13 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
           name="Occupation"
           autoComplete="Occupation"
           placeholder="Select option"
-          focusBorderColor="teal.600"
+          focusBorderColor="#4299e1"
           shadow="sm"
           size="sm"
           w="full"
           value={data.occupation}
           rounded="md"
-          colorScheme="teal.600"
+          colorScheme="#4299e1"
           onChange={handleSelect}
         >
           <option value="none">None</option>
@@ -168,7 +174,7 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
             <Input
               id="country"
               placeholder="Country of Institute"
-              focusBorderColor="teal.600"
+              focusBorderColor="#4299e1"
               size="sm"
               name="country"
               value={data.country}
@@ -180,7 +186,7 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
             <Input
               id="last-name"
               placeholder="Name of Institute"
-              focusBorderColor="teal.600"
+              focusBorderColor="#4299e1"
               size="sm"
               name="inst_name"
               value={data.inst_name}
@@ -196,7 +202,7 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
             <Input
               id="in_title"
               placeholder="Title"
-              focusBorderColor="teal.600"
+              focusBorderColor="#4299e1"
               size="sm"
               name="title"
               value={data.title}
@@ -208,7 +214,7 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
             <Input
               id="major"
               placeholder="Major"
-              focusBorderColor="teal.600"
+              focusBorderColor="#4299e1"
               size="sm"
               name="major"
               value={data.major}
@@ -236,7 +242,7 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
             allowMouseWheel
             min={1950}
             max={2050}
-            focusBorderColor="teal.600"
+            focusBorderColor="#4299e1"
             name="year"
             value={data.year}
             onChange={handleChange2}
@@ -273,7 +279,7 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
 
         <InputGroup size="sm">
           <InputLeftAddon
-            bg="teal.600"
+            bg="#4299e1"
             _dark={{
               bg: "gray.800",
             }}
@@ -285,7 +291,7 @@ const Form2 = ({ step, setStep, progress, setProgress, data, setData }) => {
           <Input
             type="tel"
             placeholder="www.example.com"
-            focusBorderColor="teal.600"
+            focusBorderColor="#4299e1"
             rounded="md"
             value={data.portfolio}
             name="portfolio"
