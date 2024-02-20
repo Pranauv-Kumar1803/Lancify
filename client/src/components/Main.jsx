@@ -23,6 +23,7 @@ import RegisterGig from './gigPosting/RegisterGig';
 import BlogList from './blogs/BlogList';
 import BlogDetail from './blogs/BlogDetail';
 import { useSelector } from 'react-redux'
+import SellerDash from './seller-analytics/SellerDash';
 const Main = () => {
     const { currentUser } = useSelector(store => store.user)
     console.log(currentUser)
@@ -56,6 +57,7 @@ const Main = () => {
                 <Route path="register" element={<RegisterSeller />} />
                 <Route path="create-gig" element={<RegisterGig />} />
                 <Route path="@dmin" element={<AdDashBoard />} />
+                <Route path="analytics" element={<SellerDash />} />
                 {/* <Route path="admin-dashboard" element={<AdDashBoard />} /> */}
             </Route>
 
