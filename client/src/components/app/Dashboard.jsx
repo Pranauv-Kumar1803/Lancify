@@ -113,7 +113,7 @@ const FinishedOrders = () => {
             align={"center"}
           >
             {data &&
-              data.ongoing && 
+              data.ongoing &&
               data.ongoing.length > 0 ?
               data.ongoing.map((order) => (
                 <Box
@@ -158,7 +158,7 @@ const FinishedOrders = () => {
                     </Button>
                   </Link>
                 </Box>
-              )): <h1>Nothing here!</h1> }
+              )) : <h1>Nothing here!</h1>}
           </Flex>
           <Text fontSize="3xl" fontWeight="bold" mb={6}>
             Finished Orders
@@ -209,7 +209,7 @@ const FinishedOrders = () => {
                     </Button>
                   </Link>
                 </Box>
-              )):  <h1>Nothing here!</h1> }
+              )) : <h1>Nothing here!</h1>}
           </Flex>
           {currentUser && currentUser.user_type == "seller" && (
             <>

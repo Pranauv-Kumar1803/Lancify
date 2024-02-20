@@ -27,7 +27,7 @@ import SellerDash from './seller-analytics/SellerDash';
 const Main = () => {
     const { currentUser } = useSelector(store => store.user)
     console.log(currentUser)
-    
+
     return <>
         <ToastContainer />
         <Navbar />

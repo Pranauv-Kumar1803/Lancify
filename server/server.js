@@ -2,11 +2,16 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const rfs = require("rotating-file-stream");
+const fs = require("fs");
+const path = require("path");
+const morgan = require("morgan");
 const crypto = require("crypto");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const verifyJWT = require("./middleware/verifyJWT");
+mongoose.set("strictQuery", true);
 const multer = require('multer');
 
 mongoose.set('strictQuery', true);
@@ -26,6 +31,14 @@ const serviceRouter = require("./routes/serviceRouter");
 const adminRouter = require("./routes/adminRouter");
 
 const app = express();
+const logDirectory = path.join(__dirname, "logs");
+
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+const accessLogStream = rfs.createStream("appLogs.log", {
+  interval: "1d",
+  path: logDirectory,
+});
+app.use(morgan("combined", { stream: accessLogStream }));
 
 // middleware
 app.use(express.urlencoded({ extended: true, limit: "300mb" }));
