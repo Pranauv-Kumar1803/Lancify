@@ -26,13 +26,18 @@ const SellerDash = () => {
     //  })
     //  console.log(dataX)
 
-    // useEffect(() => {
-    //     if (currentUser && currentUser.user_type != 'seller') {
-    //         toast.warning('Not Allowed!!')
-    //         nav('/');
-    //     }
-    //     setLoading(true)
-    // }, [])
+    const func = async () => {
+        try {
+            const res = await api.get('/app/seller-analytics');
+            console.log(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        func();
+    }, [])
 
     return (<>
         {loading ? <Loader /> :
