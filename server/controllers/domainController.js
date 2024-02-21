@@ -1,92 +1,112 @@
 const Service = require("../models/Service");
 
 const getServices = async (req, res) => {
-    const q = req.query;
+  const q = req.query;
 
-    console.log('inside this!', q);
+  console.log("inside this!", q);
 
-    try {
-        let services;
-        if (JSON.stringify(q) === "{}") {
-            const data = await Service.find().exec();
-            return res.status(200).json({data: data});
-        } else {
-            if (q.hours) {
-                services = await Service.find({ min_duration: { $lte: q.hours }, starting_price: { $gte: q.min, $lte: q.max } }).exec();
-                console.log(services);
-            }
-            else {
-                services = await Service.find({ starting_price: { $gte: q.min, $lte: q.max } }).exec();
-                console.log(services);
-            }
-            return res.status(200).json({data: services});
-        }
-    } catch (err) {
-        return res.status(500).json({ message: 'Server Error1!' })
+  try {
+    let services;
+    if (JSON.stringify(q) === "{}") {
+      const data = await Service.find().exec();
+      return res.status(200).json({ data: data });
+    } else {
+      if (q.hours) {
+        services = await Service.find({
+          min_duration: { $lte: q.hours },
+          starting_price: { $gte: q.min, $lte: q.max },
+        }).exec();
+        console.log(services);
+      } else {
+        services = await Service.find({
+          starting_price: { $gte: q.min, $lte: q.max },
+        }).exec();
+        console.log(services);
+      }
+      return res.status(200).json({ data: services });
     }
-}
+  } catch (err) {
+    return res.status(500).json({ message: "Server Error1!" });
+  }
+};
 
 const getServicesOfDomain = async (req, res) => {
-    console.log('inside this')
-    const q = req.query;
-    const param = req.params.param;
-    const domain = param.split('-')[0];
-    const service = param.split('-')[1];
+  console.log("inside this");
+  const q = req.query;
+  const param = req.params.param;
+  const domain = param.split("-")[0];
+  const service = param.split("-")[1];
 
-    console.log(q);
-    console.log(domain, service);
+  console.log(q);
+  console.log(domain, service);
 
-    try {
-        let services = [];
-        if (!service) {
-            console.log('service type not present!')
-            if (JSON.stringify(q) === "{}") {
-                if (!domain) {
-                    return res.status(400).json({ message: "no domain selected!" });
-                }
-
-                const services = await Service.find({ domain_type: domain }).exec();
-                return res.status(200).json({ data: services });
-            }
-
-            if (q.hours) {
-                services = await Service.find({ domain_type: domain, min_duration: { $lte: q.hours }, starting_price: { $gte: q.min, $lte: q.max } }).exec();
-                console.log(services);
-            }
-            else {
-                services = await Service.find({ domain_type: domain, starting_price: { $gte: q.min, $lte: q.max } }).exec();
-                console.log(services);
-            }
-
-            return res.status(200).json({ data: services });
+  try {
+    let services = [];
+    if (!service) {
+      console.log("service type not present!");
+      if (JSON.stringify(q) === "{}") {
+        if (!domain) {
+          return res.status(400).json({ message: "no domain selected!" });
         }
 
-        if (JSON.stringify(q) === "{}") {
-            if (!domain) {
-                return res.status(400).json({ message: "no domain selected!" });
-            }
-
-            const services = await Service.find({ service_type: service, domain_type: domain }).exec();
-            return res.status(200).json({ data: services });
-        }
-
-        console.log('service type present!')
-        services = [];
-        if (q.hours) {
-            services = await Service.find({ service_type: service, domain_type: domain, min_duration: { $lte: q.hours }, starting_price: { $gte: q.min, $lte: q.max } }).exec();
-            console.log(services);
-        }
-        else {
-            services = await Service.find({ service_type: service, domain_type: domain, starting_price: { $gte: q.min, $lte: q.max } }).exec();
-            console.log(services);
-        }
-
+        const services = await Service.find({ domain_type: domain }).exec();
         return res.status(200).json({ data: services });
-    }
-    catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: 'Server Error2' });
-    }
-}
+      }
 
-module.exports = { getServicesOfDomain, getServices }
+      if (q.hours) {
+        services = await Service.find({
+          domain_type: domain,
+          min_duration: { $lte: q.hours },
+          starting_price: { $gte: q.min, $lte: q.max },
+        }).exec();
+        console.log(services);
+      } else {
+        services = await Service.find({
+          domain_type: domain,
+          starting_price: { $gte: q.min, $lte: q.max },
+        }).exec();
+        console.log(services);
+      }
+
+      return res.status(200).json({ data: services });
+    }
+
+    if (JSON.stringify(q) === "{}") {
+      if (!domain) {
+        return res.status(400).json({ message: "no domain selected!" });
+      }
+
+      const services = await Service.find({
+        service_type: service,
+        domain_type: domain,
+      }).exec();
+      return res.status(200).json({ data: services });
+    }
+
+    console.log("service type present!");
+    services = [];
+    if (q.hours) {
+      services = await Service.find({
+        service_type: service,
+        domain_type: domain,
+        min_duration: { $lte: q.hours },
+        starting_price: { $gte: q.min, $lte: q.max },
+      }).exec();
+      console.log(services);
+    } else {
+      services = await Service.find({
+        service_type: service,
+        domain_type: domain,
+        starting_price: { $gte: q.min, $lte: q.max },
+      }).exec();
+      console.log(services);
+    }
+
+    return res.status(200).json({ data: services });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Server Error2" });
+  }
+};
+
+module.exports = { getServicesOfDomain, getServices };

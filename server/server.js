@@ -12,9 +12,9 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const verifyJWT = require("./middleware/verifyJWT");
 mongoose.set("strictQuery", true);
-const multer = require('multer');
+const multer = require("multer");
 
-mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 const Seller = require("./models/Seller");
 const User = require("./models/User");
 const Service = require("./models/Service");
@@ -29,6 +29,7 @@ const forumRouter = require("./routes/forumRouter");
 const orderRouter = require("./routes/orderRouter");
 const serviceRouter = require("./routes/serviceRouter");
 const adminRouter = require("./routes/adminRouter");
+const { log } = require("console");
 
 const app = express();
 const logDirectory = path.join(__dirname, "logs");
@@ -60,38 +61,45 @@ app.use("/auth", authRouter);
 app.use("/forum", forumRouter);
 app.use("/services", serviceRouter);
 app.use("/order", verifyJWT, orderRouter);
-app.use('/admin', verifyJWT, adminRouter);
+app.use("/admin", verifyJWT, adminRouter);
 
 // protected routes
 app.use("/app", verifyJWT, appRouter);
 
-const DIR = './public/images/multer';
+const DIR = "./public/images/multer";
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, DIR);
-    },
-    filename: (req, file, cb) => {
-        const fileName = file.originalname.toLowerCase().split(' ').join('-');
-        cb(null, String(new Date().getTime()) + '-' + fileName)
-    }
+  destination: (req, file, cb) => {
+    cb(null, DIR);
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname
+      .toLowerCase()
+      .split(" ")
+      .join("-");
+    cb(null, String(new Date().getTime()) + "-" + fileName);
+  },
 });
 
 var upload = multer({
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-            cb(null, true);
-        } else {
-            cb(null, false);
-            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
-        }
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
     }
+  },
 });
 
 // other methods
 
-//  the new post - create gig form.... its there in appRouter if you want more info... its the same - just copy pasted... 
-app.post('/postGig', upload.single('image'), async(req, res)=>{
+//  the new post - create gig form.... its there in appRouter if you want more info... its the same - just copy pasted...
+app.post("/postGig", upload.single("image"), async (req, res) => {
   console.log(JSON.parse(req.body.data), typeof JSON.parse(req.body.data));
   console.log(req.file);
 
@@ -104,15 +112,15 @@ app.post('/postGig', upload.single('image'), async(req, res)=>{
 
   console.log("in");
 
-//   // {
-//   title: 'gig1',
-//   tier1Price: '1000',
-//   tier1Services: 'servcies',
-//   tier2Price: '2000',
-//   tier2Services: 'serveirces',
-//   tier3Price: '3000',
-//   tier3Services: 'afsefsf'
-// }
+  //   // {
+  //   title: 'gig1',
+  //   tier1Price: '1000',
+  //   tier1Services: 'servcies',
+  //   tier2Price: '2000',
+  //   tier2Services: 'serveirces',
+  //   tier3Price: '3000',
+  //   tier3Services: 'afsefsf'
+  // }
 
   const obj = JSON.parse(req.body.data);
   const p = obj.sub.split("-")[1];
@@ -215,7 +223,7 @@ app.post('/postGig', upload.single('image'), async(req, res)=>{
     console.log(err.message);
     return res.status(500).json({ msg: "some error occurred" });
   }
-})
+});
 
 app.get("/profile/:id", async (req, res) => {
   console.log("in");
