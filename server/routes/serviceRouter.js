@@ -5,10 +5,7 @@ const router = express.Router();
 router.get("/:serviceId", async (req, res) => {
   const serviceId = req.params.serviceId;
   try {
-    const service = await Service.findOne({
-      _id: serviceId,
-    });
-    console.log(service);
+    const service = await Service.findOne({_id: serviceId, isAdminApproved: true}).populate("seller_id");
     res.status(200).json(service);
   } catch (error) {
     res.status(404).json({

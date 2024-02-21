@@ -207,7 +207,7 @@ router.post("/create-gig", async (req, res) => {
 router.post("/register_seller", async (req, res) => {
   try {
     console.log(req.body);
-    req.body.seller_id = req.cookies.user;
+    req.body.seller_id = req._id;
     const obj = { profile: req.body.profile, seller_id: req.body.seller_id };
 
     const result = await new Seller({
@@ -256,7 +256,7 @@ router.post("/register_seller", async (req, res) => {
 router.post("/update_seller", async (req, res) => {
   try {
     console.log(req.body);
-    req.body.seller_id = req.cookies.user;
+    req.body.seller_id = req._id;
     const obj = { profile: req.body.profile, seller_id: req.body.seller_id };
 
     const seller = await Seller.findOne({ seller_id: req._id });
