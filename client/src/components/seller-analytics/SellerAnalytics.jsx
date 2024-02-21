@@ -2,7 +2,7 @@ import { Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, SimpleGr
 import React from 'react'
 import { FaDollarSign, FaClock, FaChevronUp, FaCheckSquare, FaMoneyCheckAlt } from "react-icons/fa";
 
-const SellerAnalytics = () => {
+const SellerAnalytics = ({data}) => {
     return (
         <>
             <SimpleGrid templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
@@ -16,7 +16,7 @@ const SellerAnalytics = () => {
                         </Flex>
                     </CardBody>
                     <CardHeader paddingTop={0}>
-                        <Heading size='md' textAlign={'center'}> $450 </Heading>
+                        <Heading size='md' textAlign={'center'}> ₹{data.this_month_total} </Heading>
                     </CardHeader>
                 </Card>
             </SimpleGrid>
@@ -31,7 +31,7 @@ const SellerAnalytics = () => {
                         </Flex>
                     </CardBody>
                     <CardHeader paddingTop={0}>
-                        <Heading size='md' textAlign={'center'}> 5 </Heading>
+                        <Heading size='md' textAlign={'center'}> {data.newOrders} </Heading>
                     </CardHeader>
                 </Card>
             </SimpleGrid>
@@ -46,7 +46,7 @@ const SellerAnalytics = () => {
                         </Flex>
                     </CardBody>
                     <CardHeader paddingTop={0}>
-                        <Heading size='md' textAlign={'center'}> 3 </Heading>
+                        <Heading size='md' textAlign={'center'}> {data.pending} </Heading>
                     </CardHeader>
                 </Card>
             </SimpleGrid>
@@ -61,7 +61,7 @@ const SellerAnalytics = () => {
                         </Flex>
                     </CardBody>
                     <CardHeader paddingTop={0}>
-                        <Heading size='md' textAlign={'center'}> 30 </Heading>
+                        <Heading size='md' textAlign={'center'}> {data.completed} </Heading>
                     </CardHeader>
                 </Card>
             </SimpleGrid>
@@ -76,7 +76,7 @@ const SellerAnalytics = () => {
                         </Flex>
                     </CardBody>
                     <CardHeader paddingTop={0}>
-                        <Heading size='md' textAlign={'center'}> $3000 </Heading>
+                        <Heading size='md' textAlign={'center'}> ₹ {data.seller_total} </Heading>
                     </CardHeader>
                 </Card>
             </SimpleGrid>

@@ -1,74 +1,137 @@
-import { SimpleGrid } from '@chakra-ui/react';
-import React from 'react'
+import { Select, SimpleGrid } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
+import { FaAngleDown } from 'react-icons/fa6'
 
-const MonthlyRevenue = () => {
+const MonthlyRevenue = ({ data }) => {
+    const [obj, setObj] = useState(null);
+    const [obj2, setObj2] = useState(null);
+    const [years, setYears] = useState([]);
 
-    const obj = {
+    const preprocess = () => {
+        let y = [];
+        for (let ye in data.revenueByMonths) {
+            y.push(ye);
+        }
+        setYears(y);
+    }
 
-        series: [{
-            name: "Revenue (in dollars)",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-        }],
-        options: {
-            chart: {
-                height: 350,
-                type: 'line',
-                zoom: {
-                    enabled: false
+    const func2 = () => {
+        let revServ = [];
+        for (let key in data?.revenueByServices) {
+            revServ.push(data?.revenueByServices[key]);
+        }
+        data.revServ = revServ;
+
+        const newObj = {
+            options: {
+                title: {
+                    text: 'Revenue by services',
+                    align: 'center'
+                },
+                chart: {
+                    id: "basic-bar",
+                },
+                xaxis: {
+                    categories: Object.keys(data?.revenueByServices)
                 }
             },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'straight'
-            },
-            title: {
-                text: 'Revenue by Month',
-                align: 'left'
-            },
-            grid: {
-                row: {
-                    colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                    opacity: 0.2
-                },
-            },
-            xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-            }
-        },
-    };
+            series: [
+                {
+                    name: "Revenue in Rupees",
+                    data: data?.revServ
+                }
+            ]
+        }
 
-    const obj2 = {
-        options: {
-            title: {
-                text: 'Revenue by services',
-                align: 'center'
-            },
-            chart: {
-                id: "basic-bar"
-            },
-            xaxis: {
-                categories: ['service1', 'service2', 'service3', 'service4', 'service5', 'service6', 'service7', 'service8']
-            }
-        },
-        series: [
-            {
-                name: "Revenue in dollars",
-                data: [30, 40, 45, 50, 49, 60, 70, 91]
-            }
-        ]
+        console.log('new', newObj);
+
+        setObj2({ ...newObj });
     }
+
+    const func = (rev) => {
+        setObj({
+            series: [{
+                name: "Revenue (in Rupees)",
+                data: rev
+            }],
+            options: {
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight'
+                },
+                title: {
+                    text: 'Revenue by Month',
+                    align: 'left'
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.2
+                    },
+                },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                }
+            },
+        })
+    }
+
+    const handleYears = (e) => {
+        console.log('inside years')
+        console.log(e.target.value);
+        let p = data.revenueByMonths[e.target.value];
+
+        let rev = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (let k in p) {
+            rev[k] = (p[k]);
+        }
+
+        func(rev);
+    }
+
+    useEffect(() => {
+        console.log(data);
+
+        preprocess();
+
+        let rev = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        func(rev);
+        
+        console.log(years);
+        func2();
+    }, [data])
 
     return (
         <>
-            <SimpleGrid spacing={3} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
-                <Chart options={obj.options} series={obj.series} type="line" height={350} width={'100%'} />
-            </SimpleGrid>
-            <SimpleGrid spacing={3} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
-                <Chart options={obj2.options} series={obj2.series} type="bar" width={'100%'} height={350} />
-            </SimpleGrid>
+            {obj &&
+                <SimpleGrid spacing={3} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+                    <Select icon={<FaAngleDown />} onChange={handleYears} placeholder='Year' >
+                        {console.log(years)}
+                        {years && Array.from(years).map((y) => {
+                            return <option value={y}>{y}</option>
+                        })}
+                    </Select>
+                    {years &&
+                        <Chart options={obj.options} series={obj.series} type="line" height={350} width={'100%'} />
+                    }
+                </SimpleGrid>
+            }
+            {
+                obj2 &&
+                <SimpleGrid spacing={3} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+                    <Chart options={obj2?.options} series={obj2?.series} type="bar" width={'100%'} height={350} />
+                </SimpleGrid>
+            }
         </>
     )
 }

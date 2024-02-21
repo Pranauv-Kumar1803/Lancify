@@ -112,7 +112,7 @@ const sellerAnalytics = async (req, res) => {
   try {
     
     const seller_id = req._id;
-    const orders = await Order.find({ seller_id: seller_id }).sort({ rating: -1 }).populate('payment', 'service_id');
+    const orders = await Order.find({ seller_id: seller_id }).sort({ rating: -1 }).populate('payment').populate('service_id');
   
     const seller = await Seller.findOne({ seller_id: seller_id });
   
@@ -124,13 +124,14 @@ const sellerAnalytics = async (req, res) => {
     let rev_by_month = {};
   
     for (let order of orders) {
-      console.log(order);
+      // console.log(order);
       const cur_month = new Date().getMonth();
+      const cur_year = new Date().getFullYear();
   
       const order_month = new Date(order.order_date).getMonth();
       const order_year = new Date(order.order_date).getFullYear();
   
-      if (cur_month == order_month) {
+      if (cur_month == order_month && order_year == cur_year ) {
         money += order.grand_total;
         if (order.pending) orders_m.push(order);
       }
@@ -146,7 +147,7 @@ const sellerAnalytics = async (req, res) => {
     }
   
     console.log(rev);
-  
+ 
     for (let order of orders) {
       // revenue by services
       if (String(order.service_id.service_type) in rev_by_service) {
@@ -158,9 +159,9 @@ const sellerAnalytics = async (req, res) => {
   
     console.log(rev_by_service);
   
-    console.log('Money earned this month!', money);
-    console.log('Orders Received and Working on this month!', money);
-    console.log('Total Money Earned thru the platform = Total Balance - ', seller.balance);
+    // console.log('Money earned this month!', money);
+    // console.log('Orders Received and Working on this month!', money);
+    // console.log('Total Money Earned thru the platform = Total Balance - ', seller.balance);
   
     // code for avg time taken for completing orders of every service
     const finished = orders.filter((o) => {
@@ -173,8 +174,8 @@ const sellerAnalytics = async (req, res) => {
     let avgObj = {};
   
     for (let order of finished) {
-      console.log(avgObj);
-      console.log(order.service_id._id);
+      // console.log(avgObj);
+      // console.log(order.service_id._id);
       const start = new Date(order.order_date);
       const end = new Date(order.timeline[order.timeline.length - 1].date);
   
@@ -189,7 +190,7 @@ const sellerAnalytics = async (req, res) => {
       }
     }
   
-    console.log(avgObj);
+    // console.log(avgObj);
   
     // most liked services 
     let mostLiked = orders.filter((order) => {
@@ -203,7 +204,7 @@ const sellerAnalytics = async (req, res) => {
       servicesLiked.push(service);
     }
   
-    console.log(servicesLiked);
+    // console.log(servicesLiked);
   
     return res.status(200).json({ message: "successsfully got analytics data", servicesLiked, avgObj, newOrders: orders_m.length, pending, completed, this_month_total: money, seller_total: seller.balance, revenueByMonths: rev, revenueByServices: rev_by_service })
   } catch (err) {
