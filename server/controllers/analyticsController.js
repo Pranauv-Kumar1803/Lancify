@@ -20,16 +20,41 @@ const Service = require("../models/Service");
 // );
 // userDocs = await Promise.all(userDocs);
 
-const yearWiseAnalytics = (data) => {};
+function extractMonthYear(dateString) {
+  let date = new Date(dateString);
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let formattedDate = `${year}-${month}`;
+  return formattedDate;
+}
+
+const yearWiseAnalytics = (data) => {
+  const mpp = new Map();
+  data.forEach((doc) => {
+    const formattedDate = extractMonthYear(doc.order_date);
+    if (mpp.has(formattedDate)) {
+      mpp.set(formattedDate, mpp.get(formattedDate) + doc.grand_total);
+    } else {
+      mpp.set(formattedDate, doc.grand_total);
+    }
+  });
+  const yearMonth = [];
+  const moneySpent = [];
+  mpp.forEach((val, key) => {
+    yearMonth.push(key);
+    moneySpent.push(val);
+  });
+  return { years: yearMonth, money: moneySpent };
+};
 
 const transactionAnalytics = async (req, res, next) => {
   try {
     console.log("bro");
-    const orders = await Order.find();
-    console.log(orders);
-
+    const orders = await Order.find().sort("order_date");
+    const plotResult = yearWiseAnalytics(orders);
+    console.log(plotResult);
     res.json({
-      ok: "ok",
+      plot: plotResult,
     });
   } catch (err) {
     console.log(err);

@@ -5,8 +5,8 @@ import Loader from '../Loader/Loader'
 import UserAnalytics from "./userAnalytics"
 import OrderAnalytics from "./orderAnalytics"
 import ServicePriceScatter from './ServicePriceScatter'
+import TransactionsList from "./TransactionsList"
 import UsersPaginated from "./UsersPaginated"
-import transactionsList from "./transactionsList"
 import OrdersDetails from "./OrdersDetails"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -61,7 +61,7 @@ const AdDashBoard = () => {
                     }} >
                          <UsersPaginated dataList={sellers} type={"seller"} />
                          <UsersPaginated dataList={users} type={"user"} />
-                         <transactionsList />
+                         <TransactionsList />
                     </HStack>
                </>
 
