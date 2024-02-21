@@ -112,7 +112,7 @@ const sellerAnalytics = async (req, res) => {
   try {
     
     const seller_id = req._id;
-    const orders = await Order.find({ seller_id: seller_id }).sort({ rating: -1 }).populate('payment').populate('service_id');
+    const orders = await Order.find({ seller_id: seller_id }).sort({ rating: -1 }).populate('payment').populate('service_id').select({'service_id.seller_img': 0});
   
     const seller = await Seller.findOne({ seller_id: seller_id });
   
@@ -156,7 +156,18 @@ const sellerAnalytics = async (req, res) => {
         rev_by_service[String(order.service_id.service_type)] = order.grand_total;
       }
     }
+
+    let orders_by_service = {};
+    for (let order of orders) {
+      // revenue by services
+      if (String(order.service_id.service_type) in orders_by_service) {
+        orders_by_service[String(order.service_id.service_type)] += 1;
+      } else {
+        orders_by_service[String(order.service_id.service_type)] = 1;
+      }
+    }
   
+    console.log(orders_by_service);
     console.log(rev_by_service);
   
     // console.log('Money earned this month!', money);
@@ -181,13 +192,17 @@ const sellerAnalytics = async (req, res) => {
   
       let seconds = (end.getTime() - start.getTime()) / 1000;
   
-      if (String(order.service_id._id) in avgObj) {
-        let num = avgObj[String(order.service_id._id)][0];
-        avgObj[String(order.service_id._id)][0] = num + 1;
-        avgObj[String(order.service_id._id)][1] += (seconds / (60 * 60));
+      if (String(order.service_id.service_type) in avgObj) {
+        let num = avgObj[String(order.service_id.service_type)][0];
+        avgObj[String(order.service_id.service_type)][0] = num + 1;
+        avgObj[String(order.service_id.service_type)][1] += (seconds / (60 * 60));
       } else {
-        avgObj[String(order.service_id._id)] = [1, (seconds / (60 * 60))];
+        avgObj[String(order.service_id.service_type)] = [1, (seconds / (60 * 60))];
       }
+    }
+
+    for(let key in avgObj) {
+      avgObj[key][1] = avgObj[key][1] / avgObj[key][0];
     }
   
     // console.log(avgObj);
@@ -197,16 +212,11 @@ const sellerAnalytics = async (req, res) => {
       if (order.user_rating > 0) return order;
     })
   
-    let servicesLiked = [];
-    for (let liked of mostLiked) {
-      const service = await Service.findById(liked.service_id).select({ main_img: 0, seller_img: 0 });
-  
-      servicesLiked.push(service);
-    }
-  
-    // console.log(servicesLiked);
-  
-    return res.status(200).json({ message: "successsfully got analytics data", servicesLiked, avgObj, newOrders: orders_m.length, pending, completed, this_month_total: money, seller_total: seller.balance, revenueByMonths: rev, revenueByServices: rev_by_service })
+    let servicesLiked = Array.from(mostLiked).map((l)=>{
+      return l.service_id;
+    });
+
+    return res.status(200).json({ message: "successsfully got analytics data", servicesLiked, avgObj, newOrders: orders_m.length, pending, completed, this_month_total: money, seller_total: seller.balance, revenueByMonths: rev, revenueByServices: rev_by_service, orders_by_service })
   } catch (err) {
     console.log(err.message);
   }

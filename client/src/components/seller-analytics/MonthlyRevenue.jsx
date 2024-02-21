@@ -1,4 +1,4 @@
-import { Select, SimpleGrid } from '@chakra-ui/react';
+import { Card, Flex, Select, SimpleGrid } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
 import { FaAngleDown } from 'react-icons/fa6'
@@ -106,16 +106,16 @@ const MonthlyRevenue = ({ data }) => {
 
         let rev = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         func(rev);
-        
+
         console.log(years);
         func2();
     }, [data])
 
     return (
-        <>
+        <Flex width={'100%'} direction={{base: 'column', lg: 'row'}} justify={'space-around'} padding={{base: 4, lg: 10}} align={'center'} gap={5}>
             {obj &&
-                <SimpleGrid spacing={3} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
-                    <Select icon={<FaAngleDown />} onChange={handleYears} placeholder='Year' >
+                <Flex style={{ backgroundColor: '#fff', borderRadius: '10px' }} width={{base: '100%', lg: '50%'}} direction={'column'} justify={'center'} align={'center'} padding={5} >
+                    <Select icon={<FaAngleDown />} width={{base: '100%', lg: '50%'}} onChange={handleYears} placeholder='Year' >
                         {console.log(years)}
                         {years && Array.from(years).map((y) => {
                             return <option value={y}>{y}</option>
@@ -124,15 +124,15 @@ const MonthlyRevenue = ({ data }) => {
                     {years &&
                         <Chart options={obj.options} series={obj.series} type="line" height={350} width={'100%'} />
                     }
-                </SimpleGrid>
+                </Flex>
             }
             {
                 obj2 &&
-                <SimpleGrid spacing={3} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+                <Flex style={{ backgroundColor: '#fff', borderRadius: '10px' }} width={{base: '100%', lg: '50%'}} direction={'column'} justify={'center'} align={'center'} padding={5} >
                     <Chart options={obj2?.options} series={obj2?.series} type="bar" width={'100%'} height={350} />
-                </SimpleGrid>
+                </Flex>
             }
-        </>
+        </Flex>
     )
 }
 
