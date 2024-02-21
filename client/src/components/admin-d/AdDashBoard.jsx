@@ -8,6 +8,7 @@ import ServicePriceScatter from './ServicePriceScatter'
 import TransactionsList from "./TransactionsList"
 import UsersPaginated from "./UsersPaginated"
 import OrdersDetails from "./OrdersDetails"
+import OrdersList from './OrdersList'
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -62,6 +63,12 @@ const AdDashBoard = () => {
                          <UsersPaginated dataList={sellers} type={"seller"} />
                          <UsersPaginated dataList={users} type={"user"} />
                          <TransactionsList />
+                    </HStack>
+                    <HStack mb='6' justifyContent='space-around' flexDir={{
+                         base: 'column',
+                         lg: 'row'
+                    }} >
+                         <OrdersList />
                     </HStack>
                </>
 

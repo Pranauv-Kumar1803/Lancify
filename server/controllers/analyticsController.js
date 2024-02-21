@@ -63,4 +63,32 @@ const transactionAnalytics = async (req, res, next) => {
     });
   }
 };
-module.exports = { transactionAnalytics };
+
+const orderAnalytics = async (req, res, next) => {
+  try {
+    const orders = await Order.find()
+      .sort("order_date")
+      .select([
+        "service_type",
+        "user_name",
+        "seller_name",
+        "grand_total",
+        "pending",
+        "order_date",
+      ]);
+
+    const ongoing = orders.filter((doc) => doc.pending === true);
+    const completed = orders.filter((doc) => doc.pending === false);
+    res.status(200).json({
+      ongoing,
+      completed,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(401).json({
+      message: "Error occurred",
+    });
+  }
+};
+
+module.exports = { transactionAnalytics, orderAnalytics };

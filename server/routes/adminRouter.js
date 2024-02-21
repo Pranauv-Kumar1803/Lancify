@@ -8,6 +8,7 @@ const {
 } = require("../controllers/adminController");
 const {
   transactionAnalytics,
+  orderAnalytics,
 } = require("./../controllers/analyticsController");
 const User = require("../models/User");
 
@@ -31,5 +32,7 @@ router.get(
 router.get("/servicesToBeApproved/", verifyAdmin, getServicesToBeApproved);
 
 router.get("/transaction-analytics", verifyAdmin, transactionAnalytics);
+
+router.get("/order-analytics", verifyAdmin, orderAnalytics);
 
 module.exports = router;
