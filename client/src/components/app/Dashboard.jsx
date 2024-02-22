@@ -214,7 +214,7 @@ const FinishedOrders = () => {
           {currentUser && currentUser.user_type == "seller" && (
             <>
               <Text fontSize="3xl" fontWeight="bold" mb={6}>
-                Your Services
+                Your Approved Services
               </Text>
               <Flex
                 wrap={"wrap"}
@@ -224,7 +224,61 @@ const FinishedOrders = () => {
               >
                 {data &&
                   data.gigs &&
-                  data.gigs.map((order) => (
+                  data.gigs.approvedGigs && 
+                  data.gigs.approvedGigs.map((order) => (
+                    <Box
+                      key={order.id}
+                      bg="white"
+                      borderRadius="md"
+                      boxShadow="md"
+                      p={4}
+                      mb={4}
+                      w={["100%", "48%", "32%"]}
+                      maxW="300px"
+                      borderWidth="1px"
+                      borderColor="gray.200"
+                      _hover={{ boxShadow: "lg" }}
+                    >
+                      <Image
+                        src={order.main_img}
+                        alt="Project Image"
+                        borderRadius="md"
+                        mb="4"
+                        minHeight="150px"
+                      />
+                      <Text fontWeight="bold" fontSize="lg" mb={2}>
+                        {order.seller_title}
+                      </Text>
+                      <Text fontWeight="sm" fontSize="lg" mb={2}>
+                        {order.seller_desc}
+                      </Text>
+                      <Text fontSize="sm" color="gray.600">
+                        Service Type : {order.service_type.replace("_", " ")}
+                      </Text>
+                      <Text fontSize="sm" color="gray.600">
+                        Starting Price : {order.starting_price}
+                      </Text>
+                      <Link to={`/services/${order._id}`}>
+                        <Button my="4" colorScheme="blue">
+                          Learn more
+                        </Button>
+                      </Link>
+                    </Box>
+                  ))}
+              </Flex>
+              <Text fontSize="3xl" fontWeight="bold" mb={6}>
+                Your Unapproved Services
+              </Text>
+              <Flex
+                wrap={"wrap"}
+                justify="flex-start"
+                gap={10}
+                align={"center"}
+              >
+                {data &&
+                  data.gigs &&
+                  data.gigs.unApprovedGigs && 
+                  data.gigs.unApprovedGigs.map((order) => (
                     <Box
                       key={order.id}
                       bg="white"

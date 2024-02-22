@@ -22,14 +22,14 @@ const RegisterGig = () => {
           title: '',
           main_img: '',
           desc: '',
-          tier1Price: '',
-          tier1duration: '',
+          tier1Price: 0,
+          tier1duration: 0,
           tier1Services: '',
-          tier2Price: '',
-          tier2duration: '',
+          tier2Price: 0,
+          tier2duration: 0,
           tier2Services: '',
-          tier3Price: '',
-          tier3duration: '',
+          tier3Price: 0,
+          tier3duration: 0,
           tier3Services: ''
      });
      const [gigImage, setGigImage] = useState(null);

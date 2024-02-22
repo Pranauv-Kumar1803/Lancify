@@ -29,7 +29,7 @@ const forumRouter = require("./routes/forumRouter");
 const orderRouter = require("./routes/orderRouter");
 const serviceRouter = require("./routes/serviceRouter");
 const adminRouter = require("./routes/adminRouter");
-const { log } = require("console");
+const csrf=require('csurf');
 
 const app = express();
 const logDirectory = path.join(__dirname, "logs");
@@ -55,9 +55,13 @@ app.use(
   })
 );
 
+const crsfProtection=csrf({
+    cookie: true
+});
+
 // routes
 app.use("/domains", domainRouter);
-app.use("/auth", authRouter);
+app.use("/auth", crsfProtection, authRouter);
 app.use("/forum", forumRouter);
 app.use("/services", serviceRouter);
 app.use("/order", verifyJWT, orderRouter);
@@ -81,6 +85,7 @@ const storage = multer.diskStorage({
 });
 
 var upload = multer({
+  limits: { fieldSize: 2 * 1024 * 1024 },
   storage: storage,
   fileFilter: (req, file, cb) => {
     if (

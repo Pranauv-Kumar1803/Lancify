@@ -9,8 +9,9 @@ const Service = require("../models/Service");
 
 const loginController = async (req, res) => {
   console.log(req.body);
-  const email = req.body.email;
-  const password = req.body.password;
+
+  const email = req.body.data.email;
+  const password = req.body.data.password;
   try {
     const user = await User.findOne({ email: email }).exec();
     if (!user) {

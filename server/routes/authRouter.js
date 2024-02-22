@@ -3,6 +3,10 @@ const router = express.Router();
 const { loginController, registerController, checkUser, logout, deleteUser, getUserDetails, updateUser } = require('../controllers/authControllers');
 const verifyJWT = require('../middleware/verifyJWT');
 
+router.get('/csrftoken', (req, res) => {
+    res.json({ csrfToken: req.csrfToken() })
+})
+
 router.post('/login', loginController);
 
 router.post('/register', registerController);

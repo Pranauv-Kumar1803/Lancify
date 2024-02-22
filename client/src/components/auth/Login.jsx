@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { chakra, Box, FormControl, useToast, Input, Stack, HStack, FormErrorMessage, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
@@ -14,18 +14,31 @@ const Login = () => {
   const { loading } = useSelector((state) => state.user);
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const [details,setDetails] = useState({
-    email:'',
-    password:'',
+  const [details, setDetails] = useState({
+    email: '',
+    password: '',
   })
+  const [csrfToken, setcsrfToken] = useState("");
+
+  const gettoken = async () => {
+    try {
+      const res = await api.get("/auth/csrftoken", { withCredentials: true });
+      console.log(res.data.csrfToken);
+      setcsrfToken(res.data.csrfToken);
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   async function handleLogin(data) {
     try {
       dispatch(loginStart());
-      const res = await api.post('/auth/login', data);
+      const res = await api.post('/auth/login', { _csrf: csrfToken, data });
       // console.log(res.data);
 
       dispatch(loginSuccess(res.data));
-      (details.email == "naruto@gmail.com") ? nav('/admin/dashboard') : nav('/app/dashboard')
+      (data.email == "naruto@gmail.com") ? nav('/admin/dashboard') : nav('/app/dashboard')
 
       toast.success('Login Successful', {
         position: 'top-right'
@@ -44,6 +57,10 @@ const Login = () => {
     console.log(data)
     handleLogin(data);
   };
+
+  useEffect(() => {
+    gettoken();
+  }, []);
 
   return (
     <>
@@ -86,8 +103,8 @@ const Login = () => {
               <FormControl id="email" isInvalid={!!errors.email}>
                 <Text color='black.200' p={1}>Email</Text>
                 <Input
-                  onChange={(e)=>{
-                    setDetails({...details,email:e.target.value})
+                  onChange={(e) => {
+                    setDetails({ ...details, email: e.target.value })
                   }}
                   variant='filled'
                   {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
@@ -110,9 +127,9 @@ const Login = () => {
                 <Text color='black.200' p={1}>Password</Text>
                 <Input
                   type="password"
-                  onChange={(e)=>{
+                  onChange={(e) => {
                     console.log(e.target.value)
-                    setDetails({...details,password:e.target.value})
+                    setDetails({ ...details, password: e.target.value })
                   }}
                   variant='filled'
                   {...register('password', {
