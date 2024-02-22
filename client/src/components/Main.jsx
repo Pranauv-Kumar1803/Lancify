@@ -24,6 +24,7 @@ import BlogList from './blogs/BlogList';
 import BlogDetail from './blogs/BlogDetail';
 import { useSelector } from 'react-redux'
 import SellerDash from './seller-analytics/SellerDash';
+import AdminApproval from './admin-d/AdminApproval';
 const Main = () => {
     const { currentUser } = useSelector(store => store.user)
     console.log(currentUser)
@@ -53,6 +54,7 @@ const Main = () => {
 
             <Route path="/app" element={<Protected />}>
                 <Route path="dashboard" element={!!currentUser && currentUser.email === process.env.REACT_APP_ADMIN_EMAIL ? <AdDashBoard /> : <Dashboard />} />
+                <Route path="adApproval" element={!!currentUser && currentUser.email === process.env.REACT_APP_ADMIN_EMAIL ? <AdminApproval /> : <Dashboard />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="register" element={<RegisterSeller />} />
                 <Route path="create-gig" element={<RegisterGig />} />
