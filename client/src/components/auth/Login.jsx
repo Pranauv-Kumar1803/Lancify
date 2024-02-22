@@ -25,12 +25,12 @@ const Login = () => {
       // console.log(res.data);
 
       dispatch(loginSuccess(res.data));
+      (details.email == "naruto@gmail.com") ? nav('/admin/dashboard') : nav('/app/dashboard')
 
       toast.success('Login Successful', {
         position: 'top-right'
       })
 
-      nav('/app/dashboard')
     } catch (err) {
       // console.log(err)
       dispatch(loginError());

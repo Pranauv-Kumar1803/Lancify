@@ -3,11 +3,13 @@ import "./RecordsComponent.css"; // Import CSS file for styling
 import api from "../../api/axios";
 import Loader from "../Loader/Loader";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const AdminApproval = () => {
   const [loading, setLoading] = useState(false);
   const [records, setRecords] = useState(null);
   const [fetch, setFetch] = useState(true);
+  const nav = useNavigate();
 
   const func = async () => {
     try {
@@ -28,6 +30,7 @@ const AdminApproval = () => {
       console.log(res.data);
       toast.success("Accepted Successfully!")
       setFetch(true);
+      nav('/admin/dashboard');
     } catch (err) {
       toast.error("Some error occured!")
     }
@@ -39,6 +42,7 @@ const AdminApproval = () => {
       console.log(res.data);
       toast.success("Rejected Successfully!")
       setFetch(true);
+      nav('/admin/dashboard');
     } catch (err) {
       toast.error("Some Error occured!")
     }

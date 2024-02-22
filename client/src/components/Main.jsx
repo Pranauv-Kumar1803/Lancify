@@ -24,7 +24,9 @@ import BlogList from './blogs/BlogList';
 import BlogDetail from './blogs/BlogDetail';
 import { useSelector } from 'react-redux'
 import SellerDash from './seller-analytics/SellerDash';
+import UserDash from './User/UserDash';
 import AdminApproval from './admin-d/AdminApproval';
+
 const Main = () => {
     const { currentUser } = useSelector(store => store.user)
     console.log(currentUser)
@@ -53,14 +55,18 @@ const Main = () => {
             <Route path="/services/:service_id" element={<ServiceInfo />} />
 
             <Route path="/app" element={<Protected />}>
-                <Route path="dashboard" element={!!currentUser && currentUser.email === process.env.REACT_APP_ADMIN_EMAIL ? <AdDashBoard /> : <Dashboard />} />
-                <Route path="adApproval" element={!!currentUser && currentUser.email === process.env.REACT_APP_ADMIN_EMAIL ? <AdminApproval /> : <Dashboard />} />
+                <Route path="dashboard" element={<Dashboard />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="register" element={<RegisterSeller />} />
-                <Route path="create-gig" element={<RegisterGig />} />
-                <Route path="@dmin" element={<AdDashBoard />} />
-                <Route path="analytics" element={<SellerDash />} />
-                {/* <Route path="admin-dashboard" element={<AdDashBoard />} /> */}
+
+                {/* for sellers separately */}
+                <Route path="create-gig" element={currentUser && currentUser.user_type=='seller' && <RegisterGig />} />
+                <Route path="analytics" element={ currentUser && currentUser.user_type=='seller' ?  <SellerDash /> : <UserDash />} />
+            </Route>
+
+            <Route path='/admin' element={<Protected />}>
+                <Route path='dashboard' element={<AdDashBoard />} />
+                <Route path='toBeApproved' element={<AdminApproval />} />
             </Route>
 
             <Route path="*" element={<PageNotFound />} />

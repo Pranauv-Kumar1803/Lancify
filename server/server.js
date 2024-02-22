@@ -99,7 +99,7 @@ var upload = multer({
 // other methods
 
 //  the new post - create gig form.... its there in appRouter if you want more info... its the same - just copy pasted...
-app.post("/postGig", upload.single("image"), async (req, res) => {
+app.post("/postGig", upload.single("image"), verifyJWT, async (req, res) => {
   console.log(JSON.parse(req.body.data), typeof JSON.parse(req.body.data));
   console.log(req.file);
 
@@ -112,18 +112,8 @@ app.post("/postGig", upload.single("image"), async (req, res) => {
 
   console.log("in");
 
-  //   // {
-  //   title: 'gig1',
-  //   tier1Price: '1000',
-  //   tier1Services: 'servcies',
-  //   tier2Price: '2000',
-  //   tier2Services: 'serveirces',
-  //   tier3Price: '3000',
-  //   tier3Services: 'afsefsf'
-  // }
-
   const obj = JSON.parse(req.body.data);
-  const p = obj.sub.split("-")[1];
+  const p = obj['sub-category'].split("-")[1];
   let type = "";
   switch (p) {
     case "web_dev":
@@ -162,24 +152,24 @@ app.post("/postGig", upload.single("image"), async (req, res) => {
       break;
   }
 
-  const ser1 = obj.tier1services.split(",");
+  const ser1 = obj.tier1Services.split(",");
   const serv1 = ser1.map((s) => {
     return s.trim();
   });
 
-  const ser2 = obj.tier2services.split(",");
+  const ser2 = obj.tier2Services.split(",");
   const serv2 = ser2.map((s) => {
     return s.trim();
   });
 
-  const ser3 = obj.tier3services.split(",");
+  const ser3 = obj.tier3Services.split(",");
   const serv3 = ser3.map((s) => {
     return s.trim();
   });
 
   const o = {
-    domain_type: obj.sub.split("-")[0],
-    service_type: obj.sub.split("-")[1],
+    domain_type: obj['sub-category'].split("-")[0],
+    service_type: obj['sub-category'].split("-")[1],
     main_img: obj.main_img,
     seller_desc: obj.desc,
     seller_id: req._id,
@@ -187,25 +177,25 @@ app.post("/postGig", upload.single("image"), async (req, res) => {
     seller_title: obj.title,
     seller_img: user.user_img,
     seller_type: type,
-    min_duration: obj.delivery1,
-    starting_price: obj.price1,
+    min_duration: obj.tier1duration,
+    starting_price: obj.tier1Price,
     services: [
       {
         type: "tier-1",
-        starting_price: obj.price1,
-        min_duration: obj.delivery1,
+        starting_price: obj.tier1Price,
+        min_duration: obj.tier1duration,
         services: serv1,
       },
       {
         type: "tier 2",
-        starting_price: obj.price2,
-        min_duration: obj.delivery2,
+        starting_price: obj.tier2Price,
+        min_duration: obj.tier2duration,
         services: serv2,
       },
       {
         type: "tier 3",
-        starting_price: obj.price3,
-        min_duration: obj.delivery3,
+        starting_price: obj.tier3Price,
+        min_duration: obj.tier3duration,
         services: serv3,
       },
     ],

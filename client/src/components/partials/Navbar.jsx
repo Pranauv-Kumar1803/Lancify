@@ -125,26 +125,41 @@ function WithAction() {
                                         src={currentUser.user_img}
                                     />
                                 </MenuButton>
-                                <MenuList>
-                                    <MenuItem as={'a'} href='/app/dashboard'>
-                                        Dashboard
-                                    </MenuItem>
-                                    <MenuItem as={'a'} href='/app/profile'>
-                                        Profile
-                                    </MenuItem>
-                                    <MenuItem as={'a'} href='/app/analytics'>
-                                        {currentUser && currentUser.user_type == "seller" ? 'Seller Analytics' : 'User Analystics'}
-                                    </MenuItem>
-                                    {currentUser && currentUser.user_type == "seller" &&
-                                        <MenuItem as={'a'} href='/app/create-gig'>
-                                            Post Gig
+                                {currentUser && currentUser.email == "naruto@gmail.com" ?
+                                    <MenuList>
+                                        <MenuItem as={'a'} href='/admin/dashboard'>
+                                            Dashboard
                                         </MenuItem>
-                                    }
-                                    <MenuDivider />
-                                    <MenuItem onClick={handleLogout}>
-                                        Logout
-                                    </MenuItem>
-                                </MenuList>
+                                        <MenuItem as={'a'} href='/admin/toBeApproved'>
+                                            Services To Be Approved
+                                        </MenuItem>
+                                        <MenuDivider />
+                                        <MenuItem onClick={handleLogout}>
+                                            Logout
+                                        </MenuItem>
+                                    </MenuList>
+                                    :
+                                    <MenuList>
+                                        <MenuItem as={'a'} href='/app/dashboard'>
+                                            Dashboard
+                                        </MenuItem>
+                                        <MenuItem as={'a'} href='/app/profile'>
+                                            Profile
+                                        </MenuItem>
+                                        <MenuItem as={'a'} href='/app/analytics'>
+                                            {currentUser && currentUser.user_type == "seller" ? 'Seller Analytics' : 'User Analystics'}
+                                        </MenuItem>
+                                        {currentUser && currentUser.user_type == "seller" &&
+                                            <MenuItem as={'a'} href='/app/create-gig'>
+                                                Post Gig
+                                            </MenuItem>
+                                        }
+                                        <MenuDivider />
+                                        <MenuItem onClick={handleLogout}>
+                                            Logout
+                                        </MenuItem>
+                                    </MenuList>
+                                }
                             </Menu>
                         }
                     </Flex>
