@@ -5,8 +5,10 @@ import Loader from '../Loader/Loader'
 import UserAnalytics from "./userAnalytics"
 import OrderAnalytics from "./orderAnalytics"
 import ServicePriceScatter from './ServicePriceScatter'
+import TransactionsList from "./TransactionsList"
 import UsersPaginated from "./UsersPaginated"
 import OrdersDetails from "./OrdersDetails"
+import OrdersList from './OrdersList'
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -41,7 +43,7 @@ const AdDashBoard = () => {
                setData(e.data)
                setLoading(false)
           }).catch(e => console.log(e));
-          setData(netReq);
+          // setData(netReq);
      }, [])
      return (<>
           {loading ? <Loader /> :
@@ -60,7 +62,13 @@ const AdDashBoard = () => {
                     }} >
                          <UsersPaginated dataList={sellers} type={"seller"} />
                          <UsersPaginated dataList={users} type={"user"} />
-                         <OrdersDetails dataList={orders} />
+                         <TransactionsList />
+                    </HStack>
+                    <HStack mb='6' justifyContent='space-around' flexDir={{
+                         base: 'column',
+                         lg: 'row'
+                    }} >
+                         <OrdersList />
                     </HStack>
                </>
 

@@ -24,6 +24,7 @@ import Loader from '../Loader/Loader';
 
 export default function CardPricing({ data }) {
      const services = data.services;
+     console.log(data)
      const [tier0, tier1, tier2] = services;
      const { currentUser } = useSelector(state => state.user);
      const [disable, setDisable] = useState(false);
@@ -39,7 +40,7 @@ export default function CardPricing({ data }) {
           else if (currentUser && currentUser.user_type == 'seller' && currentUser.user_id == data.seller_id) {
                setDisable(true);
           }
-          else if(currentUser && currentUser.user_type == 'seller') {
+          else if (currentUser && currentUser.user_type == 'seller') {
                setDisable(true);
           }
      }, [])

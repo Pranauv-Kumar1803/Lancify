@@ -11,7 +11,7 @@ const verifyJWT = (req, res, next) => {
     if(!tokenAdmin) flag2 = 1;
     
     if(flag1 && flag2) return res.status(401).json({message: "unauthorised! login again!"}); // no token
-
+    
     if(!flag1)
     {
         jwt.verify(
