@@ -237,6 +237,11 @@ app.get("/profile/:id", async (req, res) => {
   res.render("pages/profile", { login: false, user, seller, services });
 });
 
+app.use((err, req, res, next)=>{
+  console.log(err.message);
+  res.status(500).send('Error here!');
+})
+
 mongoose.connect(
   "mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/Lancify?retryWrites=true&w=majority",
   () => {

@@ -56,7 +56,8 @@ router.get("/getProfileData", async (req, res) => {
 
   if (req.query.type === "seller") {
     console.log(req._id);
-    const gigs = await Service.find({ seller_id: req._id });
+    const approvedGigs = await Service.find({ seller_id: req._id,  isAdminApproved: true  });
+    const unApprovedGigs = await Service.find({ seller_id: req._id, isAdminApproved: false });
     const seller = await Seller.findOne({ seller_id: req._id });
     const seller_orders = await Order.find({
       seller_id: req._id,
@@ -71,7 +72,7 @@ router.get("/getProfileData", async (req, res) => {
     return res.json({
       user,
       seller,
-      gigs,
+      gigs: {approvedGigs, unApprovedGigs},
       orders: seller_orders,
       ongoing,
     });

@@ -8,17 +8,19 @@ const getServices = async (req, res) => {
   try {
     let services;
     if (JSON.stringify(q) === "{}") {
-      const data = await Service.find().exec();
+      const data = await Service.find({isAdminApproved: true}).exec();
       return res.status(200).json({ data: data });
     } else {
       if (q.hours) {
         services = await Service.find({
+          isAdminApproved: true,
           min_duration: { $lte: q.hours },
           starting_price: { $gte: q.min, $lte: q.max },
         }).exec();
         console.log(services);
       } else {
         services = await Service.find({
+          isAdminApproved: true,
           starting_price: { $gte: q.min, $lte: q.max },
         }).exec();
         console.log(services);
@@ -49,12 +51,13 @@ const getServicesOfDomain = async (req, res) => {
           return res.status(400).json({ message: "no domain selected!" });
         }
 
-        const services = await Service.find({ domain_type: domain }).exec();
+        const services = await Service.find({ isAdminApproved: true ,domain_type: domain }).exec();
         return res.status(200).json({ data: services });
       }
 
       if (q.hours) {
         services = await Service.find({
+          isAdminApproved: true,
           domain_type: domain,
           min_duration: { $lte: q.hours },
           starting_price: { $gte: q.min, $lte: q.max },
@@ -62,6 +65,7 @@ const getServicesOfDomain = async (req, res) => {
         console.log(services);
       } else {
         services = await Service.find({
+          isAdminApproved: true,
           domain_type: domain,
           starting_price: { $gte: q.min, $lte: q.max },
         }).exec();
@@ -77,6 +81,7 @@ const getServicesOfDomain = async (req, res) => {
       }
 
       const services = await Service.find({
+        isAdminApproved: true,
         service_type: service,
         domain_type: domain,
       }).exec();
@@ -87,6 +92,7 @@ const getServicesOfDomain = async (req, res) => {
     services = [];
     if (q.hours) {
       services = await Service.find({
+        isAdminApproved: true,
         service_type: service,
         domain_type: domain,
         min_duration: { $lte: q.hours },
@@ -95,6 +101,7 @@ const getServicesOfDomain = async (req, res) => {
       console.log(services);
     } else {
       services = await Service.find({
+        isAdminApproved: true,
         service_type: service,
         domain_type: domain,
         starting_price: { $gte: q.min, $lte: q.max },

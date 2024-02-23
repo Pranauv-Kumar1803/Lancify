@@ -224,7 +224,8 @@ const FinishedOrders = () => {
               >
                 {data &&
                   data.gigs &&
-                  data.gigs.approvedGigs && 
+                  data.gigs.approvedGigs &&
+                  data.gigs.approvedGigs.length > 0 ? 
                   data.gigs.approvedGigs.map((order) => (
                     <Box
                       key={order.id}
@@ -264,7 +265,7 @@ const FinishedOrders = () => {
                         </Button>
                       </Link>
                     </Box>
-                  ))}
+                  )):<h1>No Such Services Found!</h1>}
               </Flex>
               <Text fontSize="3xl" fontWeight="bold" mb={6}>
                 Your Unapproved Services
@@ -278,6 +279,7 @@ const FinishedOrders = () => {
                 {data &&
                   data.gigs &&
                   data.gigs.unApprovedGigs && 
+                  data.gigs.unApprovedGigs.length > 0 ?
                   data.gigs.unApprovedGigs.map((order) => (
                     <Box
                       key={order.id}
@@ -317,7 +319,7 @@ const FinishedOrders = () => {
                         </Button>
                       </Link>
                     </Box>
-                  ))}
+                  )):<h1>No Such Services Found!</h1>}
               </Flex>
             </>
           )}
