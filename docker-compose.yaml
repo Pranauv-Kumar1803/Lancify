@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  client:
+    build: ./client
+    ports:
+      - '3000:3000'
+    volumes:
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    depends_on:
+      - server
+
+  server:
+    build: ./server
+    ports:
+      - '5500:5500'
+    restart: 'unless-stopped'
+    links:
+      - redis
+    volumes:
+      - /app/node_modules
+
+  redis:
+    image: redis:7.2
+    restart: unless-stopped
+    expose:
+      - 6379

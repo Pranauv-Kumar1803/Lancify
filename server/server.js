@@ -29,7 +29,11 @@ const forumRouter = require("./routes/forumRouter");
 const orderRouter = require("./routes/orderRouter");
 const serviceRouter = require("./routes/serviceRouter");
 const adminRouter = require("./routes/adminRouter");
-const csrf = require("csurf");
+const csrf = require('csurf');
+
+// import redis connection file
+const { connectRedis, client } = require("./helpers/redis");
+
 
 const app = express();
 const logDirectory = path.join(__dirname, "logs");
@@ -56,7 +60,7 @@ app.use(
 );
 
 const crsfProtection = csrf({
-  cookie: true,
+  cookie: true
 });
 
 // routes
@@ -236,6 +240,11 @@ app.get("/profile/:id", async (req, res) => {
   }
   res.render("pages/profile", { login: false, user, seller, services });
 });
+
+app.use((err, req, res, next) => {
+  console.log(err.message);
+  res.status(500).send('Error here!');
+})
 
 mongoose.connect(
   "mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/Lancify?retryWrites=true&w=majority",

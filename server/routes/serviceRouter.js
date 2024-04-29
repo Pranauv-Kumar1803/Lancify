@@ -1,6 +1,7 @@
 const express = require("express");
 const Service = require("../models/Service");
 const router = express.Router();
+const client = require("../helpers/redis");
 
 router.get('/toBeApproved', async (req, res) => {
   try {
@@ -43,8 +44,22 @@ router.post('/reject/:id', async (req, res) => {
 router.get("/:serviceId", async (req, res) => {
   const serviceId = req.params.serviceId;
   try {
-    const service = await Service.findOne({ _id: serviceId, isAdminApproved: true }).populate("seller_id");
-    res.status(200).json(service);
+    client.get(serviceId, async (err, cache_data) => {
+      console.log(err); 
+      if (cache_data) {
+        return res.status(200).json({
+          message: `Retrieved ${serviceId}'s data from the cache`,
+          service: JSON.parse(cache_data)
+        })
+      } else {
+        const service = await Service.findOne({ _id: serviceId, isAdminApproved: true }).populate("seller_id");
+        client.setEx(serviceId, 1440, JSON.stringify(service))
+        return res.status(200).json({
+          message: `Retrieved ${serviceId}'s data from the server`,
+          service
+        })
+      }
+    })
   } catch (error) {
     res.status(404).json({
       message: "error",
