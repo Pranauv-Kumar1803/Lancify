@@ -29,7 +29,7 @@ const forumRouter = require("./routes/forumRouter");
 const orderRouter = require("./routes/orderRouter");
 const serviceRouter = require("./routes/serviceRouter");
 const adminRouter = require("./routes/adminRouter");
-const csrf=require('csurf');
+const csrf = require("csurf");
 
 const app = express();
 const logDirectory = path.join(__dirname, "logs");
@@ -55,8 +55,8 @@ app.use(
   })
 );
 
-const crsfProtection=csrf({
-    cookie: true
+const crsfProtection = csrf({
+  cookie: true,
 });
 
 // routes
@@ -118,7 +118,7 @@ app.post("/postGig", upload.single("image"), verifyJWT, async (req, res) => {
   console.log("in");
 
   const obj = JSON.parse(req.body.data);
-  const p = obj['sub-category'].split("-")[1];
+  const p = obj["sub-category"].split("-")[1];
   let type = "";
   switch (p) {
     case "web_dev":
@@ -173,8 +173,8 @@ app.post("/postGig", upload.single("image"), verifyJWT, async (req, res) => {
   });
 
   const o = {
-    domain_type: obj['sub-category'].split("-")[0],
-    service_type: obj['sub-category'].split("-")[1],
+    domain_type: obj["sub-category"].split("-")[0],
+    service_type: obj["sub-category"].split("-")[1],
     main_img: obj.main_img,
     seller_desc: obj.desc,
     seller_id: req._id,
