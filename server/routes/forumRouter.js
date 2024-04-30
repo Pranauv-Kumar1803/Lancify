@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /:
+ * /forum:
  *   get:
  *     summary: Get all discussions
  *     description: Retrieves all discussions along with user information sorted by time.

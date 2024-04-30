@@ -21,7 +21,7 @@ const verifyAdmin = async (req, res, next) => {
 
 /**
  * @swagger
- * /analytics:
+ * /admin/analytics:
  *   get:
  *     summary: Retrieve analytics data
  *     description: Retrieves analytics data including sellers, services, users, orders, ratings, and average seller rating.
@@ -77,7 +77,7 @@ const verifyAdmin = async (req, res, next) => {
 
 /**
  * @swagger
- * /approve-services:
+ * /admin/approve-services:
  *   post:
  *     summary: Approve services
  *     description: Approves services by updating the `isAdminApproved` field to true.
@@ -132,7 +132,7 @@ const verifyAdmin = async (req, res, next) => {
 
 /**
  * @swagger
- * /services-to:
+ * /admin/services-to:
  *   get:
  *     summary: Get services to be approved
  *     description: Retrieves services that are pending approval by the admin.
@@ -172,7 +172,7 @@ const verifyAdmin = async (req, res, next) => {
 
 /**
  * @swagger
- * /services-to-be-approved:
+ * /admin/services-to-be-approved:
  *   get:
  *     summary: Get services to be approved
  *     description: Retrieves services that are pending approval by the admin.

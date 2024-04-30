@@ -4,7 +4,7 @@ const { getServicesOfDomain, getServices } = require('../controllers/domainContr
 
 /**
  * @swagger
- * /service:
+ * /domains:
  *   get:
  *     summary: Get services
  *     description: |

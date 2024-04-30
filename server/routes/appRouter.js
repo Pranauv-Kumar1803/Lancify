@@ -19,11 +19,9 @@ router.post("/discussions", async (req, res) => {
   return res.status(500);
 });
 
-
-
 /**
  * @swagger
- * /create-checkout-session:
+ * /app/create-checkout-session:
  *   post:
  *     summary: Create a checkout session
  *     description: |
@@ -79,6 +77,73 @@ router.post("/discussions", async (req, res) => {
 router.post("/create-checkout-session", checkoutsession);
 
 router.post("/payment-success", paymentSuccess);
+
+/**
+ * @swagger
+ * /app/sellerAnalytics:
+ *   get:
+ *     summary: Get seller analytics
+ *     description: Retrieve analytics data for a seller, including revenue, orders, and average completion time for services.
+ *     tags:
+ *       - Seller
+ *     responses:
+ *       '200':
+ *         description: Seller analytics data retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *                 servicesLiked:
+ *                   type: array
+ *                   description: List of services liked by users
+ *                   items:
+ *                     $ref: '#/components/schemas/Service'
+ *                 avgObj:
+ *                   type: object
+ *                   description: Average completion time for each service
+ *                   example: {"service1": [3, 4.5], "service2": [5, 6.8]}
+ *                 newOrders:
+ *                   type: integer
+ *                   description: Number of new orders received this month
+ *                 pending:
+ *                   type: integer
+ *                   description: Number of pending orders
+ *                 completed:
+ *                   type: integer
+ *                   description: Number of completed orders
+ *                 this_month_total:
+ *                   type: number
+ *                   description: Total earnings for the current month
+ *                 seller_total:
+ *                   type: number
+ *                   description: Total earnings for the seller
+ *                 revenueByMonths:
+ *                   type: object
+ *                   description: Revenue earned by the seller for each month
+ *                   example: {"2024-01": 1000, "2024-02": 1500}
+ *                 revenueByServices:
+ *                   type: object
+ *                   description: Revenue earned by the seller for each service type
+ *                   example: {"service1": 2000, "service2": 3000}
+ *                 orders_by_service:
+ *                   type: object
+ *                   description: Number of orders received for each service type
+ *                   example: {"service1": 5, "service2": 3}
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   description: Error message
+ */
 
 router.get('/seller-analytics', sellerAnalytics);
 

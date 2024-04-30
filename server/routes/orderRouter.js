@@ -4,7 +4,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /getorder:
+ * /order/getorder:
  *   get:
  *     summary: Get order by ID
  *     description: Retrieves an order by its ID along with related service and payment information.
@@ -58,7 +58,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /seller/orders/{id}/cancel:
+ * /order/seller/orders/{id}/cancel:
  *   put:
  *     summary: Cancel and close an order by seller
  *     description: Cancel and close an order by seller and update relevant data such as pending status, timeline, and seller balance.
@@ -106,7 +106,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /acceptOrder/{id}/close:
+ * /order/acceptOrder/{id}/close:
  *   put:
  *     summary: Accept and close an order
  *     description: Accept and close an order by the user and update relevant data such as pending status, timeline, seller's completed and ongoing orders, and service's number of customers and reviews.
@@ -154,7 +154,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /acceptOrder/{id}/close:
+ * /order/acceptOrder/{id}/close:
  *   put:
  *     summary: Accept and close an order
  *     description: Accept and close an order by the user and update relevant data such as pending status, timeline, seller's completed and ongoing orders, and service's number of customers and reviews.

@@ -5,7 +5,7 @@ const router = express.Router();
  
 /**
  * @swagger
- * /toBeApproved:
+ * /services/toBeApproved:
  *   get:
  *     summary: Get services to be approved
  *     description: Retrieves services that are pending approval by the admin.
@@ -34,9 +34,7 @@ const router = express.Router();
  *                   type: string
  *                   description: Error message
  */
-
-
-
+  
 router.get('/toBeApproved', async (req, res) => {
   try {
     console.log('inside');
