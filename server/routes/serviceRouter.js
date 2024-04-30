@@ -2,6 +2,41 @@ const express = require("express");
 const Service = require("../models/Service");
 const router = express.Router();
 
+ 
+/**
+ * @swagger
+ * /toBeApproved:
+ *   get:
+ *     summary: Get services to be approved
+ *     description: Retrieves services that are pending approval by the admin.
+ *     tags:
+ *       - Services
+ *     responses:
+ *       '200':
+ *         description: Successful response with services data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ */
+
+
+
 router.get('/toBeApproved', async (req, res) => {
   try {
     console.log('inside');

@@ -19,6 +19,63 @@ router.post("/discussions", async (req, res) => {
   return res.status(500);
 });
 
+
+
+/**
+ * @swagger
+ * /create-checkout-session:
+ *   post:
+ *     summary: Create a checkout session
+ *     description: |
+ *       Creates a checkout session for making a payment.
+ *     tags:
+ *       - Checkout
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               service:
+ *                 type: object
+ *                 properties:
+ *                   seller_id:
+ *                     type: string
+ *               items:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     unit_price:
+ *                       type: number
+ *             required:
+ *               - service
+ *               - items
+ *     responses:
+ *       '200':
+ *         description: Successful response with checkout session URL
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 url:
+ *                   type: string
+ *                   description: URL for the checkout session
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message
+ */
+
+
 router.post("/create-checkout-session", checkoutsession);
 
 router.post("/payment-success", paymentSuccess);
