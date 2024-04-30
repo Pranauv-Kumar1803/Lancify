@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const ejs = require("ejs");
 const rfs = require("rotating-file-stream");
 const fs = require("fs");
@@ -9,12 +10,8 @@ const morgan = require("morgan");
 const crypto = require("crypto");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
 const verifyJWT = require("./middleware/verifyJWT");
-mongoose.set("strictQuery", true);
 const multer = require("multer");
-
-mongoose.set("strictQuery", true);
 const Seller = require("./models/Seller");
 const User = require("./models/User");
 const Service = require("./models/Service");
@@ -29,11 +26,10 @@ const forumRouter = require("./routes/forumRouter");
 const orderRouter = require("./routes/orderRouter");
 const serviceRouter = require("./routes/serviceRouter");
 const adminRouter = require("./routes/adminRouter");
-const csrf = require('csurf');
+const csrf = require("csurf");
 
 // import redis connection file
 const { connectRedis, client } = require("./helpers/redis");
-
 
 const app = express();
 const logDirectory = path.join(__dirname, "logs");
@@ -60,12 +56,12 @@ app.use(
 );
 
 const crsfProtection = csrf({
-  cookie: true
+  cookie: true,
 });
 
 // routes
 app.use("/domains", domainRouter);
-app.use("/auth", crsfProtection, authRouter);
+app.use("/auth", authRouter);
 app.use("/forum", forumRouter);
 app.use("/services", serviceRouter);
 app.use("/order", verifyJWT, orderRouter);
@@ -243,14 +239,17 @@ app.get("/profile/:id", async (req, res) => {
 
 app.use((err, req, res, next) => {
   console.log(err.message);
-  res.status(500).send('Error here!');
-})
+  res.status(500).send("Error here!");
+});
 
-mongoose.connect(
-  "mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/Lancify?retryWrites=true&w=majority",
-  () => {
-    app.listen(5500, () => {
-      console.log("connected to mongodb and server started in port 5500");
-    });
-  }
-);
+// comment this once testing is done
+// mongoose.connect(
+//   "mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/Lancify?retryWrites=true&w=majority",
+//   () => {
+//     app.listen(5500, () => {
+//       console.log("connected to mongodb and server started in port 5500");
+//     });
+//   }
+// );
+
+module.exports = app;
