@@ -17,13 +17,16 @@ services:
     ports:
       - '5500:5500'
     restart: 'unless-stopped'
+    depends_on:
+      - redis
     links:
       - redis
     volumes:
       - /app/node_modules
+      - /server/helpers/redis.js:/app/helper/redis
 
   redis:
-    image: redis:7.2
+    image: redis:latest
     restart: unless-stopped
-    expose:
-      - 6379
+    ports:
+      - '6379:6379'

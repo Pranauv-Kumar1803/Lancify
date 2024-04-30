@@ -28,11 +28,10 @@ const serviceRouter = require("./routes/serviceRouter");
 const adminRouter = require("./routes/adminRouter");
 const csrf = require("csurf");
 
-// import redis connection file
-const { connectRedis, client } = require("./helpers/redis");
-
 const app = express();
 const logDirectory = path.join(__dirname, "logs");
+
+const { connectRedis, client } = require("./helpers/redis");
 
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 const accessLogStream = rfs.createStream("appLogs.log", {
