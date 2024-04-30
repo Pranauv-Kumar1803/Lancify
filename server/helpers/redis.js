@@ -1,9 +1,12 @@
-const redis = require('redis');
+const Redis = require('ioredis');
 
-const redisClient = redis.createClient(6379);
+const redisClient = new Redis({
+  host: 'lancify-redis-1',
+  port: 6379
+});
 
 redisClient.on('connect', () => {
-  console.log('Connected to Redis server');
+  console.log('Redis connected successfully!');
 });
 
 redisClient.on('error', (err) => {

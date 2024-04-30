@@ -45,7 +45,7 @@ router.get("/:serviceId", async (req, res) => {
   const serviceId = req.params.serviceId;
   try {
     client.get(serviceId, async (err, cache_data) => {
-      console.log(err); 
+      if(err) console.log(err); 
       if (cache_data) {
         return res.status(200).json({
           message: `Retrieved ${serviceId}'s data from the cache`,
@@ -53,7 +53,7 @@ router.get("/:serviceId", async (req, res) => {
         })
       } else {
         const service = await Service.findOne({ _id: serviceId, isAdminApproved: true }).populate("seller_id");
-        client.setEx(serviceId, 1440, JSON.stringify(service))
+        client.set(serviceId, JSON.stringify(service), "EX", 1000)
         return res.status(200).json({
           message: `Retrieved ${serviceId}'s data from the server`,
           service
