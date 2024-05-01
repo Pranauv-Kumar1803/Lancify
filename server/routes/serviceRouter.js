@@ -42,6 +42,7 @@ router.post('/reject/:id', async (req, res) => {
 })
 
 router.get("/:serviceId", async (req, res) => {
+  // redis
   const serviceId = req.params.serviceId;
   try {
     client.get(serviceId, async (err, cache_data) => {

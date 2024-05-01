@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const Seller = require("../models/Seller");
 const Order = require("../models/Order");
 const Service = require("../models/Service");
+const client = require("../helpers/redis");
 
 const loginController = async (req, res) => {
   console.log(req.body);
@@ -101,9 +102,20 @@ const checkUser = async (req, res) => {
   if (!req._id) return res.status(401).json({ message: "Unauthorized!" });
 
   try {
-    const data = await User.findOne({ user_id: req._id }, { password: 0 });
+    // redis
+    client.get(req._id, async (err, ca_data) => {
+      if (err) return res.status(500);
 
-    return res.status(200).json({ data, type: req.type });
+      if (ca_data) {
+        return res.status(200).json(JSON.parse(ca_data));
+      } else {
+        const data = await User.findOne({ user_id: req._id }, { password: 0 });
+
+        client.set(req._id, JSON.stringify({data, type: req.type}), "EX", 1000);
+
+        return res.status(200).json({ data, type: req.type });
+      }
+    })
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

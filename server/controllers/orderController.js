@@ -4,28 +4,69 @@ const Seller = require('../models/Seller');
 const User = require('../models/User');
 const Service = require('../models/Service');
 const Payment = require('../models/Payment');
+const client = require('../helpers/redis');
 
 const getOrder = async (req, res) => {
-    const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
-    const user = await User.findOne({ user_id: req._id });
+    try {
+        // redis
+        client.get(req.params.id, async (err, cache_data) => {
+            if (err) console.log(err);
+            if (cache_data) {
+                const user = await User.findOne({ user_id: req._id });
 
-    console.log()
+                const data = JSON.parse(cache_data);
 
-    if (!order) {
-        return res.status(404).json({ message: "order not found" });
-    }
+                if(user.user_type == "seller") {
+                    return res.status(200).json({
+                        message: `Retrieved ${req.params.id}'s data from the cache`,
+                        ...data["seller"]
+                    })
+                } else {
+                    return res.status(200).json({
+                        message: `Retrieved ${req.params.id}'s data from the cache`,
+                        ...data["user"]
+                    })
+                }
+            } else {
+                const order = await Order.findById(req.params.id).populate("service_id").populate('payment');
+                const user = await User.findOne({ user_id: req._id });
 
-    if (user.user_type === "seller") {
-        console.log("in");
-        return res.status(200).json({
-            order,
-            pending: order.pending,
-        });
-    } else {
-        return res.status(200).json({
-            order,
-            pending: order.pending,
-            rated: order.rating,
+                if (!order) {
+                    return res.status(404).json({ message: "order not found" });
+                }
+
+                const obj = {
+                    "user": {
+                        order,
+                        pending: order.pending,
+                        rated: order.rating,
+                    },
+                    "seller": {
+                        order,
+                        pending: order.pending,
+                    }
+                }
+
+                client.set(req.params.id, JSON.stringify(obj), "EX", 1000);
+
+                if (user.user_type === "seller") {
+                    console.log("in");
+                    return res.status(200).json({
+                        order,
+                        pending: order.pending,
+                    });
+                } else {
+                    return res.status(200).json({
+                        order,
+                        pending: order.pending,
+                        rated: order.rating,
+                    });
+                }
+            }
+        })
+    } catch (error) {
+        res.status(404).json({
+            message: "error",
         });
     }
 }
@@ -85,9 +126,8 @@ const addToOrderTimeline = async (req, res) => {
         const d = new Date();
         console.log("in");
 
-        if(one_time)
-        {
-            order.timeline[order.timeline.length-1].one_time = false;
+        if (one_time) {
+            order.timeline[order.timeline.length - 1].one_time = false;
         }
 
         if (files && files.length > 0) {
