@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("./server");
+const app = require('./test_server');
 
 describe("POST /auth/login", () => {
   describe("given mail & password", () => {
