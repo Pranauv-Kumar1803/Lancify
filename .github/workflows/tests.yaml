@@ -18,13 +18,17 @@ jobs:
         with:
           node-version: 18.12.1
 
-      - name: Install Dependencies
+      - name: Install Dependencies on Server
         run: npm install
         working-directory: server
       
       - name: Run Tests
-        run: npm test
+        run: npx jest
         working-directory: server
+
+      - name: Install Dependencies on Client
+        run: npm install
+        working-directory: client
       
       - name: Build Client
         run: npm run build
