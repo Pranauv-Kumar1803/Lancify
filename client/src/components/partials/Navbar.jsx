@@ -49,7 +49,7 @@ function WithAction() {
     const dispatch = useDispatch();
     const nav = useNavigate();
 
-    let Links = currentUser?.isLoggedin ? [{ name: 'Discover Projects', link: 'explore' }, { name: 'Explore the Community', link: '/blogs' }] : [{ name: 'Discover Projects', link: 'explore' }, { name: 'Explore the Community', link: '/blogs' }, { name: 'Register as a User', link: '/auth/signup' }]
+    let Links = currentUser ? [{ name: 'Discover Projects', link: 'explore' }, { name: 'Explore the Community', link: '/blogs' }] : [{ name: 'Discover Projects', link: 'explore' }, { name: 'Explore the Community', link: '/blogs' }, { name: 'Register as a User', link: '/auth/signup' }]
 
     useEffect(() => {
         ;

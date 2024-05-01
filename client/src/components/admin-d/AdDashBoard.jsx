@@ -5,7 +5,7 @@ import Loader from '../Loader/Loader'
 import UserAnalytics from "./userAnalytics"
 import OrderAnalytics from "./orderAnalytics"
 import ServicePriceScatter from './ServicePriceScatter'
-import TransactionsList from "./transactionsList"
+import TransactionsList from "./TransactionsList"
 import UsersPaginated from "./UsersPaginated"
 import OrdersDetails from "./OrdersDetails"
 import OrdersList from './OrdersList'

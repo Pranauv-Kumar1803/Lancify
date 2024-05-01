@@ -5,6 +5,8 @@ import {
   FormControl,
   FormLabel,
   Input,
+  InputGroup,
+  InputLeftElement,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -25,6 +27,7 @@ import { toast } from "react-toastify";
 import api from "../../api/axios";
 import Card from "../Reusable/ReCard";
 import Loader from "../Loader/Loader";
+import { Search2Icon } from "@chakra-ui/icons";
 
 function Domains() {
   const params = useParams();
@@ -34,6 +37,7 @@ function Domains() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [filter, setFilter] = useState({ min: 0, max: 0, time: null });
   const [isFilter, setIsFilter] = useState(false);
+  const [search, setSearch] = useState('');
 
   const getServices = async (params) => {
     try {
@@ -168,6 +172,14 @@ function Domains() {
       background={"#F5F7F8"}
     >
       <Center p={5}>
+        <InputGroup>
+          <InputLeftElement pointerEvents='none'>
+            <Search2Icon color='gray.300' />
+          </InputLeftElement>
+          <Input type='text' placeholder='Search for Services!' value={search} onChange={(e)=>{setSearch(e.target.value)}} />
+        </InputGroup>
+      </Center>
+      <Center p={5}>
         <Button onClick={onOpen}>Apply Filters</Button>
         <Button
           onClick={(e) => {
@@ -243,26 +255,50 @@ function Domains() {
           <Loader />
         ) : (
           <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} padding={10} >
-            {data && data.length >= 1 ? (
+
+            {search != '' ? (data && data.length >= 1 && 
               data.map((d, i) => {
-                return (
-                  <Link to={`/services/${d._id}`}>
-                    <Card
-                      key={i}
-                      price={d.starting_price}
-                      body={d.seller_desc}
-                      title={d.seller_title}
-                      name={d.seller_name}
-                      img={d.main_img}
-                      min_dur={d.min_duration}
-                      seller_img={d.seller_img}
-                    />
-                  </Link>
-                );
-              })
-            ) : (
-              <h1>No Services with the filter!</h1>
-            )}
+                if(d.seller_title.toLowerCase().includes(search)) {
+                  return (
+                    <Link to={`/services/${d._id}`}>
+                      <Card
+                        key={i}
+                        price={d.starting_price}
+                        body={d.seller_desc}
+                        title={d.seller_title}
+                        name={d.seller_name}
+                        img={d.main_img}
+                        min_dur={d.min_duration}
+                        seller_img={d.seller_img}
+                      />
+                    </Link>
+                  );
+                }
+              }))
+              :
+              (
+                data && data.length >= 1 ? (
+                  data.map((d, i) => {
+                    return (
+                      <Link to={`/services/${d._id}`}>
+                        <Card
+                          key={i}
+                          price={d.starting_price}
+                          body={d.seller_desc}
+                          title={d.seller_title}
+                          name={d.seller_name}
+                          img={d.main_img}
+                          min_dur={d.min_duration}
+                          seller_img={d.seller_img}
+                        />
+                      </Link>
+                    );
+                  })
+                ) :  (
+                  <h1>No Services with the filter!</h1>
+                )
+              )
+            }
           </SimpleGrid>
         )}
       </Center>

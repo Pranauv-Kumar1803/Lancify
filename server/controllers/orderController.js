@@ -9,7 +9,9 @@ const client = require('../helpers/redis');
 const getOrder = async (req, res) => {
     try {
         // redis
+        console.log('inside this')
         client.get(req.params.id, async (err, cache_data) => {
+            console.log('inside here!', req.params.id)
             if (err) console.log(err);
             if (cache_data) {
                 const user = await User.findOne({ user_id: req._id });

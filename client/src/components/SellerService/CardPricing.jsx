@@ -23,14 +23,18 @@ import Loader from '../Loader/Loader';
 
 
 export default function CardPricing({ data }) {
-     const services = data.services;
      console.log(data)
+     let services = data.services;
      const [tier0, tier1, tier2] = services;
      const { currentUser } = useSelector(state => state.user);
      const [disable, setDisable] = useState(false);
      const [loading, setLoading] = useState(false);
      const param = useParams();
      const nav = useNavigate();
+
+     useEffect(()=>{
+          services = data.services;
+     },[data])
 
      useEffect(() => {
           console.log(data);
@@ -94,6 +98,7 @@ export default function CardPricing({ data }) {
           }
      }
 
+    console.log('rr') 
      return (
           <Box py={12}>
                <VStack spacing={2} textAlign="center">
