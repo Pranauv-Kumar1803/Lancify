@@ -12,6 +12,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const verifyJWT = require("./middleware/verifyJWT");
 const multer = require("multer");
+const swaggerjsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express")
+
+mongoose.set("strictQuery", true);
 const Seller = require("./models/Seller");
 const User = require("./models/User");
 const Service = require("./models/Service");
@@ -54,8 +58,27 @@ app.use(
   })
 );
 
-const crsfProtection = csrf({
-  cookie: true,
+const options = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Lancify API Documentation',
+      version: '1.0.0',
+      description: 'API documentation for Lancify application.',
+    },
+    servers: [
+      {
+        url: `http://localhost:5500/`,
+        description: 'Local server',
+      },
+    ]
+  },
+  apis: ['./routes/*.js'],
+  
+};
+
+const crsfProtection=csrf({
+    cookie: true
 });
 
 // routes
@@ -65,6 +88,9 @@ app.use("/forum", forumRouter);
 app.use("/services", serviceRouter);
 app.use("/order", verifyJWT, orderRouter);
 app.use("/admin", verifyJWT, adminRouter);
+
+const specs = swaggerjsdoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // protected routes
 app.use("/app", verifyJWT, appRouter);
