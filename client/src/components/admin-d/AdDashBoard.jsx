@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Heading } from '@chakra-ui/react'
 import { HStack, Box } from '@chakra-ui/react'
-import Loader from '../Loader/Loader'
+import Loader from '../Loader'
 import UserAnalytics from "./userAnalytics"
 import OrderAnalytics from "./orderAnalytics"
 import ServicePriceScatter from './ServicePriceScatter'

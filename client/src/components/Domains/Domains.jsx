@@ -26,7 +26,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../api/axios";
 import Card from "../Reusable/ReCard";
-import Loader from "../Loader/Loader";
+import Loader from "../Loader";
 import { Search2Icon } from "@chakra-ui/icons";
 
 function Domains() {

@@ -3,7 +3,7 @@ import Timeline from '../Reusable/Timeline'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Divider, Flex, FormControl, FormLabel, Heading, Image, Input, Radio, RadioGroup, SimpleGrid, Spinner, Stack, StackDivider, Text, useColorModeValue } from '@chakra-ui/react';
 import api from '../../api/axios';
-import Loader from '../Loader/Loader';
+import Loader from '../Loader';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import Rating from '../Reusable/Rating';

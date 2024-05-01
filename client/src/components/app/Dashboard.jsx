@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import api from "../../api/axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Loader from "../Loader/Loader";
+import Loader from "../Loader";
 
 const FinishedOrders = () => {
   // Sample data for finished orders

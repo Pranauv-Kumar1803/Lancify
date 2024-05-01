@@ -19,7 +19,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PriceWrapper from './WrapperCard';
 import api from '../../api/axios';
 import { toast } from 'react-toastify';
-import Loader from '../Loader/Loader';
+import Loader from '../Loader';
 
 
 export default function CardPricing({ data }) {

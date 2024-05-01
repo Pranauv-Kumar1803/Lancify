@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Container, HStack } from '@chakra-ui/react'
 import PaginatedOrders from './PaginatedOrders'
 
-import Loader from '../Loader/Loader'
+import Loader from '../Loader'
 import api from '../../api/axios'
 
 const OrdersList = ({ type }) => {

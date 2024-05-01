@@ -15,7 +15,7 @@ import {
 import Data from './mockData.json';
 import { useSelector } from 'react-redux';
 import api from '../../api/axios';
-import Loader from '../Loader/Loader';
+import Loader from '../Loader';
 
 const ProfilePage = () => {
   const { currentUser } = useSelector((state) => state.user);

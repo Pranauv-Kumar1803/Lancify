@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Outlet, useLocation, Navigate, useNavigate } from "react-router-dom";
-import Loader from '../Loader/Loader'
+import Loader from '../Loader'
 
 function Protected() {
     const location = useLocation();

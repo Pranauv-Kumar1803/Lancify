@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Button, Card, CardBody, CardFooter, Flex, Heading, Image, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { HStack, Box } from '@chakra-ui/react'
-import Loader from '../Loader/Loader'
+import Loader from '../Loader'
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"

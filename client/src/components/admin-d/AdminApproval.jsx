@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./RecordsComponent.css"; // Import CSS file for styling
 import api from "../../api/axios";
-import Loader from "../Loader/Loader";
+import Loader from "../Loader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 

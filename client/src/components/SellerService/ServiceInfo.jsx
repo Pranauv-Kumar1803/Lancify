@@ -6,7 +6,7 @@ import ItemCard from "./ItemCard";
 import CardSkeleton from './CardSkeleton'
 import DescriptionSeller from "./DescriptionSeller";
 import CardPricing from './CardPricing';
-import Loader from "../Loader/Loader";
+import Loader from "../Loader";
 
 const ServiceInfo = () => {
 

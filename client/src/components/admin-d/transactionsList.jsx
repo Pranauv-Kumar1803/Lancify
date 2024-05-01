@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Chart from "react-apexcharts";
-import Loader from '../Loader/Loader'
+import Loader from '../Loader'
 import api from '../../api/axios'
 
 const TransactionsList = () => {

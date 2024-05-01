@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import api from "../../api/axios";
 import {useNavigate} from 'react-router-dom'
 import { useState } from "react";
-import Loader from '../Loader/Loader'
+import Loader from '../Loader'
 
 
 const Form3 = ({ step, setStep, progress, setProgress, data, setData }) => {

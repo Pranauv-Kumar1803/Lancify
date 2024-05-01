@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import api from "./api/axios";
 import { useDispatch } from "react-redux";
 import { loginStart, loginSuccess } from "./features/userSlice";
-import Loader from "./components/Loader/Loader";
+import Loader from "./components/Loader";
 import Main from "./components/Main";
 
 function App() {
