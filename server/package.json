@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "npx jest",
+    "test": "npx jest --runInBand --detectOpenHandles --forceExit",
     "start": "nodemon run_server.js",
     "tailwind:css": "postcss public/css/tailwind.css -o public/css/styles.css"
   },
