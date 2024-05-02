@@ -50,12 +50,23 @@ app.use(express.json({ limit: "3000mb" }));
 app.use(express.json());
 app.use(cookieParser());
 app.set("view engine", "ejs");
+
+// preflight requests handling
+app.options('*', (req, res) => {
+  res.set('Access-Control-Allow-Origin', 'https://lancify-client.onrender.com');
+  res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, X-HTTP-Method-Override,x-csrf-token, Accept');
+
+  res.status(200).end();
+});
+
 app.use({
   origin: "https://lancify-client.onrender.com",
   methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "X-HTTP-Method-Override", "Accept"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "X-HTTP-Method-Override","x-csrf-token", "Accept"],
   credentials: true
 });
+
 
 const options = {
   swaggerDefinition: {
