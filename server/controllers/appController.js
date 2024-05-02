@@ -34,8 +34,8 @@ const checkoutsession = async (req, res) => {
           quantity: 1,
         };
       }),
-      success_url: `http://localhost:3000/success?s=${service._id}&t=${items[0].tier}`,
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: `https://lancify.onrender.com/success?s=${service._id}&t=${items[0].tier}`,
+      cancel_url: "https://lancify.onrender.com/cancel",
     });
 
     res.json({ url: session.url });

@@ -52,7 +52,7 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:5500"],
+    origin: "*",
     methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
     credentials: true,
   })
@@ -68,8 +68,8 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:5500/`,
-        description: 'Local server',
+        url: `https://lancify-api.onrender.com/`,
+        description: 'Public server',
       },
     ]
   },

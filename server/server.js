@@ -50,13 +50,27 @@ app.use(express.json({ limit: "3000mb" }));
 app.use(express.json());
 app.use(cookieParser());
 app.set("view engine", "ejs");
-app.use(
-  cors({
-    origin: "*",
-    methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+
+app.use(function(req, res, next) {
+  // res.header("Access-Control-Allow-Origin", "*");
+  const allowedOrigins = ["https://lancify-client.onrender.com"];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+  next();
+});
+
+// app.use(
+//   cors({
+//     origin: "*",
+//     methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
 
 const options = {
   swaggerDefinition: {
@@ -68,8 +82,8 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:5500/`,
-        description: 'Local server',
+        url: `https://lancify-api.onrender.com/`,
+        description: 'Deployed server',
       },
     ]
   },
