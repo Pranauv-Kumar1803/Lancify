@@ -24,3 +24,12 @@ redisClient.on('error', (err) => {
 console.log('Flushed the redis database!')
 
 module.exports = redisClient;
+
+async function closeRedisConnection() {
+  try {
+    await redisClient.quit();
+    console.log('Redis connection closed.');
+  } catch (error) {
+    console.error('Error closing Redis connection:', error);
+  }
+}

@@ -9,8 +9,8 @@ const Service = require("../models/Service");
 const client = require("../helpers/redis");
 
 const loginController = async (req, res) => {
-  console.log(req.body);
-
+  console.log("inside login controller", req.body.data);
+  
   const email = req.body.data.email;
   const password = req.body.data.password;
   try {
