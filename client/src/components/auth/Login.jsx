@@ -18,23 +18,11 @@ const Login = () => {
     email: '',
     password: '',
   })
-  const [csrfToken, setcsrfToken] = useState("");
-
-  const gettoken = async () => {
-    try {
-      const res = await api.get("/auth/csrftoken", { withCredentials: true });
-      console.log(res.data.csrfToken);
-      setcsrfToken(res.data.csrfToken);
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
 
   async function handleLogin(data) {
     try {
       dispatch(loginStart());
-      const res = await api.post('/auth/login', { _csrf: csrfToken, data });
+      const res = await api.post('/auth/login', { data });
       // console.log(res.data);
 
       dispatch(loginSuccess(res.data));
@@ -57,10 +45,6 @@ const Login = () => {
     console.log(data)
     handleLogin(data);
   };
-
-  useEffect(() => {
-    gettoken();
-  }, []);
 
   return (
     <>
