@@ -9,7 +9,8 @@ let connection;
 let db;
 
 beforeAll(async () => {
-  await mongoose.connect('mongodb://127.0.0.1/testing', {
+  await mongoose.connect("mongodb+srv://lancify:1CeOEWH8wfnKgWVU@cluster0.hripjgl.mongodb.net/lancify-testing?retryWrites=true&w=majority",
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
