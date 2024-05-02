@@ -50,27 +50,12 @@ app.use(express.json({ limit: "3000mb" }));
 app.use(express.json());
 app.use(cookieParser());
 app.set("view engine", "ejs");
-
-app.use(function(req, res, next) {
-  // res.header("Access-Control-Allow-Origin", "*");
-  const allowedOrigins = ["https://lancify-client.onrender.com"];
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-       res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
-  next();
+app.use({
+  origin: "https://lancify-client.onrender.com",
+  methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "X-HTTP-Method-Override", "Accept"],
+  credentials: true
 });
-
-// app.use(
-//   cors({
-//     origin: "*",
-//     methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
 
 const options = {
   swaggerDefinition: {
@@ -88,11 +73,11 @@ const options = {
     ]
   },
   apis: ['./routes/*.js'],
-  
+
 };
 
-const crsfProtection=csrf({
-    cookie: true
+const crsfProtection = csrf({
+  cookie: true
 });
 
 // routes
