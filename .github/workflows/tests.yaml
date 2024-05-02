@@ -31,5 +31,5 @@ jobs:
         working-directory: client
       
       - name: Build Client
-        run: npm run build
+        run: CI="" npm run build
         working-directory: client
