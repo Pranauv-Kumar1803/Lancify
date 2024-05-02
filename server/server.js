@@ -52,9 +52,8 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(
   cors({
-    origin: "https://lancify-client.onrender.com",
+    origin: ["https://lancify-client.onrender.com"],
     methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "X-HTTP-Method-Override", "x-csrf-token", "Accept"],
     credentials: true,
   })
 );
