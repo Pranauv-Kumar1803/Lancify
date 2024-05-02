@@ -52,7 +52,7 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(
   cors({
-    origin: ["https://lancify-client.onrender.com"],
+    origin: ["https://lancify-client.vercel.app"],
     methods: ["POST", "GET", "HEAD", "PUT", "DELETE"],
     credentials: true,
   })

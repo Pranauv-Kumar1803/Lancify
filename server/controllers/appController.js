@@ -34,8 +34,8 @@ const checkoutsession = async (req, res) => {
           quantity: 1,
         };
       }),
-      success_url: `https://lancify.onrender.com/success?s=${service._id}&t=${items[0].tier}`,
-      cancel_url: "https://lancify.onrender.com/cancel",
+      success_url: `https://lancify-client.vercel.app//success?s=${service._id}&t=${items[0].tier}`,
+      cancel_url: "https://lancify-client.vercel.app//cancel",
     });
 
     res.json({ url: session.url });
