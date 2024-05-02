@@ -3,8 +3,11 @@ const jwt = require("jsonwebtoken");
 
 const verifyJWT = (req, res, next) => {
     console.log('inside verifyJWT')
+    console.log(req.cookies)
     let tokenUser = req.cookies.user;
     let tokenAdmin = req.cookies.admin;
+
+    console.log(tokenAdmin, tokenUser);
 
     let flag1 = 0, flag2 = 0;
     if(!tokenUser) flag1 = 1;
