@@ -35,7 +35,7 @@ const loginController = async (req, res) => {
       res.cookie("admin", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: false,
+        sameSite: "none",
         secure: true
       });
 
@@ -52,7 +52,7 @@ const loginController = async (req, res) => {
     res.cookie("user", token, {
       maxAge: 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: false,
+      sameSite: "none",
       secure: true
     });
 
