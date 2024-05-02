@@ -9,7 +9,7 @@ router.get('/csrftoken', (req, res) => {
 
 /**
  * @swagger
- * /auth/userDetails:
+ * /auth/check:
  *   get:
  *     summary: Get user details
  *     description: Retrieve details of a user by their ID, including both regular user and seller details.

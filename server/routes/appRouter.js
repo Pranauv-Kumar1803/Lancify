@@ -15,9 +15,9 @@ const {
   sellerAnalytics,
 } = require("../controllers/appController");
 
-router.post("/discussions", async (req, res) => {
-  return res.status(500);
-});
+// router.post("/discussions", async (req, res) => {
+//   return res.status(500);
+// });
 
 /**
  * @swagger
@@ -75,6 +75,41 @@ router.post("/discussions", async (req, res) => {
 
 
 router.post("/create-checkout-session", checkoutsession);
+
+/**
+ * @swagger
+ * /app/payment-success:
+ *   post:
+ *     summary: Create required payment information in the database after the payment was successful!
+ *     tags:
+ *       - Payment 
+ *     parameters:
+ *       - in: query
+ *         name: service
+ *         description: this is the service id in the query
+ *         schema: 
+ *           type: string
+ *       - in: query
+ *         name: tier
+ *         description: this is the tier in the query
+ *         schema: 
+ *           type: string 
+ *     responses:
+ *       '200':
+ *         description: Successful response with payment and order details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 order:
+ *                   type: object
+ *                   description: order details
+ *                 payment: 
+ *                   type: object
+ *                   description: payment
+ */
+
 
 router.post("/payment-success", paymentSuccess);
 
